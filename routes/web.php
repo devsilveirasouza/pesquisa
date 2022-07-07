@@ -14,13 +14,9 @@ Route::get('usuarios/novo',             [UserController::class,     'createUser'
 //Route::get('usuarios.ajax', [UserController::class, 'listAllAjax'])->name('users.datatablelist');
 
 // Paginação Ajax - 27/06/22
-Route::get('/users',                    [UserController::class,     'indexList']);
+Route::get('/usuarios',                 [UserController::class,     'indexList']);
 
-Route::get('/users-getData',            [UserController::class,     'getData']);
-
-//Route::get('usuarios',                  [UserController::class,      'index']);
-
-//Route::get('usuarios/ajax',             [UserController::class,      'listaUsuarios']);
+Route::get('/usuarios-listagem',        [UserController::class,     'buscaDados'])->name('user.listAll');
 
 Route::post('usuarios/store',           [UserController::class,     'store'])->middleware('auth')->name('user.store');
 
@@ -31,11 +27,11 @@ Route::get('usuarios/{user}/edit',      [UserController::class,     'edit'])->mi
 Route::put('usuarios/{user}/atualizar', [UserController::class,     'update'])->middleware('auth')->name('user.update');
 
 Route::get('usuarios/{user}/excluir',   [UserController::class,     'excluir'])->middleware('auth')->name('user.delete');
-// Chama a view de cadastro de perguntas
+
 Route::get('questions/novo',            [QuestionController::class, 'createQuestion'])->name('question.create');
-// Mostrar perguntas usuário
+
 Route::get('questions/{id}',            [UserController::class,     'show']);
-// Cadastrar perguntas
+
 Route::post('questions/store',          [QuestionController::class, 'store'])->name('question.store');
 
 require __DIR__ . '/auth.php';

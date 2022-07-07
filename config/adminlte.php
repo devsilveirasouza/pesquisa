@@ -260,6 +260,11 @@ return [
             'icon' => 'fas fa-fw fa-unlock',
         ],
         [
+            'text' => 'Usuários',
+            'url'  => 'usuarios',
+            'icon' => 'fas fa-fw fa-user',
+        ],
+        [
             'text'    => 'Cadastro',
             'icon'    => 'fas fa-fw fa-save',
             'submenu' => [
@@ -303,32 +308,21 @@ return [
                 ],
             ],
         ],
+        ['header' => 'labels'],
         [
-            'text'    => 'Listagem',
-            'icon'    => 'fas fa-fw fa-list',
-            'submenu' => [
-                [
-                    'text' => 'Listagem de Usuários',
-                    'url'  => 'usuarios',
-                    'icon' => 'fas fa-fw fa-user',
-                ],
-            ],
-            ['header' => 'labels'],
-            [
-                'text'       => 'important',
-                'icon_color' => 'red',
-                'url'        => '#',
-            ],
-            [
-                'text'       => 'warning',
-                'icon_color' => 'yellow',
-                'url'        => '#',
-            ],
-            [
-                'text'       => 'information',
-                'icon_color' => 'cyan',
-                'url'        => '#',
-            ],
+            'text'       => 'important',
+            'icon_color' => 'red',
+            'url'        => '#',
+        ],
+        [
+            'text'       => 'warning',
+            'icon_color' => 'yellow',
+            'url'        => '#',
+        ],
+        [
+            'text'       => 'information',
+            'icon_color' => 'cyan',
+            'url'        => '#',
         ],
     ],
 

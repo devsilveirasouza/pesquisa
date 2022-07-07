@@ -1,4 +1,13 @@
 @extends('adminlte::page')
+<!-- Ajustando o dataTable com CSS -->
+<style type="text/css">
+    table.consulta  {
+        margin-bottom: 0px !important;
+        margin-top: 0px !important;
+        border-collapse: collapse !important;
+    }
+</style>
+
 {{-- Configuração do datatables --}}
 @php
 // Definindo cabeçalho do datatables
@@ -6,10 +15,10 @@ $heads = [
     'ID',
     'Nome.',
     'Email',
-    'Ações',
+    //'Ações',
     ];
 // Rota do processamento ajax
-$url = 'users-getData';
+$url = route('user.listAll');
 // configuração geral do processamento  dos dados
 $config = [
     'language' => [
@@ -25,8 +34,7 @@ $config = [
         ['data' => 'id'],
         ['data' => 'name'],
         ['data' => 'email', 'orderable' => false],
-        ['data' => 'buttons', 'orderable' => false, 'no-export' => true, 'width' => 5],
-
+        //['data' => 'buttons', 'orderable' => false, 'no-export' => true, 'width' => 5],
     ],
 ];
 @endphp
@@ -34,7 +42,7 @@ $config = [
 @section('title', 'Users List')
 
 @section('content_header')
-    <h1>Listagem de Usuários</h1>
+    <h2>Usuários Cadastrados</h2>
     @if ($status = Session::get('mensagem'))
         <h2> {{ $status }} </h2>
     @endif

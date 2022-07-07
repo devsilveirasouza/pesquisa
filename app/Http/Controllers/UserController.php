@@ -18,10 +18,10 @@ class UserController extends Controller
      */
     // Dev - 27/06/2022 - wss
     public function indexList() {
-        return view('list');
+        return view('users.list');
     }
 
-    public function getData(Request $request) {
+    public function buscaDados(Request $request) {
 
         //print_r($request->all());
 
@@ -95,7 +95,7 @@ class UserController extends Controller
     {
         /**
          * Realiza consulta de email ou nome de usuário no banco
-         * Se não existir realiza o cadastro
+         * Se não existir realiza o cadastros
          * Se não retorna mensagem, cadastro já existe
          * */
         $consulta = User::where('email', $request->email)->first();
@@ -103,10 +103,10 @@ class UserController extends Controller
         // dd($consulta->email);
         if ($consulta === null) {
             User::create($request->all());
-            return redirect()->route('users.listAll')
+            return redirect()->route('user.listAll')
                 ->with('mensagem', 'Cadastrado com sucesso!');
         } else {
-            return back()->with('mensagem', 'Usuário já está cadastrado!');
+            return back()->with('mensagem', 'Este usuário já existe!');
         }
     }
     /**
