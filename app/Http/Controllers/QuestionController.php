@@ -4,46 +4,43 @@ namespace App\Http\Controllers;
 
 use App\Models\Question;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class QuestionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        return ("Chegamos no index!");
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function createQuestion()
+    public function criarPergunta()
     {
-        // Chama a tela de cadastro
-        return view('questions.createQuestion');
+        return ("Tela: perguntas cadastrarPergunta");
     }
-
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function cadastrarPergunta(Request $request)
     {
-        // Recebendo os dados do formulário
-        $pergunta = $request;
-
-        // foreach($request->radio as $key => $name);
-
-        dd($pergunta);
+        dd($request->all());
+        // $pergunta = $request->all();
+        // dd($pergunta);
+        // $insert = [
+        //     // Tabela de perguntas
+        //     'question'      => $request->pergunta,
+        //     'usuario'       => $request->usuario,
+        //     'mandatory'     => $request->obrigatorio,
+        //     'options'       => $request->tipoResposta,
+        //     // Tabela de Opções
+        //     'option' => implode(',', $request->option),
+        // ];
+        //dd($insert);
+        //DB::table('questions')->insert($insert);
+        //foreach($request->radio as $key => $name);
     }
-
     /**
      * Display the specified resource.
      *
@@ -54,7 +51,6 @@ class QuestionController extends Controller
     {
         //
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -65,7 +61,6 @@ class QuestionController extends Controller
     {
         //
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -77,7 +72,6 @@ class QuestionController extends Controller
     {
         //
     }
-
     /**
      * Remove the specified resource from storage.
      *

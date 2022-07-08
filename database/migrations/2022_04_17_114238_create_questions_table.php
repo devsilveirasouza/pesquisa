@@ -15,18 +15,17 @@ class CreateQuestionsTable extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user');
-            $table->longText('question');
-            $table->string('options');
-            $table->char('mandatory', 1);
+            $table->unsignedBigInteger('usuario');
+            $table->longText('pergunta');
+            $table->string('obrigatorio');
+            $table->string('tipoPergunta');
             $table->timestamp('last_used_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('user')->references('id') -> on ('users');
+            $table->foreign('usuario')->references('id') -> on ('users');
         });
     }
-
     /**
      * Reverse the migrations.
      *

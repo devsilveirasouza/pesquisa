@@ -15,14 +15,14 @@ class CreateResponsesTable extends Migration
     {
         Schema::create('responses', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_question');
-            $table->unsignedBigInteger('id_option');
-            $table->longText('response_question');
+            $table->unsignedBigInteger('id_pergunta');
+            $table->unsignedBigInteger('id_opcao_resposta');
+            $table->longText('resposta');
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('id_question') ->references('id')   -> on ('questions');
-            $table->foreign('id_option')   ->references('id')   -> on ('options');
+            $table->foreign('id_pergunta')      ->references('id')   -> on ('questions');
+            $table->foreign('id_resposta')      ->references('id')   -> on ('options');
         });
     }
 

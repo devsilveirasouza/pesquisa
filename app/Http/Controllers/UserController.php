@@ -11,20 +11,14 @@ use JeroenNoten\LaravelAdminLte\View\Components\Tool\Datatable;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     // Dev - 27/06/2022 - wss
-    public function indexList() {
+    public function indexUsuarios() {
         return view('users.list');
     }
 
-    public function buscaDados(Request $request) {
-
+    public function buscaDados(Request $request)
+    {
         //print_r($request->all());
-
         $draw               = $request->get('draw');// Iniciando tabela a ser mostrada
         $start              = $request->get("start");// Inicialização dos registros
         $rowPerPage         = $request->get("length");// Quantidade de registros por paginas
@@ -71,9 +65,7 @@ class UserController extends Controller
         );
 
         return response()->json($response);
-
     }
-
     /**
      * Show the form for creating a new resource.
      *

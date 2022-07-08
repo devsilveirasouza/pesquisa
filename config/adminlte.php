@@ -275,7 +275,7 @@ return [
                 ],
                 [
                     'text' => 'Cadastro de Perguntas',
-                    'url'  => 'questions/novo',
+                    'url'  => 'pergunta/novo',
                     'icon' => 'fas fa-fw fa-question',
                 ],
                 [

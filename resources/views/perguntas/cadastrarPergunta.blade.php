@@ -1,17 +1,14 @@
 @extends('adminlte::page')
 
-@section('title', 'Question Register')
+@section('title', 'Cadastrar Pergunta')
 
 @section('content_header')
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
     <div class="card-header">
         <h1 class="card-title center">Painel Administrativo</h1>
     </div>
-
 @stop
 
 @section('content')
@@ -20,7 +17,7 @@
     @endif
     {{-- Campos de entradas --}}
     <div class="card card-info">
-        <form action="{{ route('question.store') }}" method="post">
+        <form action="{{ route('pergunta.cadastrar') }}" method="post">
             @csrf
             <div class="card-header">
                 <h3 class="card-title">Cadastrar pergunta</h3>
@@ -47,7 +44,6 @@
                         <label class="form-check-label" for="inlineRadio2">NÃO</label>
                     </div>
                 </div>
-
             </fieldset>
             {{-- Tipo de respostas --}}
             <fieldset class="form-group">
@@ -110,11 +106,9 @@
     <!-- Função adiciona campos -->
     <script type="text/javascript">
         var controleCampo = 1;
-
         function adicionarCampo() {
             controleCampo++;
             //console.log(controleCampo);
-
             document.getElementById('formulario').insertAdjacentHTML('beforeend',
                 '<div class="input-group mb-3" id="campo' +
                 controleCampo +
@@ -139,7 +133,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
     </script>
-
 @stop
 
 @section('css')
