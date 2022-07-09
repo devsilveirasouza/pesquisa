@@ -10,21 +10,12 @@ class QuestionController extends Controller
 {
     public function index()
     {
-        return ("Chegamos no index!");
+        return view('perguntas.cadastrarPergunta');
     }
 
-    public function criarPergunta()
-    {
-        return ("Tela: perguntas cadastrarPergunta");
-    }
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function cadastrarPergunta(Request $request)
     {
+        // return ("Cadastrar perguntas metodo!!!");
         dd($request->all());
         // $pergunta = $request->all();
         // dd($pergunta);

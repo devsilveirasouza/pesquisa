@@ -15,6 +15,8 @@
     @if ($status = Session::get('mensagem'))
         <h2> {{ $status }} </h2>
     @endif
+    <h3>Tela de Cadastrar as perguntas</h3>
+
     {{-- Campos de entradas --}}
     <div class="card card-info">
         <form action="{{ route('pergunta.cadastrar') }}" method="post">
@@ -44,6 +46,7 @@
                         <label class="form-check-label" for="inlineRadio2">NÃO</label>
                     </div>
                 </div>
+
             </fieldset>
             {{-- Tipo de respostas --}}
             <fieldset class="form-group">
@@ -97,18 +100,29 @@
 
             <div class="card-footer">
                 <div class="col-sm-10">
-                    <button type="submit" class="btn btn-success float-right" value="Cadastrar" name="cadastrar">Salvar</button>
+                    <button type="submit" class="btn btn-success float-right" value="Cadastrar"
+                        name="cadastrar">Salvar</button>
                 </div>
             </div>
             <!-- Form -->
         </form>
     </div>
+
+@stop
+
+@section('css')
+    <link rel="stylesheet" href="/css/admin_custom.css">
+@stop
+
+@section('js')
     <!-- Função adiciona campos -->
     <script type="text/javascript">
         var controleCampo = 1;
+
         function adicionarCampo() {
             controleCampo++;
             //console.log(controleCampo);
+
             document.getElementById('formulario').insertAdjacentHTML('beforeend',
                 '<div class="input-group mb-3" id="campo' +
                 controleCampo +
@@ -117,6 +131,7 @@
                 ')"> - </button> <input type="text" class="form-control" name="option[]" id="option" placeholder="Opção" /> </div>'
             );
         }
+
         function removerCampo(idCampo) {
             //console.log("Campo remover: " + idCampo);
             document.getElementById('campo' + idCampo).remove();
@@ -133,13 +148,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
     </script>
-@stop
-
-@section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-@stop
-
-@section('js')
     <script>
         console.log('Hi!');
     </script>

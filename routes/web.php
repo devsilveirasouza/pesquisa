@@ -26,10 +26,8 @@ Route::get('usuarios/{user}/excluir',   [UserController::class,     'excluir'])-
 // Métodos em desenvovimento
 Route::get('pergunta/{id}',             [QuestionController::class, 'show']);
 
-Route::get('pergunta',                  [QuestionController::class,  'indexPergunta']);
+Route::get('/pergunta',                 [QuestionController::class, 'index']);
 
-Route::get('pergunta/novo',             [QuestionController::class, 'criarPergunta'])->name('pergunta.criar');
-
-Route::post('pergunta/cadastrar',       [QuestionController::class, 'cadastrarPergunta'])->name('pergunta.cadastrar');
+Route::post('pergunta/cadastrar',        [QuestionController::class, 'cadastrarPergunta'])->name('pergunta.cadastrar');
 
 require __DIR__ . '/auth.php';
