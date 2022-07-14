@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Question;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -115,7 +116,12 @@ class QuestionController extends Controller
      */
     public function show(Question $pergunta)
     {
-        // dd($pergunta);
+        /**
+         * -- Consulta o id de usuario informado na pergunta e
+         * busca o usuario e retorna o name da tabela Users
+         **/
+        $usuario = User::find($pergunta->usuario);
+        $pergunta->usuario = $usuario->name;
         return view('perguntas.listPerg', [ 'pergunta' => $pergunta ]);
     }
     /**

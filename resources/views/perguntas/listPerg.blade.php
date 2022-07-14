@@ -25,7 +25,7 @@
                             <td>Pergunta</td>
                             <td>Obrigatoria</td>
                             <td>Tipo Resposta</td>
-                            <td>Usuário</td>
+                            <td>Usuário de Cadastro</td>
                             <td>Data Cadastro</td>
                             <td>Ações</td>
                         </tr>
@@ -48,6 +48,19 @@
                         </tr>
                     </tbody>
                 </table>
+                <div class="col-md-12">
+                    <div class="h-100 p-5 bg-light border rounded-3">
+                      <h2>{{ $pergunta->pergunta }}</h2>
+                      <label for="">Resposta obrigatória:</label><p>{{ $pergunta->respObrigatoria }}.</p>
+                      <label for="">Tipo de Resposta:</label><p>{{ $pergunta->tipoResposta }}.</p>
+                      <label for="">Usuário de Cadastro:</label><p>{{ $pergunta->usuario }}.</p>
+                      <label for="">Data de Cadastro:</label><p>{{ date('d/m/Y', strtotime($pergunta->created_at)) }}.</p>
+                      <button-group>
+                        <button class="btn btn-outline-secondary" type="button">Exemplo de botão</button>
+                      </button-group>
+
+                    </div>
+                  </div>
             </div>
         </div>
     </div>
