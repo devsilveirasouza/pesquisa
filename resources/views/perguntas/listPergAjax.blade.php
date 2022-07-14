@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 <!-- Ajustando o dataTable com CSS -->
 <style type="text/css">
-    table.consulta  {
+    table.consulta {
         margin-bottom: 0px !important;
         margin-top: 0px !important;
         border-collapse: collapse !important;
@@ -16,10 +16,11 @@ $heads = [
     'Resp. Obrigatória',
     'Tipo Resposta',
     'Id User',
+    'Excluido',
     //'Ações',
-    ];
+];
 // Rota do processamento ajax
-// $url = route('perguntas.listAjax');
+$url = route('perguntas.listAjax');
 // configuração geral do processamento  dos dados
 $config = [
     'language' => [
@@ -29,14 +30,15 @@ $config = [
     'serverSide' => true,
     'searching' => true,
     'ordering' => true,
-    //'ajax' => $url,
+    'ajax' => $url,
     'sDom' => 'blfrtip', // Configuração: 'DOM' de exibição do datatable
     'columns' => [
-        ['data' => 'id', 'visible' => false],
+        ['data' => 'id'],
         ['data' => 'pergunta'],
         ['data' => 'respObrigatoria'],
         ['data' => 'tipoResposta'],
-        ['data' => 'usuario', 'orderable' => false],
+        ['data' => 'usuario'],
+        ['data' => 'deleted_at', 'visible' => false]
         //['data' => 'buttons', 'orderable' => false, 'no-export' => true, 'width' => 5],
     ],
 ];
@@ -45,14 +47,14 @@ $config = [
 @section('title', 'Users List')
 
 @section('content_header')
-    <h2>Perguntas Cadastradas</h2>
+    <h2>Listagem com Ajax</h2>
     @if ($status = Session::get('mensagem'))
         <h2> {{ $status }} </h2>
     @endif
 @stop
 
 @section('content')
-    <x-adminlte-datatable id="consulta" :heads="$heads" :config="$config" striped hoverable bordered compressed />
+    <x-adminlte-datatable id="pergunta" :heads="$heads" :config="$config" striped hoverable bordered compressed />
 @stop
 
 @section('css')

@@ -21,7 +21,7 @@ class CreateQuestionsTable extends Migration
             $table->string('usuario');
             $table->timestamp('last_used_at')->nullable();
             $table->timestamps();
-            $table->softDeletes();
+            //$table->softDeletes();
         });
     }
     /**

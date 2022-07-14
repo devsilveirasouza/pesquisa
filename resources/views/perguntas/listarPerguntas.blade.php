@@ -19,7 +19,7 @@
     </head>
 
     <body>
-        <h1>Perguntas Cadastradas</h1>
+        <h3>Listagem sem Ajax</h3>
 
         <div class="table-responsive">
             <table class="table align-middle">
@@ -34,14 +34,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($perguntas as $value)
+                    @foreach ($perguntas as $pergunta)
                         <tr>
-                            <td>{{ $value->id }}</td>
-                            <td>{{ $value->pergunta }}</td>
-                            <td>{{ $value->respObrigatoria }}</td>
-                            <td>{{ $value->tipoResposta }}</td>
-                            <td>{{ $value->usuario }}</td>
-                            <td> <a href="">Ver Usuário</a>
+                            <td>{{ $pergunta->id }}</td>
+                            <td>{{ $pergunta->pergunta }}</td>
+                            <td>{{ $pergunta->respObrigatoria }}</td>
+                            <td>{{ $pergunta->tipoResposta }}</td>
+                            <td>{{ $pergunta->usuario }}</td>
+                            <td> <a href="{{ route('pergunta.listar', [ $pergunta -> id ]) }}">Visualizar</a>
                                 <form action="" method="post">
                                     <input type="hidden" name="user" value="">
                                     <input type="submit" value="Remover">

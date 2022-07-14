@@ -17,8 +17,9 @@ class QuestionController extends Controller
     //---------------------------------------------
     public function index()
     {
-        $perguntas = Question::all();
+        // $perguntas = Question::all();
         // return $perguntas;
+        $perguntas = Question::latest()->paginate();
         return view('perguntas.listarPerguntas')
             ->with(['perguntas' => $perguntas]);
     }
@@ -28,9 +29,11 @@ class QuestionController extends Controller
         return view('perguntas.listPergAjax');
     }
     //--------------Buscando informações e montando o datatables----------------------
-    public function buscaDados(Request $request)
+    public function buscaDados(Question $request)
     {
-        print_r($request->all());// Está chegando nullo
+        // print_r($request->all());// Está chegando nullo
+        // $pergs = $request->all();
+        // dd($pergs);
         //--------------------------Estrutura de busca---------------------------------
         $draw               = $request->get('draw');// Iniciando tabela a ser mostrada
         $start              = $request->get("start");// Inicialização dos registros
@@ -80,6 +83,9 @@ class QuestionController extends Controller
         return response()->json($response);
     }
     //-----------------------------Cadastrar--------------------------------
+    /**
+     * Chama a view de cadastro de perguntas
+     */
     public function create()
     {
         return view('perguntas.cadastrarPergunta');
@@ -104,9 +110,13 @@ class QuestionController extends Controller
      * @param  \App\Models\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function show(Question $question)
+    /**
+     * Mostra um registro especifico passando id pela rota
+     */
+    public function show(Question $pergunta)
     {
-        //
+        // dd($pergunta);
+        return view('perguntas.listPerg', [ 'pergunta' => $pergunta ]);
     }
     /**
      * Show the form for editing the specified resource.
