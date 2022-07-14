@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
-use App\Models\Question;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use JeroenNoten\LaravelAdminLte\View\Components\Tool\Datatable;
 
 class UserController extends Controller
 {
@@ -95,7 +93,7 @@ class UserController extends Controller
         // dd($consulta->email);
         if ($consulta === null) {
             User::create($request->all());
-            return redirect()->route('user.listAll')
+            return redirect()->route('user.list')
                 ->with('mensagem', 'Cadastrado com sucesso!');
         } else {
             return back()->with('mensagem', 'Este usuário já existe!');

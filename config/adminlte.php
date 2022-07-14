@@ -269,13 +269,18 @@ return [
             'icon'    => 'fas fa-fw fa-save',
             'submenu' => [
                 [
-                    'text' => 'Cadastro de Usuário',
-                    'url'  => 'usuarios/novo',
+                    'text' => 'Cadastrar de Usuário',
+                    'url'  => '/usuarios/novo',
                     'icon' => 'fas fa-fw fa-user',
                 ],
                 [
-                    'text' => 'Cadastro de Perguntas',
-                    'url'  => 'pergunta/novo',
+                    'text' => 'Register',
+                    'url'  => '/register',
+                    'icon' => 'fas fa-fw fa-save',
+                ],
+                [
+                    'text' => 'Cadastrar de Pergunta',
+                    'url'  => '/pergunta/novo',
                     'icon' => 'fas fa-fw fa-question',
                 ],
                 [

@@ -21,8 +21,8 @@ class CreateResponsesTable extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('id_pergunta')      ->references('id')   -> on ('questions');
-            $table->foreign('id_resposta')      ->references('id')   -> on ('options');
+            $table->foreign('id_pergunta')              ->references('id')   -> on ('questions');
+            $table->foreign('id_opcao_resposta')        ->references('id')   -> on ('options');
         });
     }
 

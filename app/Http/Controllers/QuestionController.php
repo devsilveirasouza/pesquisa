@@ -8,29 +8,95 @@ use Illuminate\Support\Facades\DB;
 
 class QuestionController extends Controller
 {
+    protected $pergunta;
+
+    public function __construct(Question $pergunta)
+    {
+        $this->pergunta = $pergunta;
+    }
+    //---------------------------------------------
     public function index()
+    {
+        $perguntas = Question::all();
+        // return $perguntas;
+        return view('perguntas.listarPerguntas')
+            ->with(['perguntas' => $perguntas]);
+    }
+    //--------------Processamento ajax------------------------------------------------
+    public function listagem()
+    {
+        return view('perguntas.listPergAjax');
+    }
+    //--------------Buscando informações e montando o datatables----------------------
+    public function buscaDados(Request $request)
+    {
+        print_r($request->all());// Está chegando nullo
+        //--------------------------Estrutura de busca---------------------------------
+        $draw               = $request->get('draw');// Iniciando tabela a ser mostrada
+        $start              = $request->get("start");// Inicialização dos registros
+        $rowPerPage         = $request->get("length");// Quantidade de registros por paginas
+
+        $orderArray         = $request->get('order');// Array da coluna de ordenação
+        $columnNameArray    = $request->get('columns');// Array da coluna pergunta
+
+        $searchArray        = $request->get('search');// Array de busca
+        $columnIndex        = $orderArray[0]['column'];// Array de index
+
+        $columnName         = $columnNameArray[$columnIndex]['data'];// Armazena o Array dos nomes de acordo com os indexs
+
+        $columnSortOrder    = $orderArray[0]['dir'];
+        $searchValue        = $searchArray['value'];
+
+        $questions          = DB::table('questions');
+        $total              = $questions->count();
+
+        $totalFilter        = DB::table('questions');
+        //------------------Busca informações no dataTables----------------------------------
+        if  (!empty($searchValue)) {
+            $totalFilter    = $totalFilter->where('pergunta','like','%'.$searchValue.'%');
+            // $totalFilter    = $totalFilter->orWhere('usuario','like','%'.$searchValue.'%');
+        }
+
+        $totalFilter        = $questions->count();
+
+        $arrData            = DB::table('questions');
+        $arrData            = $arrData->skip($start)->take($rowPerPage);
+        $arrData            = $arrData->orderBy($columnName, $columnSortOrder);
+
+        if  (!empty($searchValue)) {
+            $arrData        = $arrData->where('pergunta','like','%'.$searchValue.'%');
+            // $arrData        = $arrData->orWhere('usuario','like','%'.$searchValue.'%');
+        }
+
+        $arrData            = $arrData->get();
+        //-------------------------Retorna informações pro dataTable----------------------
+        $response = array(
+            "draw"              => intval($draw),
+            "recordsTotal"      => $total,
+            "recordsFiltered"   => $totalFilter,
+            "data"              => $arrData,
+        );
+
+        return response()->json($response);
+    }
+    //-----------------------------Cadastrar--------------------------------
+    public function create()
     {
         return view('perguntas.cadastrarPergunta');
     }
 
     public function cadastrarPergunta(Request $request)
     {
-        // return ("Cadastrar perguntas metodo!!!");
-        dd($request->all());
-        // $pergunta = $request->all();
-        // dd($pergunta);
-        // $insert = [
-        //     // Tabela de perguntas
-        //     'question'      => $request->pergunta,
-        //     'usuario'       => $request->usuario,
-        //     'mandatory'     => $request->obrigatorio,
-        //     'options'       => $request->tipoResposta,
-        //     // Tabela de Opções
-        //     'option' => implode(',', $request->option),
-        // ];
-        //dd($insert);
-        //DB::table('questions')->insert($insert);
-        //foreach($request->radio as $key => $name);
+        $nova_pergunta = new Question();
+
+        $nova_pergunta->pergunta         = request('pergunta');
+        $nova_pergunta->respObrigatoria  = request('respObrigatoria');
+        $nova_pergunta->tipoResposta     = request('tipoResposta');
+        $nova_pergunta->usuario          = request('usuario');
+
+        $nova_pergunta->save();
+        return redirect()->route('perguntas.index')
+        ->with('mensagem', 'Pergunta cadastrada com sucesso!');
     }
     /**
      * Display the specified resource.

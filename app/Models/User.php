@@ -27,7 +27,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
+    protected $fillable     = [
         'name',
         'email',
         'password',
@@ -38,7 +38,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $hidden = [
+    protected $hidden       = [
         'password',
         'remember_token',
     ];
@@ -48,12 +48,12 @@ class User extends Authenticatable
      *
      * @var array<string, string>
      */
-    protected $casts = [
+    protected $casts        = [
         'email_verified_at' => 'datetime',
     ];
 
-    public function listQuestions()
-    {
+    public function perguntas()
+    {   // Um pra muitos
         return $this->hasMany('App\Models\Question');
     }
 }

@@ -11,11 +11,29 @@ class Question extends Model
     use HasFactory;
     use SoftDeletes;
 
-        protected $table = 'questions';
+    protected $table        = "questions";
+    protected $primaryKey   = "id";
 
-        protected $dates = ['deleted_at'];
+    protected $fillable     =   [
 
-        public function user()
+        'respObrigatoria',
+        'tipoResposta'
+    ];
+
+    protected $dates        = ['deleted_at'];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts        = [
+        'respObrigatoria'   => 'array',
+        'tipoResposta'      => 'array',
+        'deleted_at'          => 'datetime'
+    ];
+
+    public function user()
     {
         return $this->belongsTo('App\Models\User');
     }

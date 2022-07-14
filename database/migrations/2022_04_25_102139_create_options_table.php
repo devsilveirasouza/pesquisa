@@ -23,7 +23,6 @@ class CreateOptionsTable extends Migration
             $table->foreign('id_pergunta') ->references('id') -> on ('questions');
         });
     }
-
     /**
      * Reverse the migrations.
      *

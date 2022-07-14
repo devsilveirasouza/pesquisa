@@ -15,15 +15,13 @@ class CreateQuestionsTable extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('usuario');
             $table->longText('pergunta');
-            $table->string('obrigatorio');
-            $table->string('tipoPergunta');
+            $table->string('respObrigatoria');
+            $table->string('tipoResposta');
+            $table->string('usuario');
             $table->timestamp('last_used_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
-
-            $table->foreign('usuario')->references('id') -> on ('users');
         });
     }
     /**

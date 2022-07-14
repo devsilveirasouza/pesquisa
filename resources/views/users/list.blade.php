@@ -7,7 +7,6 @@
         border-collapse: collapse !important;
     }
 </style>
-
 {{-- Configuração do datatables --}}
 @php
 // Definindo cabeçalho do datatables
