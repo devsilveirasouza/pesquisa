@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Question;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class QuestionController extends Controller
 {
@@ -13,7 +12,7 @@ class QuestionController extends Controller
 
     public function __construct(Question $pergunta)
     {
-        $this->pergunta = $pergunta;
+        $this->Pergunta = $pergunta;
     }
     //---------------------------------------------
     public function index()
@@ -30,58 +29,74 @@ class QuestionController extends Controller
         return view('perguntas.listPergAjax');
     }
     //--------------Buscando informações e montando o datatables----------------------
-    public function buscaDados(Question $request)
+    public function buscaDados(Question $question)
     {
-        // print_r($request->all());// Está chegando nullo
-        // $pergs = $request->all();
-        // dd($pergs);
+        $perg1 = Question::all();
+
+        $perg2 = Question::find(2);
+
+        $item = "você";
+        $busca = [];
+        $question = Question::where('pergunta', 'like', '%'.$item.'%')->get();
+        $busca['pergunta'] = $question;
+
+        $q1 = Question::where('pergunta', 'Você encontrou tudo o que estava procurando?')->get();
+
+        $q2 = Question::where('pergunta', 'Você recomendaria nossa loja?')->first();
+
+        dump($perg1, $perg2, $busca, $q1, $q2);
         //--------------------------Estrutura de busca---------------------------------
-        $draw               = $request->get('draw');// Iniciando tabela a ser mostrada
-        $start              = $request->get("start");// Inicialização dos registros
-        $rowPerPage         = $request->get("length");// Quantidade de registros por paginas
+        // $draw               = $pergunta->get('draw'); // Iniciando tabela a ser mostrada
+        // $start              = $pergunta->get("start"); // Inicialização dos registros nas páginas
+        // $rowPerPage         = $pergunta->get("length"); // Quantidade de registros por páginas
 
-        $orderArray         = $request->get('order');// Array da coluna de ordenação
-        $columnNameArray    = $request->get('columns');// Array da coluna pergunta
+        // $orderArray         = $pergunta->get('order'); // Array da coluna de ordenação
+        // $columnNameArray    = $pergunta->get('columns'); // Array da coluna pergunta
 
-        $searchArray        = $request->get('search');// Array de busca
-        $columnIndex        = $orderArray[0]['column'];// Array de index
+        // $searchArray        = $pergunta->get('search'); // Array de busca
+        // $columnIndex        = $orderArray[0]['column']; // Array de index
 
-        $columnName         = $columnNameArray[$columnIndex]['data'];// Armazena o Array dos nomes de acordo com os indexs
+        // $columnName         = $columnNameArray[$columnIndex]['data']; // Armazena o Array dos nomes de acordo com os indexs
 
-        $columnSortOrder    = $orderArray[0]['dir'];
-        $searchValue        = $searchArray['value'];
+        // $columnSortOrder    = $orderArray[0]['dir'];// Define a ordem dos registros: Crescente ou decrescente
+        // $searchValue        = $searchArray['value'];
+        // // //------------------Origem dos dados-------------------------------------------------
+        // $questions          = $pergunta;// Atribui as informações do objeto na variável
+        // $total              = $questions->count();// Busca o total de registros da tabela
+        // // //------------------Filtra e Busca as informações no banco de dados------------------
+        // // $totalFilter = $total;
 
-        $questions          = DB::table('questions');
-        $total              = $questions->count();
+        // $arrData            = $pergunta;
+        // $arrData            = $arrData->get();
 
-        $totalFilter        = DB::table('questions');
-        //------------------Busca informações no dataTables----------------------------------
-        if  (!empty($searchValue)) {
-            $totalFilter    = $totalFilter->where('pergunta','like','%'.$searchValue.'%');
-            // $totalFilter    = $totalFilter->orWhere('usuario','like','%'.$searchValue.'%');
-        }
+        // // $arrData            = $arrData->skip($start)->take($rowPerPage);
+        // // $arrData            = $arrData->orderBy($columnName, $columnSortOrder);
+        // // $totalFilter        = Question::all();// Atribui as informações da tabela na variável
+        // // if (!empty($searchValue)) {
+        // //     $totalFilter    = $totalFilter->where('pergunta','like','%'.$searchValue.'%');
+        // //     $totalFilter    = $totalFilter->orWhere('usuario','like','%'.$searchValue.'%');
+        // // }
 
-        $totalFilter        = $questions->count();
+        // // $totalFilter        = $questions->count();
 
-        $arrData            = DB::table('questions');
-        $arrData            = $arrData->skip($start)->take($rowPerPage);
-        $arrData            = $arrData->orderBy($columnName, $columnSortOrder);
+        // // $arrData            = Question::all();
+        // // $arrData            = $arrData->skip($start)->take($rowPerPage);
+        // // $arrData            = $arrData->orderBy($columnName, $columnSortOrder);
 
-        if  (!empty($searchValue)) {
-            $arrData        = $arrData->where('pergunta','like','%'.$searchValue.'%');
-            // $arrData        = $arrData->orWhere('usuario','like','%'.$searchValue.'%');
-        }
+        // // if (!empty($searchValue)) {
+        // //     $arrData        = $arrData->where('pergunta','like','%'.$searchValue.'%');
+        // //     $arrData        = $arrData->orWhere('usuario','like','%'.$searchValue.'%');
+        // // }
 
-        $arrData            = $arrData->get();
-        //-------------------------Retorna informações pro dataTable----------------------
-        $response = array(
-            "draw"              => intval($draw),
-            "recordsTotal"      => $total,
-            "recordsFiltered"   => $totalFilter,
-            "data"              => $arrData,
-        );
+        // // //-------------------------Retorna informações pro dataTable----------------------
+        // $response = array(
+        //     "draw"              => intval($draw),
+        //     "recordsTotal"      => $total,
+        //     "recordsFiltered"   => $totalFilter,
+        //     "data"              => $arrData,
+        // );
 
-        return response()->json($response);
+        // return response()->json($response);
     }
     //-----------------------------Cadastrar--------------------------------
     /**
@@ -96,14 +111,14 @@ class QuestionController extends Controller
     {
         $nova_pergunta = new Question();
 
-        $nova_pergunta->pergunta         = request('pergunta');
-        $nova_pergunta->respObrigatoria  = request('respObrigatoria');
-        $nova_pergunta->tipoResposta     = request('tipoResposta');
-        $nova_pergunta->usuario          = request('usuario');
+        $nova_pergunta->pergunta = request('pergunta');
+        $nova_pergunta->respObrigatoria = request('respObrigatoria');
+        $nova_pergunta->tipoResposta = request('tipoResposta');
+        $nova_pergunta->usuario = request('usuario');
 
         $nova_pergunta->save();
         return redirect()->route('perguntas.index')
-        ->with('mensagem', 'Pergunta cadastrada com sucesso!');
+            ->with('mensagem', 'Pergunta cadastrada com sucesso!');
     }
     /**
      * Display the specified resource.
@@ -122,7 +137,7 @@ class QuestionController extends Controller
          **/
         $usuario = User::find($pergunta->usuario);
         $pergunta->usuario = $usuario->name;
-        return view('perguntas.listPerg', [ 'pergunta' => $pergunta ]);
+        return view('perguntas.listPerg', ['pergunta' => $pergunta]);
     }
     /**
      * Show the form for editing the specified resource.

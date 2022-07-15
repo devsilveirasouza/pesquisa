@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 class UserRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
+     * Determina se o usuário está autorizado a fazer a solicitação.
      *
      * @return bool
      */
@@ -18,7 +18,7 @@ class UserRequest extends FormRequest
     }
 
     /**
-     * Prepare the password for validation.
+     * Prepara o password para validação.
      *
      * @return void
      */
@@ -26,13 +26,13 @@ class UserRequest extends FormRequest
     {
         if ($this->password) {
             $this->merge([
-                'password' => Hash::make($this->password),
+                'password'  => Hash::make($this->password),
             ]);
         }
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * Busca as regras de validação e aplica na solicitação.
      *
      * @return array
      */
@@ -40,9 +40,9 @@ class UserRequest extends FormRequest
     {
         return [
             //
-            'name' => ['required', 'string'],
-            'email' => ['required', 'string', 'email'],
-            'password' => ['required', 'string'],
+            'name'          => ['required', 'string'],
+            'email'         => ['required', 'string', 'email'],
+            'password'      => ['required', 'string'],
         ];
     }
 }

@@ -9,6 +9,7 @@
 @stop
 
 @section('content')
+    <img src="/img/wallpaper.jpg" alt="">
     <p>Nosso objetivo é melhorar cada vez mais nosso atendimento proporcinando uma experiência única aos nossos clientes!</p>
 @stop
 

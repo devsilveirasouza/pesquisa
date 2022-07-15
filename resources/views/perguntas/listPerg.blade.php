@@ -50,17 +50,25 @@
                 </table>
                 <div class="col-md-12">
                     <div class="h-100 p-5 bg-light border rounded-3">
-                      <h2>{{ $pergunta->pergunta }}</h2>
-                      <label for="">Resposta obrigatória:</label><p>{{ $pergunta->respObrigatoria }}.</p>
-                      <label for="">Tipo de Resposta:</label><p>{{ $pergunta->tipoResposta }}.</p>
-                      <label for="">Usuário de Cadastro:</label><p>{{ $pergunta->usuario }}.</p>
-                      <label for="">Data de Cadastro:</label><p>{{ date('d/m/Y', strtotime($pergunta->created_at)) }}.</p>
-                      <button-group>
-                        <button class="btn btn-outline-secondary" type="button">Exemplo de botão</button>
-                      </button-group>
+                        <label for="">Descrição da pergunta:</label>
+                        <p>{{ $pergunta->pergunta }}</p>
+                        <label for="">Resposta obrigatória:</label>
+                        <p>{{ $pergunta->respObrigatoria }}.</p>
+                        <label for="">Tipo de Resposta:</label>
+                        <p>{{ $pergunta->tipoResposta }}.</p>
+                        <label for="">Usuário de Cadastro:</label>
+                        <p>{{ $pergunta->usuario }}.</p>
+                        <label for="">Data de Cadastro:</label>
+                        <p>{{ date('d/m/Y', strtotime($pergunta->created_at)) }}.</p>
+                        <label for="">Ações:</label><br>
+                        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                            <button type="button" class="btn btn-success mr-1"><i class="fas fa-list"></i></button>
+                            <button type="button" class="btn btn-warning mr-1"><i class="fas fa-edit"></i></button>
+                            <button type="button" class="btn btn-danger mr-1"><i class="fas fa-trash"></i></button>
+                        </div>
 
                     </div>
-                  </div>
+                </div>
             </div>
         </div>
     </div>
