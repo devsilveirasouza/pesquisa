@@ -67,3 +67,12 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 ## Ubuntu Configuration - 01/07/2022 - Wellington Silveira de Souza.
 ## Altered branch name. 
+
+## Configuração de Ambiente 
+
+Apache 2.4.51
+MySql 5.7.36
+PHP 7.4.26
+Composer 2.3.9
+Node v16.15.1
+Laravel 8
