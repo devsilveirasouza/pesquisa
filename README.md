@@ -66,7 +66,8 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
 ## Ubuntu Configuration - 01/07/2022 - Wellington Silveira de Souza.
-## Altered branch name. 
+
+Altered branch name for main. 
 
 ## Configuração de Ambiente 
 
@@ -77,4 +78,4 @@ Composer 2.3.9
 Node v16.15.1
 Laravel 8
 
-Server Local OK
+Server local: Laragon
