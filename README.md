@@ -76,3 +76,5 @@ PHP 7.4.26
 Composer 2.3.9
 Node v16.15.1
 Laravel 8
+
+Server Local OK
