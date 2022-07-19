@@ -14,7 +14,6 @@
 @stop
 
 @section('content')
-
     <div class="row">
         <div class="col-12">
             <div class="card-body table-responsive p-0">
@@ -44,7 +43,6 @@
                                 <a href="#" class="btn btn-danger btn-sm ml-2 mt-2"><i class="fas fa-trash"></i></a>
                             </td>
                             </td>
-
                         </tr>
                     </tbody>
                 </table>
@@ -66,18 +64,15 @@
                             <button type="button" class="btn btn-warning mr-1"><i class="fas fa-edit"></i></button>
                             <button type="button" class="btn btn-danger mr-1"><i class="fas fa-trash"></i></button>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
+    <link rel="stylesheet" href="/css/app.css">
 @stop
 
 @section('js')

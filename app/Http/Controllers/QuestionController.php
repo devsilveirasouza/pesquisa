@@ -114,7 +114,7 @@ class QuestionController extends Controller
         $nova_pergunta->pergunta = request('pergunta');
         $nova_pergunta->respObrigatoria = request('respObrigatoria');
         $nova_pergunta->tipoResposta = request('tipoResposta');
-        $nova_pergunta->usuario = request('usuario');
+        $nova_pergunta->user_id = request('usuario');
 
         $nova_pergunta->save();
         return redirect()->route('perguntas.index')

@@ -48,7 +48,7 @@ $config = [
 @stop
 
 @section('content')
-    <x-adminlte-datatable id="consulta" :heads="$heads" :config="$config" striped hoverable bordered compressed with-buttons/>
+    <x-adminlte-datatable id="consulta" :heads="$heads" :config="$config" striped hoverable bordered compressed />
 @stop
 
 @section('css')

@@ -8,7 +8,37 @@
     }
 </style>
 {{-- Configuração do datatables --}}
+{{-- Setup data for datatables --}}
 @php
+$heads = [
+    'ID',
+    'Name',
+    ['label' => 'Phone', 'width' => 40],
+    ['label' => 'Actions', 'no-export' => true, 'width' => 5],
+];
+
+$btnEdit = '<button class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
+                <i class="fa fa-lg fa-fw fa-pen"></i>
+            </button>';
+$btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow" title="Delete">
+                  <i class="fa fa-lg fa-fw fa-trash"></i>
+              </button>';
+$btnDetails = '<button class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
+                   <i class="fa fa-lg fa-fw fa-eye"></i>
+               </button>';
+
+$config = [
+    'language' => [ 'url' => 'datatables_translates/pt-BR.json', ], // Tradução
+    'data' => [
+        [$user->'id', 'John Bender', '+02 (123) 123456789', '<nobr>'.$btnEdit.$btnDelete.$btnDetails.'</nobr>'],
+        [19, 'Sophia Clemens', '+99 (987) 987654321', '<nobr>'.$btnEdit.$btnDelete.$btnDetails.'</nobr>'],
+        [3, 'Peter Sousa', '+69 (555) 12367345243', '<nobr>'.$btnEdit.$btnDelete.$btnDetails.'</nobr>'],
+    ],
+    'order' => [[1, 'asc']],
+    'columns' => [null, null, null, ['orderable' => false]],
+];
+@endphp
+{{-- @php
 // Definindo cabeçalho do datatables
 $heads = [
     'ID',
@@ -36,7 +66,7 @@ $config = [
         //['data' => 'buttons', 'orderable' => false, 'no-export' => true, 'width' => 5],
     ],
 ];
-@endphp
+@endphp --}}
 
 @section('title', 'Users List')
 
@@ -48,7 +78,7 @@ $config = [
 @stop
 
 @section('content')
-    <x-adminlte-datatable id="consulta" :heads="$heads" :config="$config" striped hoverable bordered compressed with-buttons/>
+    <x-adminlte-datatable id="consulta" :heads="$heads" :config="$config" striped hoverable bordered compressed />
 @stop
 
 @section('css')
