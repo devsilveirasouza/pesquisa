@@ -40,12 +40,11 @@
                             <td>{{ $pergunta->pergunta }}</td>
                             <td>{{ $pergunta->respObrigatoria }}</td>
                             <td>{{ $pergunta->tipoResposta }}</td>
-                            <td>{{ $pergunta->usuario }}</td>
-                            <td> <a href="{{ route('pergunta.listar', [ $pergunta -> id ]) }}">Visualizar</a>
-                                <form action="" method="post">
-                                    <input type="hidden" name="user" value="">
-                                    <input type="submit" value="Remover">
-                                </form>
+                            <td>{{ $pergunta->user_id }}</td>
+                            <td>
+                                <a href="{{ route('pergunta.listar', [ $pergunta -> id ]) }}" class="btn btn-primary btn-sm ml-2 mt-2"><i class="fas fa-list"></i></a>
+                                <a href=" " class="btn btn-warning btn-sm ml-2 mt-2"><i class="fas fa-edit"></i></a>
+                                <a href="{{ route('pergunta.delete', [ $pergunta -> id ]) }}" class="btn btn-danger btn-sm ml-2 mt-2"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                     @endforeach

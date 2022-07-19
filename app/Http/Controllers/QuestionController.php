@@ -17,9 +17,9 @@ class QuestionController extends Controller
     //---------------------------------------------
     public function index()
     {
-        // $perguntas = Question::all();
+        $perguntas = Question::all();
         // return $perguntas;
-        $perguntas = Question::latest()->paginate();
+        // $perguntas = Question::latest()->paginate();
         return view('perguntas.listarPerguntas')
             ->with(['perguntas' => $perguntas]);
     }
@@ -135,7 +135,7 @@ class QuestionController extends Controller
          * -- Consulta o id de usuario informado na pergunta e
          * busca o usuario e retorna o name da tabela Users
          **/
-        $usuario = User::find($pergunta->usuario);
+        $usuario = User::find($pergunta->user_id);
         $pergunta->usuario = $usuario->name;
         return view('perguntas.listPerg', ['pergunta' => $pergunta]);
     }
@@ -166,8 +166,10 @@ class QuestionController extends Controller
      * @param  \App\Models\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Question $question)
+    public function excluir(Question $question)
     {
-        //
+        // dd($question);
+        $question->delete();
+        return back()->with('mensagem', 'Pergunta excluída com sucesso!');
     }
 }

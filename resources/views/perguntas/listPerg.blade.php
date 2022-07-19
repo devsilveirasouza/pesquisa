@@ -38,7 +38,7 @@
                             <td>{{ $pergunta->usuario }}</td>
                             <td>{{ date('d/m/Y', strtotime($pergunta->created_at)) }}</td>
                             <td>
-                                <a href="  " class="btn btn-primary btn-sm ml-2 mt-2"><i class="fas fa-list"></i></a>
+                                <a href=" {{ route('perguntas.index') }} " class="btn btn-primary btn-sm ml-2 mt-2"><i class="fas fa-list"></i></a>
                                 <a href="  " class="btn btn-warning btn-sm ml-2 mt-2"><i class="fas fa-edit"></i></a>
                                 <a href="#" class="btn btn-danger btn-sm ml-2 mt-2"><i class="fas fa-trash"></i></a>
                             </td>
