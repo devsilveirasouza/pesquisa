@@ -38,8 +38,10 @@
                             <td>{{ $pergunta->usuario }}</td>
                             <td>{{ date('d/m/Y', strtotime($pergunta->created_at)) }}</td>
                             <td>
-                                <a href=" {{ route('perguntas.index') }} " class="btn btn-primary btn-sm ml-2 mt-2"><i class="fas fa-list"></i></a>
-                                <a href="  " class="btn btn-warning btn-sm ml-2 mt-2"><i class="fas fa-edit"></i></a>
+                                <a href=" {{ route('perguntas.index') }} " class="btn btn-primary btn-sm ml-2 mt-2"><i
+                                        class="fas fa-list"></i></a>
+                                <a href=" {{ route('pergunta.edit', [$pergunta->id]) }}"
+                                    class="btn btn-warning btn-sm ml-2 mt-2"><i class="fas fa-edit"></i></a>
                                 <a href="#" class="btn btn-danger btn-sm ml-2 mt-2"><i class="fas fa-trash"></i></a>
                             </td>
                             </td>
@@ -60,9 +62,11 @@
                         <p>{{ date('d/m/Y', strtotime($pergunta->created_at)) }}.</p>
                         <label for="">Ações:</label><br>
                         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                            <button type="button" class="btn btn-success mr-1"><i class="fas fa-list"></i></button>
-                            <button type="button" class="btn btn-warning mr-1"><i class="fas fa-edit"></i></button>
-                            <button type="button" class="btn btn-danger mr-1"><i class="fas fa-trash"></i></button>
+                            <a href=" {{ route('perguntas.index') }} " class="btn btn-primary btn-sm ml-2 mt-2"><i
+                                    class="fas fa-list"></i></a>
+                            <a href=" {{ route('pergunta.edit', [$pergunta->id]) }}"
+                                class="btn btn-warning btn-sm ml-2 mt-2"><i class="fas fa-edit"></i></a>
+                            <a href="{{ route('pergunta.delete', [$pergunta->id]) }}" class="btn btn-danger btn-sm ml-2 mt-2"><i class="fas fa-trash"></i></a>
                         </div>
                     </div>
                 </div>
@@ -72,28 +76,28 @@
 @stop
 
 @section('css')
-        <!-- Bootstrap CSS -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    @stop
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+@stop
 
-    @section('js')
-        <!-- Optional JavaScript; choose one of the two! -->
+@section('js')
+    <!-- Optional JavaScript; choose one of the two! -->
 
-        <!-- Option 1: Bootstrap Bundle with Popper -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-        </script>
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
 
-        <!-- Option 2: Separate Popper and Bootstrap JS -->
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
-            integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous">
-        </script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
-            integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous">
-        </script>
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous">
+    </script>
 
-        <script>
-            console.log('Hi!');
-        </script>
-    @stop
+    <script>
+        console.log('Hi!');
+    </script>
+@stop

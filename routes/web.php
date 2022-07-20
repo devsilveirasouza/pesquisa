@@ -21,7 +21,9 @@ Route::get('/perguntas-listagem',        [QuestionController::class, 'listagem']
 Route::get('/perguntas-ajax',            [QuestionController::class, 'buscaDados'])->middleware('auth')->name('perguntas.listAjax');
 Route::get('/pergunta/novo',             [QuestionController::class, 'create'])->middleware('auth')->name('pergunta.criar');
 Route::post('/pergunta/store',           [QuestionController::class, 'cadastrarPergunta'])->middleware('auth')->name('pergunta.cadastrar');
+Route::get('/pergunta/{pergunta}/edit',  [QuestionController::class, 'edit'])->middleware('auth')->name('pergunta.edit');
+Route::put('/pergunta/{pergunta}/atualizar', [QuestionController::class, 'update'])->name('pergunta.update');
 Route::get('/pergunta/{pergunta}',       [QuestionController::class, 'show'])->middleware('auth')->middleware('auth')->name('pergunta.listar');
-Route::get('/pergunta/{question}/excluir',[QuestionController::class, 'excluir'])->name('pergunta.delete');
+Route::get('/pergunta/{question}/excluir',[QuestionController::class, 'excluir'])->middleware('auth')->name('pergunta.delete');
 
 require __DIR__ . '/auth.php';

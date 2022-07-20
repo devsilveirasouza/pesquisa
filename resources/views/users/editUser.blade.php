@@ -5,7 +5,7 @@
 @section('content_header')
 
     <div class="card-header">
-        <h1 class="card-title center">Painel Administrativo</h1>
+        <h1 class="card-title center">Atualização de Usuário</h1>
     </div>
 
 @stop
@@ -17,7 +17,7 @@
 
     <div class="card card-info">
         <div class="card-header">
-            <h3 class="card-title">Editar de Usuário</h3>
+            <h3 class="card-title">Atualizar cadastro de usuário</h3>
         </div>
         {{-- Formulário de cadastro --}}
         <form class="form-horizontal" action="{{ route('user.update', [$user -> id]) }}" method="post">
@@ -56,8 +56,8 @@
             </div>
 
             <div class="card-footer">
-                <button type="submit" class="btn btn-warning btn-md ml-2 mt-2">Atualizar</button>
-                <a href=" {{ route('users.listAll') }} " class="btn btn-primary btn-md col-sm-1 ml-2 mt-2"><i class="fas fa-list"></i></a>
+                <button type="submit" class="btn btn-danger btn-md ml-2 mt-2">Atualizar</button>
+                <a href=" {{ route('user.list') }} " class="btn btn-primary btn-md col-sm-1 ml-2 mt-2"><i class="fas fa-list"></i></a>
             </div>
         </form>
     </div>
@@ -65,7 +65,10 @@
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
+    {{-- <link rel="stylesheet" href="/css/app.css"> --}}
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 @stop
 
 @section('js')

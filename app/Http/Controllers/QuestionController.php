@@ -145,9 +145,9 @@ class QuestionController extends Controller
      * @param  \App\Models\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function edit(Question $question)
+    public function edit(Question $pergunta)
     {
-        //
+        return view('perguntas.editPerg', ['pergunta' => $pergunta]);
     }
     /**
      * Update the specified resource in storage.
@@ -158,7 +158,8 @@ class QuestionController extends Controller
      */
     public function update(Request $request, Question $question)
     {
-        //
+        $question = $request->all();
+        dd($question);
     }
     /**
      * Remove the specified resource from storage.
