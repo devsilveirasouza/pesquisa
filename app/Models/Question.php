@@ -16,8 +16,7 @@ class Question extends Model
 
     protected $fillable     =   [
 
-        'respObrigatoria',
-        'tipoResposta'
+        'pergunta','respObrigatoria','tipoResposta'
     ];
 
     // protected $dates        = [ 'deleted_at' ];

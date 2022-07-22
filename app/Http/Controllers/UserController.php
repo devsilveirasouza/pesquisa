@@ -16,8 +16,9 @@ class UserController extends Controller
 
     public function buscaDados(Request $request)
     {
-        //print_r($request->all());
+        // print_r($request->all());
         $draw               = $request->get('draw');// Iniciando tabela a ser mostrada
+        // dd($draw);
         $start              = $request->get("start");// Inicialização dos registros
         $rowPerPage         = $request->get("length");// Quantidade de registros por paginas
 
@@ -127,7 +128,7 @@ class UserController extends Controller
         // $user -> $request;
         // dd($user);
         $user->update($request->all());
-        return redirect()->route('users.listAll')->with('mensagem', 'Alteração realizada com sucesso!');
+        return redirect()->route('user.list')->with('mensagem', 'Alteração realizada com sucesso!');
     }
     // Exclui registro
     public function excluir(User $user)

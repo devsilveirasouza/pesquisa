@@ -2,102 +2,79 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Question;
 use App\Models\User;
-use Illuminate\Http\Request;
 
 class QuestionController extends Controller
-{
-    protected $pergunta;
-
-    public function __construct(Question $pergunta)
-    {
-        $this->Pergunta = $pergunta;
+{    public function index()    {
+        return view('perguntas.index');
     }
-    //---------------------------------------------
-    public function index()
-    {
-        $perguntas = Question::all();
-        // return $perguntas;
-        // $perguntas = Question::latest()->paginate();
-        return view('perguntas.listarPerguntas')
-            ->with(['perguntas' => $perguntas]);
+    public function getQuestion(Request $request)    {
+        ## Leitura dos valores
+        $draw = $request->get('draw');
+        $start = $request->get('start');
+        $rowperpage = $request->get('length'); // Exibição de linhas por págima
+
+        $columnIndex_arr = $request->get('order');
+        $columnName_arr = $request->get('columns');
+        $order_arr = $request->get('order');
+        $search_arr = $request->get('search');
+
+        $columnIndex = $columnIndex_arr[0]['column']; // Indice da coluna
+        $columnName = $columnName_arr[$columnIndex]['data']; // Nome da coluna
+        $columnSortOrder = $order_arr[0]['dir']; // Definir ordenação das informações asc ou desc
+        $searchValue = $search_arr['value']; // Valor da pesquisa
+
+        // Total de registro
+        $totalRecords = Question::select('count(*) as allcount')->count();
+
+        $totalRecordswithFilter = Question::select('count(*) as allcount')
+            ->where('pergunta', 'like', '%' . $searchValue . '%')
+            ->count();
+        // Buscar registros
+        $records = Question::orderBy($columnName, $columnSortOrder)
+            ->where('questions.pergunta', 'like', '%' . $searchValue . '%')
+            ->select('questions.*')
+            ->skip($start)
+            ->take($rowperpage)
+            ->get();
+
+        $data_arr = array();
+
+        foreach ($records as $record) {
+            $id = $record->id;
+            $pergunta = $record->pergunta;
+            $respObrigatoria = $record->respObrigatoria;
+            $tipoResposta = $record->tipoResposta;
+            $usuario = $record->user_id;
+            $created_at = $record->created_at;
+            $buttons = '<a href="#" class="btn btn-warning btn-sm ml-2 mt-2">
+                        <i class="fas fa-edit"></i></a>
+                        <a href="#" class="btn btn-danger btn-sm ml-2 mt-2">
+                        <i class="fas fa-trash"></i></a>';
+            $data_arr[] = array(
+                "id" => $id,
+                "pergunta" => $pergunta,
+                "respObrigatoria" => $respObrigatoria,
+                "tipoResposta" => $tipoResposta,
+                "usuario" => $usuario,
+                "created_at" => $created_at,
+                "buttons" => $buttons
+            );
+        }
+
+        $response = array(
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordswithFilter,
+            "aaData" => $data_arr
+        );
+
+        echo json_encode($response);
+        exit;
     }
-    //--------------Processamento ajax------------------------------------------------
-    public function listagem()
-    {
-        return view('perguntas.listPergAjax');
-    }
-    //--------------Buscando informações e montando o datatables----------------------
-    public function buscaDados(Question $question)
-    {
-        $perg1 = Question::all();
 
-        $perg2 = Question::find(2);
-
-        $item = "você";
-        $busca = [];
-        $question = Question::where('pergunta', 'like', '%'.$item.'%')->get();
-        $busca['pergunta'] = $question;
-
-        $q1 = Question::where('pergunta', 'Você encontrou tudo o que estava procurando?')->get();
-
-        $q2 = Question::where('pergunta', 'Você recomendaria nossa loja?')->first();
-
-        dump($perg1, $perg2, $busca, $q1, $q2);
-        //--------------------------Estrutura de busca---------------------------------
-        // $draw               = $pergunta->get('draw'); // Iniciando tabela a ser mostrada
-        // $start              = $pergunta->get("start"); // Inicialização dos registros nas páginas
-        // $rowPerPage         = $pergunta->get("length"); // Quantidade de registros por páginas
-
-        // $orderArray         = $pergunta->get('order'); // Array da coluna de ordenação
-        // $columnNameArray    = $pergunta->get('columns'); // Array da coluna pergunta
-
-        // $searchArray        = $pergunta->get('search'); // Array de busca
-        // $columnIndex        = $orderArray[0]['column']; // Array de index
-
-        // $columnName         = $columnNameArray[$columnIndex]['data']; // Armazena o Array dos nomes de acordo com os indexs
-
-        // $columnSortOrder    = $orderArray[0]['dir'];// Define a ordem dos registros: Crescente ou decrescente
-        // $searchValue        = $searchArray['value'];
-        // // //------------------Origem dos dados-------------------------------------------------
-        // $questions          = $pergunta;// Atribui as informações do objeto na variável
-        // $total              = $questions->count();// Busca o total de registros da tabela
-        // // //------------------Filtra e Busca as informações no banco de dados------------------
-        // // $totalFilter = $total;
-
-        // $arrData            = $pergunta;
-        // $arrData            = $arrData->get();
-
-        // // $arrData            = $arrData->skip($start)->take($rowPerPage);
-        // // $arrData            = $arrData->orderBy($columnName, $columnSortOrder);
-        // // $totalFilter        = Question::all();// Atribui as informações da tabela na variável
-        // // if (!empty($searchValue)) {
-        // //     $totalFilter    = $totalFilter->where('pergunta','like','%'.$searchValue.'%');
-        // //     $totalFilter    = $totalFilter->orWhere('usuario','like','%'.$searchValue.'%');
-        // // }
-
-        // // $totalFilter        = $questions->count();
-
-        // // $arrData            = Question::all();
-        // // $arrData            = $arrData->skip($start)->take($rowPerPage);
-        // // $arrData            = $arrData->orderBy($columnName, $columnSortOrder);
-
-        // // if (!empty($searchValue)) {
-        // //     $arrData        = $arrData->where('pergunta','like','%'.$searchValue.'%');
-        // //     $arrData        = $arrData->orWhere('usuario','like','%'.$searchValue.'%');
-        // // }
-
-        // // //-------------------------Retorna informações pro dataTable----------------------
-        // $response = array(
-        //     "draw"              => intval($draw),
-        //     "recordsTotal"      => $total,
-        //     "recordsFiltered"   => $totalFilter,
-        //     "data"              => $arrData,
-        // );
-
-        // return response()->json($response);
-    }
     //-----------------------------Cadastrar--------------------------------
     /**
      * Chama a view de cadastro de perguntas
@@ -156,10 +133,13 @@ class QuestionController extends Controller
      * @param  \App\Models\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Question $question)
+    public function update(Request $request, Question $pergunta)
     {
-        $question = $request->all();
-        dd($question);
+        // $pergunta->$request;
+        // dd($pergunta);
+        $pergunta->update($request->all());
+        return redirect()->route('perguntas.index')
+            ->with('mensagem', 'Atualização realizada com sucesso!');
     }
     /**
      * Remove the specified resource from storage.
