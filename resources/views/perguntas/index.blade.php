@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 <!-- Ajustando o dataTable com CSS -->
 <style type="text/css">
-    table.consulta {
+    table.pergunta {
         margin-bottom: 0px !important;
         margin-top: 0px !important;
         border-collapse: collapse !important;

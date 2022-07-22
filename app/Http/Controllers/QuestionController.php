@@ -12,28 +12,27 @@ class QuestionController extends Controller
     }
     public function getQuestion(Request $request)    {
         ## Leitura dos valores
-        $draw = $request->get('draw');
-        $start = $request->get('start');
-        $rowperpage = $request->get('length'); // Exibição de linhas por págima
+        $draw                       = $request->get('draw');
+        $start                      = $request->get('start');
+        $rowperpage                 = $request->get('length'); // Exibição de linhas por págima
 
-        $columnIndex_arr = $request->get('order');
-        $columnName_arr = $request->get('columns');
-        $order_arr = $request->get('order');
-        $search_arr = $request->get('search');
+        $columnIndex_arr            = $request->get('order');
+        $columnName_arr             = $request->get('columns');
+        $order_arr                  = $request->get('order');
+        $search_arr                 = $request->get('search');
 
-        $columnIndex = $columnIndex_arr[0]['column']; // Indice da coluna
-        $columnName = $columnName_arr[$columnIndex]['data']; // Nome da coluna
-        $columnSortOrder = $order_arr[0]['dir']; // Definir ordenação das informações asc ou desc
-        $searchValue = $search_arr['value']; // Valor da pesquisa
-
+        $columnIndex                = $columnIndex_arr[0]['column']; // Indice da coluna
+        $columnName                 = $columnName_arr[$columnIndex]['data']; // Nome da coluna
+        $columnSortOrder            = $order_arr[0]['dir']; // Definir ordenação das informações asc ou desc
+        $searchValue                = $search_arr['value']; // Valor da pesquisa
         // Total de registro
-        $totalRecords = Question::select('count(*) as allcount')->count();
+        $totalRecords               = Question::select('count(*) as allcount')->count();
 
-        $totalRecordswithFilter = Question::select('count(*) as allcount')
+        $totalRecordswithFilter     = Question::select('count(*) as allcount')
             ->where('pergunta', 'like', '%' . $searchValue . '%')
             ->count();
         // Buscar registros
-        $records = Question::orderBy($columnName, $columnSortOrder)
+        $records                    = Question::orderBy($columnName, $columnSortOrder)
             ->where('questions.pergunta', 'like', '%' . $searchValue . '%')
             ->select('questions.*')
             ->skip($start)
@@ -43,34 +42,32 @@ class QuestionController extends Controller
         $data_arr = array();
 
         foreach ($records as $record) {
-            $id = $record->id;
-            $pergunta = $record->pergunta;
-            $respObrigatoria = $record->respObrigatoria;
-            $tipoResposta = $record->tipoResposta;
-            $usuario = $record->user_id;
-            $created_at = $record->created_at;
-            $buttons = '<a href="#" class="btn btn-warning btn-sm ml-2 mt-2">
-                        <i class="fas fa-edit"></i></a>
-                        <a href="#" class="btn btn-danger btn-sm ml-2 mt-2">
-                        <i class="fas fa-trash"></i></a>';
+            $id                     = $record->id;
+            $pergunta               = $record->pergunta;
+            $respObrigatoria        = $record->respObrigatoria;
+            $tipoResposta           = $record->tipoResposta;
+            $usuario                = $record->user_id;
+            $created_at             = \Carbon\Carbon::parse($record->created_at)->format('d/m/Y');
+            $buttons                = '<a href="#" class="btn btn-warning btn-sm ml-2 mt-2">
+                                        <i class="fas fa-edit"></i></a>
+                                        <a href="#" class="btn btn-danger btn-sm ml-2 mt-2">
+                                        <i class="fas fa-trash"></i></a>';
             $data_arr[] = array(
-                "id" => $id,
-                "pergunta" => $pergunta,
-                "respObrigatoria" => $respObrigatoria,
-                "tipoResposta" => $tipoResposta,
-                "usuario" => $usuario,
-                "created_at" => $created_at,
-                "buttons" => $buttons
+                "id"                => $id,
+                "pergunta"          => $pergunta,
+                "respObrigatoria"   => $respObrigatoria,
+                "tipoResposta"      => $tipoResposta,
+                "usuario"           => $usuario,
+                "created_at"        => $created_at,
+                "buttons"           => $buttons
             );
         }
-
         $response = array(
-            "draw" => intval($draw),
-            "iTotalRecords" => $totalRecords,
-            "iTotalDisplayRecords" => $totalRecordswithFilter,
-            "aaData" => $data_arr
+            "draw"                  => intval($draw),
+            "iTotalRecords"         => $totalRecords,
+            "iTotalDisplayRecords"  => $totalRecordswithFilter,
+            "aaData"                => $data_arr
         );
-
         echo json_encode($response);
         exit;
     }
