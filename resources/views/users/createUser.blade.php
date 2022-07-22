@@ -5,7 +5,7 @@
 @section('content_header')
 
     <div class="card-header">
-        <h1 class="card-title center">Cadastro de Usuário</h1>
+        <h1 class="card-title center">Painel de cadastro</h1>
     </div>
 
 @stop
@@ -18,7 +18,7 @@
 
     <div class="card card-info">
         <div class="card-header">
-            <h3 class="card-title">Painel de cadastro</h3>
+            <h3 class="card-title">Cadastro de Usuário</h3>
         </div>
         {{-- Formulário de cadastro --}}
         <form class="form-horizontal" action="{{ route('user.store') }}" method="post">
@@ -54,22 +54,25 @@
                     </div>
                 </div>
             </div>
-
             <div class="card-footer">
                 <button type="submit" class="btn btn-info">Save</button>
                 <button type="reset" class="btn btn-danger float-right">Limpar</button>
             </div>
         </form>
+        {{-- Formulário de cadastro --}}
     </div>
 
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="/css/app.css">
+    {{-- <link rel="stylesheet" href="/css/app.css"> --}}
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 @stop
 
 @section('js')
     <script>
-        console.log('{{ $user = $user->id; }}');
+        console.log('Olá!');
     </script>
 @stop

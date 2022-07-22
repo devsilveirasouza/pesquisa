@@ -33,7 +33,7 @@ $config = [
     'ajax' => $url,
     'sDom' => 'blfrtip', // Configuração: 'DOM' de exibição do datatable
     'columns' => [
-        ['data' => 'id', 'visible' => false],
+        ['data' => 'id', 'visible' => true],
         ['data' => 'pergunta'],
         ['data' => 'respObrigatoria'],
         ['data' => 'tipoResposta'],

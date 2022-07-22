@@ -38,9 +38,16 @@ class QuestionController extends Controller
             ->skip($start)
             ->take($rowperpage)
             ->get();
+        // Criação dos botões
+            $btnDetails = '<button class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
+                <i class="fa fa-lg fa-fw fa-eye"></i></button>';
+            $btnEdit = '<button class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
+                <i class="fa fa-lg fa-fw fa-pen"></i></button>';
+            $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow" title="Delete">
+                <i class="fa fa-lg fa-fw fa-trash"></i></button>';
 
         $data_arr = array();
-
+        // Atribuindo as informações
         foreach ($records as $record) {
             $id                     = $record->id;
             $pergunta               = $record->pergunta;
@@ -48,10 +55,8 @@ class QuestionController extends Controller
             $tipoResposta           = $record->tipoResposta;
             $usuario                = $record->user_id;
             $created_at             = \Carbon\Carbon::parse($record->created_at)->format('d/m/Y');
-            $buttons                = '<a href="#" class="btn btn-warning btn-sm ml-2 mt-2">
-                                        <i class="fas fa-edit"></i></a>
-                                        <a href="#" class="btn btn-danger btn-sm ml-2 mt-2">
-                                        <i class="fas fa-trash"></i></a>';
+            $buttons                = ['<nobr>'.$btnDetails.$btnEdit.$btnDelete.'</nobr>'];
+
             $data_arr[] = array(
                 "id"                => $id,
                 "pergunta"          => $pergunta,
@@ -71,7 +76,6 @@ class QuestionController extends Controller
         echo json_encode($response);
         exit;
     }
-
     //-----------------------------Cadastrar--------------------------------
     /**
      * Chama a view de cadastro de perguntas

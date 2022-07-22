@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'Question',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -265,7 +265,12 @@ return [
             'icon' => 'fas fa-fw fa-user',
         ],
         [
-            'text'    => 'Cadastro',
+            'text' => 'Perguntas',
+            'url'  => 'perguntas',
+            'icon' => 'fas fa-fw fa-list',
+        ],
+        [
+            'text'    => 'Cadastros',
             'icon'    => 'fas fa-fw fa-save',
             'submenu' => [
                 [
@@ -274,14 +279,14 @@ return [
                     'icon' => 'fas fa-fw fa-user',
                 ],
                 [
-                    'text' => 'Register',
-                    'url'  => '/register',
-                    'icon' => 'fas fa-fw fa-save',
-                ],
-                [
                     'text' => 'Cadastrar de Pergunta',
                     'url'  => '/pergunta/novo',
                     'icon' => 'fas fa-fw fa-question',
+                ],
+                [
+                    'text' => 'Register',
+                    'url'  => '/register',
+                    'icon' => 'fas fa-fw fa-save',
                 ],
                 [
                     'text'    => 'level_one',

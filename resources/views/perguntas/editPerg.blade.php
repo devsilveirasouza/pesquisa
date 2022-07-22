@@ -49,7 +49,7 @@
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="inputText3" name="name" placeholder="Name"
                             value="{{ $pergunta->tipoResposta }}" required>
-                        @if ($errors->has('tipoResposta'))
+                        @if ($errors->has('name'))
                         <h6> Favor preencher este campo! </h6>
                         @endif
                     </div>
