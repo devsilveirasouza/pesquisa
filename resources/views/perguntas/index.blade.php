@@ -37,24 +37,25 @@ $config = [
         ['data' => 'pergunta'],
         ['data' => 'respObrigatoria'],
         ['data' => 'tipoResposta'],
-        ['data' => 'usuario'],
+        ['data' => 'usuario', 'orderable' => false],
         ['data' => 'created_at', 'visible' => true],
         ['data' => 'buttons', 'orderable' => false, 'no-export' => true, 'width' => 5],
     ],
 ];
 @endphp
 
-@section('title', 'Users List')
+@section('title', 'Questions List')
 
 @section('content_header')
-    <h2>Listagem com Ajax</h2>
+    <h2>Perguntas Cadastradas</h2>
     @if ($status = Session::get('mensagem'))
         <h2> {{ $status }} </h2>
     @endif
 @stop
 
 @section('content')
-    <x-adminlte-datatable id="pergunta" :heads="$heads" :config="$config" striped hoverable bordered compressed />
+
+    <x-adminlte-datatable id="pergunta" :heads="$heads" :config="$config" striped hoverable bordered compressed with="buttons"/>
 
     {{-- <table id='pergTable' width='100%' border="1" style='border-collapse: collapse;'>
         <thead>
@@ -100,11 +101,20 @@ $config = [
     });
     </script> --}}
     <!-- Datatables jquery 3.6.0 js -->
-    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Datatables jquery min js -->
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
+    <!-- Incluindo o Ajax -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
+    <!-- Incluindo o Ajax para formulários -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
+
+    {{-- <a href=" {{ route('users.listAll') }} " class="btn btn-primary btn-sm ml-2 mt-2"><i class="fas fa-list"></i></a>
+    <a href="{{ route('user.edit', [ $user -> id ]) }}" class="btn btn-warning btn-sm ml-2 mt-2"><i class="fas fa-edit"></i></a>
+    <a href="{{ route('user.delete', [ $user -> id ]) }}" class="btn btn-danger btn-sm ml-2 mt-2"><i class="fas fa-trash"></i></a> --}}
+
 @stop

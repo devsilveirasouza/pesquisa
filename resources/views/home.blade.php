@@ -4,7 +4,7 @@
 
 @section('content_header')
     <div class="card-header">
-        <h1>Sistema de Pesquisa de Satisfação do Cliente!</h1>
+        <h1>Pesquisa de Satisfação do Cliente!</h1>
     </div>
 @stop
 

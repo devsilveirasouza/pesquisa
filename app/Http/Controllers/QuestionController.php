@@ -25,9 +25,9 @@ class QuestionController extends Controller
         $columnName                 = $columnName_arr[$columnIndex]['data']; // Nome da coluna
         $columnSortOrder            = $order_arr[0]['dir']; // Definir ordenação das informações asc ou desc
         $searchValue                = $search_arr['value']; // Valor da pesquisa
-        // Total de registro
+        // Total de registros
         $totalRecords               = Question::select('count(*) as allcount')->count();
-
+        // Total de registros com filtros
         $totalRecordswithFilter     = Question::select('count(*) as allcount')
             ->where('pergunta', 'like', '%' . $searchValue . '%')
             ->count();
@@ -38,14 +38,15 @@ class QuestionController extends Controller
             ->skip($start)
             ->take($rowperpage)
             ->get();
+        // Atribuindo rota nas variáveis
+        $details                    = route('user.list');
+        $edit                       = route('perguntas.index');
+        $delete                     = route('pergunta.criar');
         // Criação dos botões
-            $btnDetails = '<button class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
-                <i class="fa fa-lg fa-fw fa-eye"></i></button>';
-            $btnEdit = '<button class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
-                <i class="fa fa-lg fa-fw fa-pen"></i></button>';
-            $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow" title="Delete">
-                <i class="fa fa-lg fa-fw fa-trash"></i></button>';
-
+        $btnDetails                 = '<a href="'.$details.'" class="btn btn-primary btn-sm ml-2 mt-2"><i class="fas fa-list"></i></a>';
+        $btnEdit                    = '<a href="'.$edit.'" class="btn btn-warning btn-sm ml-2 mt-2"><i class="fas fa-edit"></i></a>';
+        $btnDelete                  = '<a href="'.$delete.'" class="btn btn-danger btn-sm ml-2 mt-2"><i class="fas fa-trash"></i></a>';
+        // Criando o array que vai receber as informações
         $data_arr = array();
         // Atribuindo as informações
         foreach ($records as $record) {
@@ -56,7 +57,7 @@ class QuestionController extends Controller
             $usuario                = $record->user_id;
             $created_at             = \Carbon\Carbon::parse($record->created_at)->format('d/m/Y');
             $buttons                = ['<nobr>'.$btnDetails.$btnEdit.$btnDelete.'</nobr>'];
-
+            // Carregando as informações no array
             $data_arr[] = array(
                 "id"                => $id,
                 "pergunta"          => $pergunta,
@@ -67,6 +68,7 @@ class QuestionController extends Controller
                 "buttons"           => $buttons
             );
         }
+        // Envio das informações
         $response = array(
             "draw"                  => intval($draw),
             "iTotalRecords"         => $totalRecords,
