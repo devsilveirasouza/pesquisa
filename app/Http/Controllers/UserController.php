@@ -2,68 +2,83 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\HtmlString;
 use App\Http\Requests\UserRequest;
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Models\User;
 
 class UserController extends Controller
 {
     // Dev - 27/06/2022 - wss
-    public function indexUsuarios() {
-        return view('users.list');
+    public function indexUsuarios()
+    {
+        return view('users.listUsers');
     }
 
     public function buscaDados(Request $request)
     {
-        // print_r($request->all());
-        $draw               = $request->get('draw');// Iniciando tabela a ser mostrada
-        // dd($draw);
-        $start              = $request->get("start");// Inicialização dos registros
-        $rowPerPage         = $request->get("length");// Quantidade de registros por paginas
+        $draw = $request->get('draw'); // Iniciando tabela a ser mostrada
+        $start = $request->get("start"); // Inicialização dos registros
+        $rowPerPage = $request->get("length"); // Quantidade de registros por paginas
 
-        $orderArray         = $request->get('order');// Array da coluna de ordenação
-        $columnNameArray    = $request->get('columns');// Array da coluna nome
+        $columnIndex_arr = $request->get('order');
+        $columnName_arr = $request->get('columns');
+        $order_arr = $request->get('order');
+        $search_arr = $request->get('search');
 
-        $searchArray        = $request->get('search');// Array de busca
-        $columnIndex        = $orderArray[0]['column'];// Array de index
+        $columnIndex = $columnIndex_arr[0]['column']; // Indice da coluna
+        $columnName = $columnName_arr[$columnIndex]['data']; // Nome da coluna
+        $columnSortOrder = $order_arr[0]['dir']; // Definir ordenação das informações asc ou desc
+        $searchValue = $search_arr['value']; // Valor da pesquisa
 
-        $columnName         = $columnNameArray[$columnIndex]['data'];// Armazena o Array dos nomes de acordo com os indexs
+        $totalRecords = User::select('count(*) as allcount')->count();
 
-        $columnSortOrder    = $orderArray[0]['dir'];
-        $searchValue        = $searchArray['value'];
+        $totalRecordswithFilter = User::select('count(*) as allcount')
+            ->where('users.name', 'like', '%' . $searchValue . '%')
+            ->orWhere('users.email', 'like', '%' . $searchValue . '%')
+            ->count();
 
-        $users              = DB::table('users');
-        $total              = $users->count();
+        $users = User::orderBy($columnName, $columnSortOrder)
+            ->where('users.name', 'like', '%' . $searchValue . '%')
+            ->orWhere('users.email', 'like', '%' . $searchValue . '%')
+            ->select('users.*')
+            ->skip($start)
+            ->take($rowPerPage)
+            ->get();
 
-        $totalFilter        = DB::table('users');
+        $data_arr = array();
 
-        if  (!empty($searchValue)) {
-            $totalFilter    = $totalFilter->where('name','like','%'.$searchValue.'%');
-            $totalFilter    = $totalFilter->orWhere('email','like','%'.$searchValue.'%');
+        foreach ($users as $user) {
+            $id = $user->id;
+            $nome = $user->name;
+            $email = $user->email;
+
+            // Criando os botões
+            $btnEdit = '<a href="javascript:void(0)" id="userEdit" data-id="' . $user->id . '"
+                class="btn btn-warning btnEdit mx-1 shadow " title="Edit">Edit</a>';
+            $btnDelete = '<a href="javascript:void(0)" id="userDelete" data-id="' . $user->id . '" type="submit"
+                class="btn btn-danger btnDelete mx-1 shadow " title="Delete">Delete</a>';
+            $btnDetails = '<a href="javascript:void(0)" id="userDetails" data-id="' . $user->id . '"
+                class="btn btn-primary btnDetails mx-1 shadow " title="Details">View</a>';
+
+            $buttons = ['<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>'];
+
+            $data_arr[] = array(
+                "id" => $id,
+                "name" => $nome,
+                "email" => $email,
+                "buttons" => $buttons
+            );
         }
-
-        $totalFilter        = $users->count();
-
-        $arrData            = DB::table('users');
-        $arrData            = $arrData->skip($start)->take($rowPerPage);
-        $arrData            = $arrData->orderBy($columnName, $columnSortOrder);
-
-        if  (!empty($searchValue)) {
-            $arrData        = $arrData->where('name','like','%'.$searchValue.'%');
-            $arrData        = $arrData->orWhere('email','like','%'.$searchValue.'%');
-        }
-
-        $arrData            = $arrData->get();
-
+        // Envio das informações
         $response = array(
-            "draw"              => intval($draw),
-            "recordsTotal"      => $total,
-            "recordsFiltered"   => $totalFilter,
-            "data"              => $arrData,
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordswithFilter,
+            "aaData" => $data_arr
         );
-
-        return response()->json($response);
+        echo json_encode($response);
+        exit;
     }
     /**
      * Show the form for creating a new resource.
@@ -101,16 +116,6 @@ class UserController extends Controller
         }
     }
     /**
-     * Mostra um registro especifico passando id pela rota
-     */
-    public function listUser(User $user)
-    {
-        // dd($user);
-        return view('users.listUser', [
-            'user' => $user
-        ]);
-    }
-    /**
      * Chama a view de edição passando id pela rota
      */
     public function edit(User $user)
@@ -132,28 +137,17 @@ class UserController extends Controller
     }
     // Exclui registro
     public function excluir(User $user)
-    {
-        // Deletar registro
-        {
-            // dd($user);
+    { {
             $user->delete();
-            return back()->with('mensagem', 'Usuário excluído com sucesso!');
+            // dd($user);
+            return redirect()->route('user.list')->with('mensagem', 'Usuário excluído com sucesso!');
         }
     }
     // Mostrar Perguntas do usuário
     public function show($id)
     {
-        $user = User::where('id', $id)->first();
+        $user = User::find($id);
         // dd($user);
-        if ($user) {
-            echo "<h2>Dados do Usuário: </h2>";
-            echo "<p>Nome: {$user->name} - Email: {$user->email}</p>";
-        }
-        $question = $user->listQuestions()->first();
-        // dd($question);
-        if ($question) {
-            echo "<h3> Esta pergunta foi cadastrada pelo usuário {$user->name}</h3>";
-            echo "<p> - Pergunta: {$question->question} </p>";
-        }
+        return view('users.listUser', ['user' => $user]);
     }
 }

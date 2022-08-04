@@ -9,7 +9,7 @@
 @stop
 
 @section('content')
-    <img src="/img/pss.jpg" class="img-fluid" alt="wallpaper">
+    <img src=" img/pss.jpg " class="img-fluid" alt="wallpaper">
     <p>Nosso objetivo é melhorar cada vez mais nosso atendimento proporcinando uma experiência única aos nossos clientes!</p>
 @stop
 

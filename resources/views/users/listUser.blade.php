@@ -35,19 +35,24 @@
                             <td>{{ $user->email }}</td>
                             <td>{{ date('d/m/Y', strtotime($user->created_at)) }}</td>
                             <td>
-                                <a href=" {{ route('users.listAll') }} " class="btn btn-primary btn-sm ml-2 mt-2"><i class="fas fa-list"></i></a>
-                                <a href="{{ route('user.edit', [ $user -> id ]) }}" class="btn btn-warning btn-sm ml-2 mt-2"><i class="fas fa-edit"></i></a>
-                                <a href="{{ route('user.delete', [ $user -> id ]) }}" class="btn btn-danger btn-sm ml-2 mt-2"><i class="fas fa-trash"></i></a>
+                                <div class="btn-group">
+                                    <form action="{{ route('user.delete', [$user->id]) }}" class="frm-deletar" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-xs btn-default text-danger mx-1 shadow"
+                                            title="Delete">
+                                            <i class="fa fa-lg fa-fw fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                                {{-- <a href="{{ route('user.delete', [ $user->id ]) }}" class="btn btn-danger btn-sm ml-2 mt-2"><i class="fas fa-trash"></i></a> --}}
                             </td>
-                            </td>
-
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-
 
 @stop
 
@@ -56,7 +61,35 @@
 @stop
 
 @section('js')
+
+    <script src=" {{ asset('js/app.js') }} "></script>
+    <script src=" {{ asset('js/jquery-3.6.0.min.js') }} "></script>
+
     <script>
-        console.log('Hi!');
+        $('.frm-deletar').submit(function(deletar) {
+            deletar.preventDefault();
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    this.submit();
+
+                    Swal.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                    )
+                }
+            })
+
+        });
     </script>
 @stop

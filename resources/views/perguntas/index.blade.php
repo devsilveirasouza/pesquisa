@@ -109,9 +109,9 @@ $config = [
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
     <!-- Incluindo o Ajax -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script> --}}
     <!-- Incluindo o Ajax para formulários -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script> --}}
 
     {{-- <a href=" {{ route('users.listAll') }} " class="btn btn-primary btn-sm ml-2 mt-2"><i class="fas fa-list"></i></a>
     <a href="{{ route('user.edit', [ $user -> id ]) }}" class="btn btn-warning btn-sm ml-2 mt-2"><i class="fas fa-edit"></i></a>

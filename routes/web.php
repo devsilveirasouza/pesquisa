@@ -9,12 +9,16 @@ Route::get('/',                         HomeController::class);
 // -------------------------------------Usuarios-----------------------------------------------------------------------------------------
 Route::get('/usuarios',                             [UserController::class,     'indexUsuarios'])->Middleware('auth')->name('user.list');
 Route::get('/usuarios-listagem',                    [UserController::class,     'buscaDados'])->Middleware('auth')->name('user.listAll');
+
 Route::get('/usuarios/novo',                        [UserController::class,     'createUser'])->middleware('auth')->name('user.create');
 Route::post('/usuarios/store',                      [UserController::class,     'store'])->middleware('auth')->name('user.store');
-Route::get('/usuarios/{user}',                      [UserController::class,     'listUser'])->middleware('auth')->name('user.listUser');
+
+Route::get('/usuarios/{user}',                      [UserController::class,     'show'])->middleware('auth')->name('user.listUser');
+
 Route::get('/usuarios/{user}/edit',                 [UserController::class,     'edit'])->middleware('auth')->name('user.edit');
 Route::put('/usuarios/{user}/atualizar',            [UserController::class,     'update'])->middleware('auth')->name('user.update');
-Route::get('/usuarios/{user}/excluir',              [UserController::class,     'excluir'])->middleware('auth')->name('user.delete');
+
+Route::delete('/usuarios/{user}/excluir',           [UserController::class,     'excluir'])->middleware('auth')->name('user.delete');
 // -------------------------------------Perguntas----------------------------------------------------------------------------------------
 Route::get('/perguntas',                            [QuestionController::class, 'index'])->Middleware('auth')->name('perguntas.index');
 Route::get('/perguntas-listagem',                   [QuestionController::class, 'listagem'])->Middleware('auth')->name('perguntas.listagem');

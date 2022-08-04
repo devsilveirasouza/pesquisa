@@ -30,16 +30,18 @@ class QuestionController extends Controller
         // Total de registros com filtros
         $totalRecordswithFilter     = Question::select('count(*) as allcount')
             ->where('pergunta', 'like', '%' . $searchValue . '%')
+            ->orWhere('tipoResposta', 'like', '%' .$searchValue. '%')
             ->count();
         // Buscar registros
         $records                    = Question::orderBy($columnName, $columnSortOrder)
-            ->where('questions.pergunta', 'like', '%' . $searchValue . '%')
+            ->where('pergunta', 'like', '%' . $searchValue . '%')
+            ->orWhere('tipoResposta', 'like', '%' .$searchValue. '%')
             ->select('questions.*')
             ->skip($start)
             ->take($rowperpage)
             ->get();
         // Atribuindo rota nas variáveis
-        $details                    = route('user.list');
+        $details                    = route('pergunta.criar');
         $edit                       = route('perguntas.index');
         $delete                     = route('pergunta.criar');
         // Criação dos botões
@@ -127,7 +129,9 @@ class QuestionController extends Controller
      */
     public function edit(Question $pergunta)
     {
-        return view('perguntas.editPerg', ['pergunta' => $pergunta]);
+        return view('perguntas.editPerg', [
+            'pergunta' => $pergunta
+        ]);
     }
     /**
      * Update the specified resource in storage.
