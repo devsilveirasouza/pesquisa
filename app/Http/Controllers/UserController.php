@@ -53,15 +53,12 @@ class UserController extends Controller
             $nome = $user->name;
             $email = $user->email;
 
-            // Criando os botões
-            $btnEdit = '<a href="javascript:void(0)" id="userEdit" data-id="' . $user->id . '"
-                class="btn btn-warning btnEdit mx-1 shadow " title="Edit">Edit</a>';
-            $btnDelete = '<a href="javascript:void(0)" id="userDelete" data-id="' . $user->id . '" type="submit"
-                class="btn btn-danger btnDelete mx-1 shadow " title="Delete">Delete</a>';
-            $btnDetails = '<a href="javascript:void(0)" id="userDetails" data-id="' . $user->id . '"
-                class="btn btn-primary btnDetails mx-1 shadow " title="Details">View</a>';
+                // Criando os botões
+                $btnEdit        = '<button type="button" value="'. $user->id .'" class="edit_user btn btn-warning btn-sm ml-1">Edit</button>';
+                $btnDelete      = '<button type="button" value="'. $user->id .'" class="delete_user btn btn-danger btn-sm ml-1">Delete</button>';
+                //$btnDetails     = '<button type="button" value="'. $user->id .'" class="view_user btn btn-warning btn-sm ml-1">View</button>';
 
-            $buttons = ['<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>'];
+            $buttons = ['<nobr>' . $btnEdit . $btnDelete . '</nobr>'];
 
             $data_arr[] = array(
                 "id" => $id,
@@ -136,12 +133,16 @@ class UserController extends Controller
         return redirect()->route('user.list')->with('mensagem', 'Alteração realizada com sucesso!');
     }
     // Exclui registro
-    public function excluir(User $user)
-    { {
+    public function excluir($id)
+    {
+            $user = User::find($id);
             $user->delete();
             // dd($user);
-            return redirect()->route('user.list')->with('mensagem', 'Usuário excluído com sucesso!');
-        }
+
+        return response()->json([
+            'status'    =>200,
+            'message'   => 'Usuário excluído com sucesso!',
+        ]);
     }
     // Mostrar Perguntas do usuário
     public function show($id)
