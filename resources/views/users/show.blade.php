@@ -36,16 +36,12 @@
                             <td>{{ date('d/m/Y', strtotime($user->created_at)) }}</td>
                             <td>
                                 <div class="btn-group">
-                                    <form action="{{ route('user.delete', [$user->id]) }}" class="frm-deletar" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-xs btn-default text-danger mx-1 shadow"
-                                            title="Delete">
-                                            <i class="fa fa-lg fa-fw fa-trash"></i>
-                                        </button>
-                                    </form>
+                                    <button type="button" value="{{ $user->id }}"
+                                        class="edit_user btn btn-warning btn-sm ml-1">Edit</button>
+                                    <button type="button" value="{{ $user->id }}"
+                                        class="delete_user btn btn-danger btn-sm ml-1">Delete</button>
+                                    <button type="button" class="home_user btn btn-info btn-sm ml-1">Home</button>
                                 </div>
-                                {{-- <a href="{{ route('user.delete', [ $user->id ]) }}" class="btn btn-danger btn-sm ml-2 mt-2"><i class="fas fa-trash"></i></a> --}}
                             </td>
                         </tr>
                     </tbody>
@@ -64,32 +60,7 @@
 
     <script src=" {{ asset('js/app.js') }} "></script>
     <script src=" {{ asset('js/jquery-3.6.0.min.js') }} "></script>
+    {{-- Script Users --}}
+    <script src=" {{ asset('site/user.js') }} "></script>
 
-    <script>
-        $('.frm-deletar').submit(function(deletar) {
-            deletar.preventDefault();
-
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-
-                    this.submit();
-
-                    Swal.fire(
-                        'Deleted!',
-                        'Your file has been deleted.',
-                        'success'
-                    )
-                }
-            })
-
-        });
-    </script>
 @stop

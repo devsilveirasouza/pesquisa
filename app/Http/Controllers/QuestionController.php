@@ -86,7 +86,7 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        return view('perguntas.cadastrarPergunta');
+        return view('perguntas.create');
     }
 
     public function cadastrarPergunta(Request $request)
@@ -129,7 +129,7 @@ class QuestionController extends Controller
      */
     public function edit(Question $pergunta)
     {
-        return view('perguntas.editPerg', [
+        return view('perguntas.edit', [
             'pergunta' => $pergunta
         ]);
     }

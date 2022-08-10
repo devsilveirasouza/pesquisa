@@ -15,8 +15,8 @@ Route::post('/usuarios/store',                      [UserController::class,     
 
 Route::get('/usuarios/{user}',                      [UserController::class,     'show'])->middleware('auth')->name('user.listUser');
 
-Route::get('/usuarios/{user}/edit',                 [UserController::class,     'edit'])->middleware('auth')->name('user.edit');
-Route::put('/usuarios/{user}/atualizar',            [UserController::class,     'update'])->middleware('auth')->name('user.update');
+Route::get('/usuarios/edit/{user}',                 [UserController::class,     'edit'])->middleware('auth')->name('user.edit');
+Route::put('/usuarios/atualizar/{user}',            [UserController::class,     'update'])->middleware('auth')->name('user.update');
 
 Route::delete('/usuarios-delete/{id}',              [UserController::class,     'excluir'])->middleware('auth')->name('user.delete');
 // -------------------------------------Perguntas----------------------------------------------------------------------------------------

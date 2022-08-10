@@ -12,7 +12,8 @@ class UserController extends Controller
     // Dev - 27/06/2022 - wss
     public function indexUsuarios()
     {
-        return view('users.listUsers');
+        return view('users.index');
+        //return view('users.listUsers');
     }
 
     public function buscaDados(Request $request)
@@ -53,12 +54,12 @@ class UserController extends Controller
             $nome = $user->name;
             $email = $user->email;
 
-                // Criando os botões
-                $btnEdit        = '<button type="button" value="'. $user->id .'" class="edit_user btn btn-warning btn-sm ml-1">Edit</button>';
-                $btnDelete      = '<button type="button" value="'. $user->id .'" class="delete_user btn btn-danger btn-sm ml-1">Delete</button>';
-                //$btnDetails     = '<button type="button" value="'. $user->id .'" class="view_user btn btn-warning btn-sm ml-1">View</button>';
+            // Criando os botões
+            $btnEdit        = '<button type="button" value="' . $user->id . '" class="edit_user btn btn-warning btn-sm ml-1">Edit</button>';
+            $btnDelete      = '<button type="button" value="' . $user->id . '" class="delete_user btn btn-danger btn-sm ml-1">Delete</button>';
+            $btnDetails     = '<button type="button" value="'. $user->id .'" class="details_user btn btn-info btn-sm ml-1">View</button>';
 
-            $buttons = ['<nobr>' . $btnEdit . $btnDelete . '</nobr>'];
+            $buttons = ['<nobr>' . $btnDetails . $btnEdit . $btnDelete . '</nobr>'];
 
             $data_arr[] = array(
                 "id" => $id,
@@ -86,7 +87,7 @@ class UserController extends Controller
     public function createUser()
     {
         // Chamar a view de cadastro
-        return view('users.createUser');
+        return view('users.create');
     }
     /**
      * Store a newly created resource in storage.
@@ -94,6 +95,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    // Realiza o cadastro do registro
     public function store(UserRequest $request)
     {
         /**
@@ -118,7 +120,7 @@ class UserController extends Controller
     public function edit(User $user)
     {
         // dd($user);
-        return view('users.editUser', [
+        return view('users.edit', [
             'user' => $user
         ]);
     }
@@ -132,23 +134,24 @@ class UserController extends Controller
         $user->update($request->all());
         return redirect()->route('user.list')->with('mensagem', 'Alteração realizada com sucesso!');
     }
-    // Exclui registro
+    // Excluir registro
     public function excluir($id)
     {
-            $user = User::find($id);
-            $user->delete();
-            // dd($user);
+        $user = User::find($id);
+        $user->delete();
+        // dd($user);
 
         return response()->json([
-            'status'    =>200,
+            'status'    => 200,
             'message'   => 'Usuário excluído com sucesso!',
         ]);
     }
-    // Mostrar Perguntas do usuário
+    // Mostra registro
     public function show($id)
     {
         $user = User::find($id);
-        // dd($user);
-        return view('users.listUser', ['user' => $user]);
+        //dd($user);
+
+        return view('users.show', [ 'user'=>$user ]);
     }
 }

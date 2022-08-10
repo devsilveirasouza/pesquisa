@@ -55,20 +55,23 @@ $config = [
 
 @section('content')
 
-    <x-adminlte-datatable id="pergunta" :heads="$heads" :config="$config" striped hoverable bordered compressed with="buttons"/>
-
-    {{-- <table id='pergTable' width='100%' border="1" style='border-collapse: collapse;'>
-        <thead>
-          <tr>
-            <td>ID</td>
-            <td>Pergunta</td>
-            <td>Resposta Obrigatoria</td>
-            <td>Tipo de Resposta</td>
-            <td>Usuário</td>
-            <td>Data de Cadastro</td>
-          </tr>
-        </thead>
-      </table> --}}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="car-header">
+                    <h4 class="text-left mt-3 mb-2 ml-3">Dados dos usuários
+                        <a href="{{ route('user.create') }}"
+                            class="btn btn-primary float-end btn-sm mt-2 mb-2 mr-3 add_user">Cadastrar</a>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <x-adminlte-datatable id="pergunta" :heads="$heads" :config="$config" striped hoverable bordered compressed with="buttons"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @stop
 
@@ -81,25 +84,7 @@ $config = [
 @stop
 
 @section('js')
- <!-- Script -->
- {{-- <script type="text/javascript">
-    $(document).ready(function(){
-      // DataTable
-      $('#pergTable').DataTable({
-         processing: true,
-         serverSide: true,
-         ajax: "{{route('perguntas.listAjax')}}",
-         columns: [
-            { data: 'id' },
-            { data: 'pergunta' },
-            { data: 'respObrigatoria' },
-            { data: 'tipoResposta' },
-            { data: 'usuario' },
-            { data: 'created_at' },
-         ]
-      });
-    });
-    </script> --}}
+
     <!-- Datatables jquery 3.6.0 js -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Datatables jquery min js -->
@@ -108,13 +93,5 @@ $config = [
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
-    <!-- Incluindo o Ajax -->
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script> --}}
-    <!-- Incluindo o Ajax para formulários -->
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script> --}}
-
-    {{-- <a href=" {{ route('users.listAll') }} " class="btn btn-primary btn-sm ml-2 mt-2"><i class="fas fa-list"></i></a>
-    <a href="{{ route('user.edit', [ $user -> id ]) }}" class="btn btn-warning btn-sm ml-2 mt-2"><i class="fas fa-edit"></i></a>
-    <a href="{{ route('user.delete', [ $user -> id ]) }}" class="btn btn-danger btn-sm ml-2 mt-2"><i class="fas fa-trash"></i></a> --}}
 
 @stop

@@ -42,32 +42,6 @@ $config = [
 
 @section('content')
 
-    {{-- DeleteUserModal --}}
-    <div class="modal fade" id="DeleteUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <!-- alterações -->
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Excluir Usuário</h5><!-- alterações -->
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-
-                    <!-- inclusão para recuperação do id (hidden -> não aparece pro usuário) -->
-                    <input type="hidden" id="delete_user_id">
-                    <h4>Você têm certeza? Quer mesmo excluir?</h4>
-                </div>
-                <div class="modal-footer">
-
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    <button type="button" class="btn btn-primary delete_user_btn">Sim Excluir</button>
-                    <!-- alterações -->
-                </div>
-            </div>
-        </div>
-    </div>
-    {{-- End DeleteUserModal --}}
-
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -100,7 +74,7 @@ $config = [
     <!-- SweetAlert -->
     <script src=" {{ asset('js/app.js') }} "></script>
     <script src=" {{ asset('js/jquery-3.6.0.min.js') }} "></script>
-
+    {{-- Scripts Users --}}
     <script src=" {{ asset('site/user.js') }} "></script>
     <!-- Datatables jquery min js -->
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>

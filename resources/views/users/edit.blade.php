@@ -1,11 +1,19 @@
 @extends('adminlte::page')
+<!-- Ajustando o dataTable com CSS -->
+<style type="text/css">
+    div.content {
+        margin-bottom: 0px !important;
+        margin-top: 0px !important;
+        border-collapse: collapse !important;
+    }
+</style>
 
-@section('title', 'User Register')
+@section('title', 'User Edit')
 
 @section('content_header')
 
     <div class="card-header">
-        <h1 class="card-title center">Painel de cadastro</h1>
+        <h1 class="card-title center">Atualização de Usuário</h1>
     </div>
 
 @stop
@@ -15,19 +23,24 @@
         <h2> {{ $status }} </h2>
     @endif
 
-
     <div class="card card-info">
         <div class="card-header">
-            <h3 class="card-title">Cadastro de Usuário</h3>
+            <h3 class="card-title">Atualizar cadastro de usuário</h3>
         </div>
         {{-- Formulário de cadastro --}}
-        <form class="form-horizontal" action="{{ route('user.store') }}" method="post">
+        <form class="form-horizontal form_edit_user" action="{{ route('user.update', [$user->id]) }}" method="post">
             @csrf
+            @method('put')
             <div class="card-body">
+                <ul id="updateform_errList"></ul>
+
+                <input type="hidden" id="edit_user_id">
+
                 <div class="form-group row">
                     <label for="inputText3" class="col-sm-2 col-form-label">Name</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputText3" name="name" placeholder="Name" required>
+                        <input type="text" class="form-control user_name" id="inputText3" name="name" placeholder="Name"
+                            value="{{ $user->name }}" required>
                         @if ($errors->has('name'))
                             <h6> Favor inserir seu nome! </h6>
                         @endif
@@ -36,8 +49,8 @@
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
                     <div class="col-sm-10">
-                        <input type="email" class="form-control" id="inputEmail3" name="email" placeholder="Email"
-                            required>
+                        <input type="email" class="form-control user_email" id="inputEmail3" name="email" placeholder="Email"
+                            value="{{ $user->email }}" required>
                         @if ($errors->has('name'))
                             <h6> Favor inserir seu email! </h6>
                         @endif
@@ -46,7 +59,7 @@
                 <div class="form-group row">
                     <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
                     <div class="col-sm-10">
-                        <input type="password" class="form-control" id="inputPassword3" name="password"
+                        <input type="password" class="form-control user_password" id="inputPassword3" name="password"
                             placeholder="Password" required>
                         @if ($errors->has('password'))
                             <h6> Favor inserir sua senha! </h6>
@@ -54,12 +67,13 @@
                     </div>
                 </div>
             </div>
+
             <div class="card-footer">
-                <button type="submit" class="btn btn-info">Save</button>
-                <button type="reset" class="btn btn-danger float-right">Limpar</button>
+                <button type="submit" class="btn btn-danger btn-md ml-2 mt-2">Atualizar</button>
+                <a href=" {{ route('user.list') }} " class="btn btn-primary btn-md col-sm-1 ml-2 mt-2"><i
+                        class="fas fa-list"></i></a>
             </div>
         </form>
-        {{-- Formulário de cadastro --}}
     </div>
 
 @stop
@@ -72,7 +86,10 @@
 @stop
 
 @section('js')
-    <script>
-        console.log('Olá!');
-    </script>
+
+    <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
+    {{-- Script Users --}}
+    <script src="{{  asset('site/user.js') }}"></script>
+
 @stop
