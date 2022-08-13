@@ -27,7 +27,7 @@
         <div class="card-header">
             <h3 class="card-title">Atualizar cadastro de usuário</h3>
         </div>
-        {{-- Formulário de cadastro --}}
+        {{-- Formulário de edição --}}
         <form class="form-horizontal form_edit_user" action="{{ route('user.update', [$user->id]) }}" method="post">
             @csrf
             @method('put')

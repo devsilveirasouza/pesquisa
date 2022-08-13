@@ -13,33 +13,31 @@ class UserController extends Controller
     public function indexUsuarios()
     {
         return view('users.index');
-        //return view('users.listUsers');
     }
-
     public function buscaDados(Request $request)
     {
-        $draw = $request->get('draw'); // Iniciando tabela a ser mostrada
-        $start = $request->get("start"); // Inicialização dos registros
-        $rowPerPage = $request->get("length"); // Quantidade de registros por paginas
+        $draw                       = $request->get('draw'); // Iniciando tabela a ser mostrada
+        $start                      = $request->get("start"); // Inicialização dos registros
+        $rowPerPage                 = $request->get("length"); // Quantidade de registros por paginas
 
-        $columnIndex_arr = $request->get('order');
-        $columnName_arr = $request->get('columns');
-        $order_arr = $request->get('order');
-        $search_arr = $request->get('search');
+        $columnIndex_arr            = $request->get('order');
+        $columnName_arr             = $request->get('columns');
+        $order_arr                  = $request->get('order');
+        $search_arr                 = $request->get('search');
 
-        $columnIndex = $columnIndex_arr[0]['column']; // Indice da coluna
-        $columnName = $columnName_arr[$columnIndex]['data']; // Nome da coluna
-        $columnSortOrder = $order_arr[0]['dir']; // Definir ordenação das informações asc ou desc
-        $searchValue = $search_arr['value']; // Valor da pesquisa
+        $columnIndex                = $columnIndex_arr[0]['column']; // Indice da coluna
+        $columnName                 = $columnName_arr[$columnIndex]['data']; // Nome da coluna
+        $columnSortOrder            = $order_arr[0]['dir']; // Definir ordenação das informações asc ou desc
+        $searchValue                = $search_arr['value']; // Valor da pesquisa
 
-        $totalRecords = User::select('count(*) as allcount')->count();
+        $totalRecords               = User::select('count(*) as allcount')->count();
 
-        $totalRecordswithFilter = User::select('count(*) as allcount')
+        $totalRecordswithFilter     = User::select('count(*) as allcount')
             ->where('users.name', 'like', '%' . $searchValue . '%')
             ->orWhere('users.email', 'like', '%' . $searchValue . '%')
             ->count();
 
-        $users = User::orderBy($columnName, $columnSortOrder)
+        $users                      = User::orderBy($columnName, $columnSortOrder)
             ->where('users.name', 'like', '%' . $searchValue . '%')
             ->orWhere('users.email', 'like', '%' . $searchValue . '%')
             ->select('users.*')
@@ -119,7 +117,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        // dd($user);
+        // return $user;
         return view('users.edit', [
             'user' => $user
         ]);

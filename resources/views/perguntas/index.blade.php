@@ -20,7 +20,7 @@ $heads = [
     'Ações',
 ];
 // Rota do processamento ajax
-$url = route('perguntas.listAjax');
+$url = route('perguntas.listagem');
 // configuração geral do processamento  dos dados
 $config = [
     'language' => [
@@ -47,10 +47,11 @@ $config = [
 @section('title', 'Questions List')
 
 @section('content_header')
-    <h2>Perguntas Cadastradas</h2>
+
     @if ($status = Session::get('mensagem'))
         <h2> {{ $status }} </h2>
     @endif
+
 @stop
 
 @section('content')
@@ -60,8 +61,8 @@ $config = [
         <div class="col-md-12">
             <div class="card">
                 <div class="car-header">
-                    <h4 class="text-left mt-3 mb-2 ml-3">Dados dos usuários
-                        <a href="{{ route('user.create') }}"
+                    <h4 class="text-left mt-3 mb-2 ml-3">Perguntas cadastradas
+                        <a href="{{ route('perguntas.create') }}"
                             class="btn btn-primary float-end btn-sm mt-2 mb-2 mr-3 add_user">Cadastrar</a>
                     </h4>
                 </div>
@@ -85,8 +86,11 @@ $config = [
 
 @section('js')
 
-    <!-- Datatables jquery 3.6.0 js -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- SweetAlert -->
+    <script src=" {{ asset('js/app.js') }} "></script>
+    <script src=" {{ asset('js/jquery-3.6.0.min.js') }} "></script>
+    {{-- Scripts Perguntas --}}
+    <script src=" {{ asset('site/question.js') }} "></script>
     <!-- Datatables jquery min js -->
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <!-- Option 1: Bootstrap Bundle with Popper -->

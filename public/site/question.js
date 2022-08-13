@@ -1,28 +1,10 @@
-// Cadastrar Usuário: Sweetalert2 para confirmação
-$(".form_create_user").submit(function (e) {
-    e.preventDefault();
-
-    Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "question",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, saved it!",
-    }).then((result) => {
-        if (result.isConfirmed) {
-            this.submit();
-            Swal.fire("Saved!", "Your file has been saved.", "success");
-        }
-    });
-});
 // Deletar: Ajax & Sweetalert2
-$(document).on("click", ".delete_user", function (e) {
+$(document).on("click", ".delete_pergunta", function (e) {
     e.preventDefault();
-    //alert('Ola!');
-    var user_id = $(this).val();
-    //console.log(user_id);
+    // alert('Ola!');
+    var perguntaId = $(this).val();
+    //alert(perguntaId);
+
     Swal.fire({
         title: "Você quer excluir?",
         text: "Não será mais possível usar este registro!",
@@ -42,7 +24,7 @@ $(document).on("click", ".delete_user", function (e) {
             });
             $.ajax({
                 type: "DELETE",
-                url: "/usuarios-delete/" + user_id,
+                url: "/perguntas-delete/" + perguntaId,
             });
             /** Maneiras de recirecionar páginas */
             //window.location.assign("/usuarios");
@@ -57,27 +39,50 @@ $(document).on("click", ".delete_user", function (e) {
         }
     });
 });
-//Editar: Ajax & Sweetalert2
-$("body").on("click", ".edit_user", function (e) {
+// Cadastrar Usuário: Sweetalert2 para confirmação
+$(".form_create_pergunta").submit(function (e) {
     e.preventDefault();
 
-    var user_id = $(this).val();
-    console.log(user_id);
-    var url = "/usuarios/edit/";
-    var rota = url + user_id;
-    var user_id = $("#edit_user_id").val();
+    Swal.fire({
+        title: "Você têm certeza ?",
+        text: "Quer salvar este registro!",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sim, Salvar!",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            this.submit();
 
-    //console.log(rota);+
+            Swal.fire("Salvo!", "O registro foi Salvo.", "success");
+
+        }
+    });
+
+});
+//Editar: Ajax & Sweetalert2
+$("body").on("click", ".edit_pergunta", function (e) {
+    e.preventDefault();
+    //alert('Você clicou no botão edit!');
+
+    var user_id = $(this).val();
+    //console.log(user_id);
+    var url = "/perguntas/edit/";
+    var rota = url + user_id;
+    // var user_id = $("#edit_pergunta_id").val();
+
+    //console.log(rota);
     window.location.href = rota;
 });
-// Confirma o envio dos dados para atualização
-$(".form_edit_user").submit(function (editar) {
-    editar.preventDefault();
+// // Confirma o envio dos dados para atualização
+$(".form_pergunta_edit").submit(function (e) {
+    e.preventDefault();
 
     Swal.fire({
         title: "Você têm certeza?",
         text: "Quer atualizar este registro?",
-        icon: "warning",
+        icon: "question",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
@@ -90,14 +95,14 @@ $(".form_edit_user").submit(function (editar) {
     });
 });
 
-//Visualizar: Ajax & Sweetalert2
-$("body").on("click", ".details_user", function (e) {
+//Editar: Ajax & Sweetalert2
+$("body").on("click", ".details_pergunta", function (e) {
     e.preventDefault();
 
-    var user_id = $(this).val();
+    var pergunta_id = $(this).val();
     // console.log(user_id);
-    var url = "/usuarios/";
-    var rota = url + user_id;
+    var url = "/pergunta/";
+    var rota = url + pergunta_id;
 
     // console.log(rota);
     window.location.href = rota;

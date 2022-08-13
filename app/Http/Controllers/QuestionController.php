@@ -7,10 +7,13 @@ use App\Models\Question;
 use App\Models\User;
 
 class QuestionController extends Controller
-{    public function index()    {
+{
+    public function indexPerguntas()
+    {
         return view('perguntas.index');
     }
-    public function getQuestion(Request $request)    {
+    public function buscaDados(Request $request)
+    {
         ## Leitura dos valores
         $draw                       = $request->get('draw');
         $start                      = $request->get('start');
@@ -30,24 +33,17 @@ class QuestionController extends Controller
         // Total de registros com filtros
         $totalRecordswithFilter     = Question::select('count(*) as allcount')
             ->where('pergunta', 'like', '%' . $searchValue . '%')
-            ->orWhere('tipoResposta', 'like', '%' .$searchValue. '%')
+            ->orWhere('tipoResposta', 'like', '%' . $searchValue . '%')
             ->count();
         // Buscar registros
         $records                    = Question::orderBy($columnName, $columnSortOrder)
             ->where('pergunta', 'like', '%' . $searchValue . '%')
-            ->orWhere('tipoResposta', 'like', '%' .$searchValue. '%')
+            ->orWhere('tipoResposta', 'like', '%' . $searchValue . '%')
             ->select('questions.*')
             ->skip($start)
             ->take($rowperpage)
             ->get();
-        // Atribuindo rota nas variáveis
-        $details                    = route('pergunta.criar');
-        $edit                       = route('perguntas.index');
-        $delete                     = route('pergunta.criar');
-        // Criação dos botões
-        $btnDetails                 = '<a href="'.$details.'" class="btn btn-primary btn-sm ml-2 mt-2"><i class="fas fa-list"></i></a>';
-        $btnEdit                    = '<a href="'.$edit.'" class="btn btn-warning btn-sm ml-2 mt-2"><i class="fas fa-edit"></i></a>';
-        $btnDelete                  = '<a href="'.$delete.'" class="btn btn-danger btn-sm ml-2 mt-2"><i class="fas fa-trash"></i></a>';
+
         // Criando o array que vai receber as informações
         $data_arr = array();
         // Atribuindo as informações
@@ -58,7 +54,14 @@ class QuestionController extends Controller
             $tipoResposta           = $record->tipoResposta;
             $usuario                = $record->user_id;
             $created_at             = \Carbon\Carbon::parse($record->created_at)->format('d/m/Y');
-            $buttons                = ['<nobr>'.$btnDetails.$btnEdit.$btnDelete.'</nobr>'];
+
+            // Criando os botões
+            $btnEdit        = '<button type="button" value="' . $record->id . '" class="edit_pergunta btn btn-warning btn-sm ml-1">Editar</button>';
+            // <a href="'.route('perguntas.edit', ['pergunta'=>$record->id]).'" class="btn btn-primary btn-sm col-sm-1 ml-2 mt-2" >Editar</a>
+            $btnDelete      = '<button type="button" value="' . $record->id . '" class="delete_pergunta btn btn-danger btn-sm ml-1">Deletar</button>';
+            $btnDetails     = '<button type="button" value="' . $record->id . '" class="details_pergunta btn btn-info btn-sm ml-1">Visualizar</button>';
+
+            $buttons                = ['<nobr>' . $btnDetails . $btnEdit . $btnDelete . '</nobr>'];
             // Carregando as informações no array
             $data_arr[] = array(
                 "id"                => $id,
@@ -88,16 +91,18 @@ class QuestionController extends Controller
     {
         return view('perguntas.create');
     }
-
-    public function cadastrarPergunta(Request $request)
+    // Cadastro
+    public function store(Request $request)
     {
+        // $question = $request->all();
+        // dd($question);
+
         $nova_pergunta = new Question();
-
-        $nova_pergunta->pergunta = request('pergunta');
-        $nova_pergunta->respObrigatoria = request('respObrigatoria');
-        $nova_pergunta->tipoResposta = request('tipoResposta');
-        $nova_pergunta->user_id = request('usuario');
-
+        $nova_pergunta->pergunta            = request('pergunta');
+        $nova_pergunta->respObrigatoria     = implode(',', request('obrigatoria'));
+        $nova_pergunta->tipoResposta        = implode(',', request('tipoResposta'));
+        $nova_pergunta->user_id             = request('usuario');
+        // dd($nova_pergunta);
         $nova_pergunta->save();
         return redirect()->route('perguntas.index')
             ->with('mensagem', 'Pergunta cadastrada com sucesso!');
@@ -117,8 +122,10 @@ class QuestionController extends Controller
          * -- Consulta o id de usuario informado na pergunta e
          * busca o usuario e retorna o name da tabela Users
          **/
+
         $usuario = User::find($pergunta->user_id);
         $pergunta->usuario = $usuario->name;
+
         return view('perguntas.listPerg', ['pergunta' => $pergunta]);
     }
     /**
@@ -127,10 +134,19 @@ class QuestionController extends Controller
      * @param  \App\Models\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function edit(Question $pergunta)
+    // public function edit(Question $pergunta)
+    // {
+    //     //dd($pergunta->respObrigatoria);
+    //     return view('perguntas.edit', [
+    //         'pergunta' => $pergunta
+    //     ]);
+    // }
+    public function edit($id)
     {
+        $perguntas = Question::where('id', $id)->get();
+
         return view('perguntas.edit', [
-            'pergunta' => $pergunta
+            'perguntas' => $perguntas
         ]);
     }
     /**
@@ -140,11 +156,22 @@ class QuestionController extends Controller
      * @param  \App\Models\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Question $pergunta)
+    public function update(Request $request)
     {
-        // $pergunta->$request;
-        // dd($pergunta);
-        $pergunta->update($request->all());
+        $pergunta = Question::find($request->id);
+        $pergunta->pergunta             = $request->pergunta;
+        $pergunta->respObrigatoria      = implode(',', $request->obrigatoria);
+        $pergunta->tipoResposta         = implode(',', $request->tipoResposta);
+        $pergunta->update();
+
+        // return $pergunta;
+
+        // $perguntas->pergunta            = request('pergunta');
+        // $perguntas->respObrigatoria     = implode(',', request('obrigatoria'));
+        // $perguntas->tipoResposta        = implode(',', request('tipoResposta'));
+        // $perguntas->user_id             = request('usuario');
+        // $perguntas->update();
+
         return redirect()->route('perguntas.index')
             ->with('mensagem', 'Atualização realizada com sucesso!');
     }
@@ -154,10 +181,16 @@ class QuestionController extends Controller
      * @param  \App\Models\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function excluir(Question $question)
+    public function excluir($id)
     {
-        // dd($question);
-        $question->delete();
-        return back()->with('mensagem', 'Pergunta excluída com sucesso!');
+        // dd($id);
+        $pergunta = Question::find($id);
+        $pergunta->delete();
+
+        return redirect()->route('perguntas.index')
+            ->with(response()->json([
+                'status' => 200,
+                'message' => 'Pergunta excluída com sucesso!',
+            ]));
     }
 }

@@ -38,17 +38,20 @@
                             <td>{{ $pergunta->usuario }}</td>
                             <td>{{ date('d/m/Y', strtotime($pergunta->created_at)) }}</td>
                             <td>
-                                <a href=" {{ route('perguntas.index') }} " class="btn btn-primary btn-sm ml-2 mt-2"><i
-                                        class="fas fa-list"></i></a>
-                                <a href=" {{ route('pergunta.edit', [$pergunta->id]) }}"
-                                    class="btn btn-warning btn-sm ml-2 mt-2"><i class="fas fa-edit"></i></a>
-                                <a href="#" class="btn btn-danger btn-sm ml-2 mt-2"><i class="fas fa-trash"></i></a>
+                                <div class="button-group">
+                                    <a href=" {{ route('perguntas.index') }} " class="btn btn-primary btn-sm ml-2 mt-2"><i
+                                            class="fas fa-list"></i></a>
+                                    <a href=" {{ route('perguntas.edit', [$pergunta->id]) }}"
+                                        class="btn btn-warning btn-sm ml-2 mt-2"><i class="fas fa-edit"></i></a>
+                                    <button type="button" value=" {{ $pergunta->id }} "
+                                        class="delete_pergunta btn btn-danger btn-sm ml-1">Deletar</button>
+                                </div>
                             </td>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-                <div class="col-md-12">
+                <div class="col-md-4">
                     <div class="h-100 p-5 bg-light border rounded-3">
                         <label for="">Descrição da pergunta:</label>
                         <p>{{ $pergunta->pergunta }}</p>
@@ -64,9 +67,10 @@
                         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                             <a href=" {{ route('perguntas.index') }} " class="btn btn-primary btn-sm ml-2 mt-2"><i
                                     class="fas fa-list"></i></a>
-                            <a href=" {{ route('pergunta.edit', [$pergunta->id]) }}"
+                            <a href=" {{ route('perguntas.edit', [$pergunta->id]) }}"
                                 class="btn btn-warning btn-sm ml-2 mt-2"><i class="fas fa-edit"></i></a>
-                            <a href="{{ route('pergunta.delete', [$pergunta->id]) }}" class="btn btn-danger btn-sm ml-2 mt-2"><i class="fas fa-trash"></i></a>
+                            <a href="{{ route('pergunta.delete', [$pergunta->id]) }}"
+                                class="delete_pergunta btn btn-danger btn-sm ml-2 mt-2"><i class="fas fa-trash"></i></a>
                         </div>
                     </div>
                 </div>
@@ -89,6 +93,9 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
 
+    <script src=" {{ asset('js/app.js') }} "></script>
+    <script src=" {{ asset('site/jquery.js') }} "></script>
+    <script src=" {{ asset('site/question.js') }} "></script>
     <!-- Option 2: Separate Popper and Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
         integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous">
@@ -97,7 +104,4 @@
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous">
     </script>
 
-    <script>
-        console.log('Hi!');
-    </script>
 @stop
