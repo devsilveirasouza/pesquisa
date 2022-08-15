@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUpdateQuestionRequest;
 use Illuminate\Http\Request;
+
 use App\Models\Question;
 use App\Models\User;
 
 class QuestionController extends Controller
 {
+    // Chama view principal das perguntas
     public function indexPerguntas()
     {
         return view('perguntas.index');
     }
+    // Realiza a busca e monta os dados do datatable
     public function buscaDados(Request $request)
     {
         ## Leitura dos valores
@@ -91,19 +95,22 @@ class QuestionController extends Controller
     {
         return view('perguntas.create');
     }
-    // Cadastro
+    // Cadastra os dados no banco
     public function store(Request $request)
     {
         // $question = $request->all();
         // dd($question);
-
         $nova_pergunta = new Question();
+        //   ---   Campo DB   ----------------------   Campos Input   ---------------------------------   //
         $nova_pergunta->pergunta            = request('pergunta');
         $nova_pergunta->respObrigatoria     = implode(',', request('obrigatoria'));
         $nova_pergunta->tipoResposta        = implode(',', request('tipoResposta'));
         $nova_pergunta->user_id             = request('usuario');
+
+        // return $nova_pergunta;
         // dd($nova_pergunta);
         $nova_pergunta->save();
+
         return redirect()->route('perguntas.index')
             ->with('mensagem', 'Pergunta cadastrada com sucesso!');
     }
@@ -120,7 +127,7 @@ class QuestionController extends Controller
     {
         /**
          * -- Consulta o id de usuario informado na pergunta e
-         * busca o usuario e retorna o name da tabela Users
+         * busca o usuario e retorna o name  Users
          **/
 
         $usuario = User::find($pergunta->user_id);
@@ -129,18 +136,7 @@ class QuestionController extends Controller
         return view('perguntas.listPerg', ['pergunta' => $pergunta]);
     }
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Question  $question
-     * @return \Illuminate\Http\Response
-     */
-    // public function edit(Question $pergunta)
-    // {
-    //     //dd($pergunta->respObrigatoria);
-    //     return view('perguntas.edit', [
-    //         'pergunta' => $pergunta
-    //     ]);
-    // }
+     * Chama o formulário para editar os dados */
     public function edit($id)
     {
         $perguntas = Question::where('id', $id)->get();
@@ -150,7 +146,7 @@ class QuestionController extends Controller
         ]);
     }
     /**
-     * Update the specified resource in storage.
+     * Atualiza os dados enviados pelo formulário de edição
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Question  $question
@@ -162,21 +158,14 @@ class QuestionController extends Controller
         $pergunta->pergunta             = $request->pergunta;
         $pergunta->respObrigatoria      = implode(',', $request->obrigatoria);
         $pergunta->tipoResposta         = implode(',', $request->tipoResposta);
+        $pergunta->user_id              = $request->usuario;
         $pergunta->update();
-
-        // return $pergunta;
-
-        // $perguntas->pergunta            = request('pergunta');
-        // $perguntas->respObrigatoria     = implode(',', request('obrigatoria'));
-        // $perguntas->tipoResposta        = implode(',', request('tipoResposta'));
-        // $perguntas->user_id             = request('usuario');
-        // $perguntas->update();
 
         return redirect()->route('perguntas.index')
             ->with('mensagem', 'Atualização realizada com sucesso!');
     }
     /**
-     * Remove the specified resource from storage.
+     * Exclui um registro.
      *
      * @param  \App\Models\Question  $question
      * @return \Illuminate\Http\Response
@@ -187,10 +176,10 @@ class QuestionController extends Controller
         $pergunta = Question::find($id);
         $pergunta->delete();
 
-        return redirect()->route('perguntas.index')
-            ->with(response()->json([
+        // return redirect()->route('perguntas.index');
+            return response()->json([
                 'status' => 200,
-                'message' => 'Pergunta excluída com sucesso!',
-            ]));
+                'mensagem' => 'Pergunta excluída com sucesso!',
+            ]);
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\HtmlString;
 use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -55,7 +54,7 @@ class UserController extends Controller
             // Criando os botões
             $btnEdit        = '<button type="button" value="' . $user->id . '" class="edit_user btn btn-warning btn-sm ml-1">Edit</button>';
             $btnDelete      = '<button type="button" value="' . $user->id . '" class="delete_user btn btn-danger btn-sm ml-1">Delete</button>';
-            $btnDetails     = '<button type="button" value="'. $user->id .'" class="details_user btn btn-info btn-sm ml-1">View</button>';
+            $btnDetails     = '<button type="button" value="' . $user->id . '" class="details_user btn btn-info btn-sm ml-1">View</button>';
 
             $buttons = ['<nobr>' . $btnDetails . $btnEdit . $btnDelete . '</nobr>'];
 
@@ -130,7 +129,8 @@ class UserController extends Controller
         // $user -> $request;
         // dd($user);
         $user->update($request->all());
-        return redirect()->route('user.list')->with('mensagem', 'Alteração realizada com sucesso!');
+        return redirect()->route('user.list')
+            ->with('mensagem', 'Alteração realizada com sucesso!');
     }
     // Excluir registro
     public function excluir($id)
@@ -138,18 +138,16 @@ class UserController extends Controller
         $user = User::find($id);
         $user->delete();
         // dd($user);
-
         return response()->json([
-            'status'    => 200,
-            'message'   => 'Usuário excluído com sucesso!',
-        ]);
+                'status'    => 200,
+                'message'   => 'Usuário excluído com sucesso!',
+            ]);
     }
     // Mostra registro
     public function show($id)
     {
         $user = User::find($id);
         //dd($user);
-
-        return view('users.show', [ 'user'=>$user ]);
+        return view('users.show', ['user' => $user]);
     }
 }

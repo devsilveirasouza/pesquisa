@@ -16,6 +16,8 @@ class User extends Authenticatable
 
     use SoftDeletes;
 
+    protected $dates = ['deleted_at'];
+
     protected $table        = "users";
     protected $primaryKey   = "id";
 
@@ -45,7 +47,6 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-
     /**
      * The attributes that should be cast.
      *

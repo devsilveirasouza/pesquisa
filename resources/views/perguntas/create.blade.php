@@ -31,8 +31,8 @@
                     <input type="text" class="form-control" name="pergunta" placeholder="Digite sua pergunta..."
                         aria-label="Textname" aria-describedby="basic-addon1" required>
                     <!-- Input com o informações do usuário do tipo: hidden -->
-                    <input type="hidden" class="form-control" name="usuario" value="{{ $user = auth()->user()->id }}"
-                        aria-label="Textname" aria-describedby="basic-addon1">
+                    <input type="text" class="form-control" name="usuario" value="{{ $user = auth()->user()->id }}"
+                        aria-label="Textname" aria-describedby="basic-addon1" >
                 </div>
 
                 {{-- Button switch aqui --}}
@@ -44,8 +44,8 @@
                         <label class="form-check-label" for="inlineRadio1">SIM</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="obrigatoria[]" id="inlineRadio2"
-                        value="Não" checked>
+                        <input class="form-check-input" type="radio" name="obrigatoria[]" id="inlineRadio2" value="Não"
+                            checked>
                         <label class="form-check-label" for="inlineRadio2">NÃO</label>
                     </div>
                 </div>

@@ -16,12 +16,12 @@
     @endif
 
     {{-- Teste de parametros --}}
-    @php
+    {{-- @php
     $resposta = json_decode($perguntas[0]);
     print_r($resposta);
-    @endphp
+    @endphp --}}
 
-    {{-- Campos de entradas --}}
+    {{-- Formulário de Edição --}}
     <div class="card card-info">
         <form id="form_pergunta_edit" class="form_pergunta_edit" action="{{ route('perguntas.update', [ $perguntas[0]->id ]) }}" method="post">
             @csrf
@@ -98,7 +98,7 @@
             </div>
         </form>
     </div>
-
+    {{-- End Formulário de Edição --}}
 @stop
 
 @section('css')

@@ -12,9 +12,10 @@ class Option extends Model
 
     use SoftDeletes;
 
-    protected $table = 'options';
+    protected $dates = ['deleted_at'];
 
-    protected $table = ['deleted_at'];
+    protected $table            = "options";
+    protected $primaryKey       = "id";
 
     public function optionListResponse()
     {

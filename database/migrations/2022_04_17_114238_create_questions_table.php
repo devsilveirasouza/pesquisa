@@ -18,10 +18,8 @@ class CreateQuestionsTable extends Migration
             $table->longText('pergunta');
             $table->string('respObrigatoria');
             $table->string('tipoResposta');
-            $table->string('usuario');
             $table->timestamp('last_used_at')->nullable();
             $table->timestamps();
-            //$table->softDeletes();
         });
     }
     /**

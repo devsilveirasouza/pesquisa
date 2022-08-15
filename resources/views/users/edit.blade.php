@@ -70,8 +70,7 @@
 
             <div class="card-footer">
                 <button type="submit" class="btn btn-danger btn-md ml-2 mt-2">Atualizar</button>
-                <a href=" {{ route('user.list') }} " class="btn btn-primary btn-md col-sm-1 ml-2 mt-2"><i
-                        class="fas fa-list"></i></a>
+                <button type="button" class="btn btn-primary home_user btn-md col-sm-1 ml-2 mt-2">Home</button>
             </div>
         </form>
     </div>

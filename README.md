@@ -69,13 +69,23 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 Altered branch name for main. 
 
-## Configuração de Ambiente 
+## Configuração de Ambiente ##
 
-Apache 2.4.51
-MySql 5.7.36
-PHP 7.4.26
+Apache 2.4.47
+MySql 5.7.33
+PHP 7.4.19
 Composer 2.3.9
 Node v16.15.1
 Laravel 8
 
 Server local: Laragon
+
+Implementações:
+
+    = Breeze authentication
+    = Sweetalert2
+    = Bootstrap Switch
+    = Softdeletes
+    = DataTables Server Side 
+    = Paginação Ajax
+    = Reset de senha por email

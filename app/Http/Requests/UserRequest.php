@@ -39,7 +39,6 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            //
             'name'          => ['required', 'string'],
             'email'         => ['required', 'string', 'email'],
             'password'      => ['required', 'string'],

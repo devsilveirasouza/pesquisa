@@ -26,8 +26,8 @@ Route::get('/perguntas-listagem',                   [QuestionController::class, 
 Route::get('/pergunta/novo',                        [QuestionController::class, 'create'])->middleware('auth')->name('perguntas.create');
 Route::post('/pergunta/store',                      [QuestionController::class, 'store'])->middleware('auth')->name('perguntas.store');
 
-Route::get('/perguntas/edit/{id}',            [QuestionController::class, 'edit'])->middleware('auth')->name('perguntas.edit');
-Route::put('/perguntas/atualizar/{id}',        [QuestionController::class, 'update'])->name('perguntas.update');
+Route::get('/perguntas/edit/{id}',                  [QuestionController::class, 'edit'])->middleware('auth')->name('perguntas.edit');
+Route::put('/perguntas/atualizar/{id}',             [QuestionController::class, 'update'])->name('perguntas.update');
 
 Route::get('/pergunta/{pergunta}',                  [QuestionController::class, 'show'])->middleware('auth')->middleware('auth')->name('pergunta.listar');
 

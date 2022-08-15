@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOptionsTable extends Migration
+class AddSoftDeletesToQuestionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,11 @@ class CreateOptionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('options', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('id_pergunta');
-            $table->json('opcaoResposta');
+        Schema::table('questions', function (Blueprint $table) {
             $table->softDeletes();
-            $table->timestamps();
-
-            $table->foreign('id_pergunta') ->references('id') -> on ('questions');
         });
     }
+
     /**
      * Reverse the migrations.
      *
@@ -30,6 +25,8 @@ class CreateOptionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('options');
+        Schema::table('questions', function (Blueprint $table) {
+            $table->dropSoftDeletes();
+        });
     }
 }

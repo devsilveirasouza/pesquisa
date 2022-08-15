@@ -10,7 +10,7 @@
 {{-- Configuração do datatables --}}
 @php
 // Definindo cabeçalho do datatables
-$heads = ['ID', 'Nome', 'Email', 'Ações'];
+$heads = ['ID', 'Nome', 'Email', 'Opções'];
 // Rota do processamento ajax
 $url = route('user.listAll');
 // configuração geral do processamento dos dados
@@ -24,7 +24,12 @@ $config = [
     'ordering' => true,
     'ajax' => $url,
     'sDom' => 'blfrtip', // Configuração: 'DOM' de exibição do datatable
-    'columns' => [['data' => 'id'], ['data' => 'name'], ['data' => 'email', 'orderable' => false], ['data' => 'buttons', 'orderable' => false, 'no-export' => true, 'width' => 5]],
+    'columns' => [
+        ['data' => 'id', 'visible' => false],
+        ['data' => 'name'],
+        ['data' => 'email', 'orderable' => false],
+        ['data' => 'buttons', 'orderable' => false, 'no-export' => true, 'width' => 5]
+    ],
 ];
 @endphp
 
@@ -34,7 +39,7 @@ $config = [
 
     <div id="success_message">
         @if ($status = Session::get('mensagem'))
-            <h4> {{ $status }} </h4>
+            <h2> {{ $status }} </h2>
         @endif
     </div>
 
