@@ -31,7 +31,7 @@
                     <input type="text" class="form-control" name="pergunta" placeholder="Digite sua pergunta..."
                         aria-label="Textname" aria-describedby="basic-addon1" required>
                     <!-- Input com o informações do usuário do tipo: hidden -->
-                    <input type="text" class="form-control" name="usuario" value="{{ $user = auth()->user()->id }}"
+                    <input type="hidden" class="form-control" name="usuario" value="{{ $user = auth()->user()->id }}"
                         aria-label="Textname" aria-describedby="basic-addon1" >
                 </div>
 

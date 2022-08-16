@@ -96,7 +96,7 @@ class QuestionController extends Controller
         return view('perguntas.create');
     }
     // Cadastra os dados no banco
-    public function store(Request $request)
+    public function store(StoreUpdateQuestionRequest $request)
     {
         // $question = $request->all();
         // dd($question);
@@ -107,8 +107,6 @@ class QuestionController extends Controller
         $nova_pergunta->tipoResposta        = implode(',', request('tipoResposta'));
         $nova_pergunta->user_id             = request('usuario');
 
-        // return $nova_pergunta;
-        // dd($nova_pergunta);
         $nova_pergunta->save();
 
         return redirect()->route('perguntas.index')
@@ -133,7 +131,7 @@ class QuestionController extends Controller
         $usuario = User::find($pergunta->user_id);
         $pergunta->usuario = $usuario->name;
 
-        return view('perguntas.listPerg', ['pergunta' => $pergunta]);
+        return view('perguntas.descricao', ['pergunta' => $pergunta]);
     }
     /**
      * Chama o formulário para editar os dados */

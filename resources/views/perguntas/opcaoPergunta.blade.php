@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <div class="card-header">
-        <h1 class="card-title center">Painel Administrativo</h1>
+        <h3 class="card-title center">Opções de resposta</h3>
     </div>
 @stop
 
@@ -16,22 +16,37 @@
         <h2> {{ $status }} </h2>
     @endif
 
-    <h3>Cadastrar opções de resposta</h3>
 
-{{-- Em desenvolvimento com campos dinâmicos --}}
-<fieldset class="form-group">
-    <div class="row">
-        <div class="col-sm-10">
+
+    {{-- Em desenvolvimento com campos dinâmicos --}}
+    <div class="card card-info">
+
+        <div class="card-header">
+            <h3 class="card-title">Cadastrar opções de resposta</h3>
+        </div>
+        <div class="card-body">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend ">
+                    <span class="input-group-text" id="basic-addon1">Pergunta</span>
+
+                    <select name="pergunta[]" id="pergunta" class="col-sm-10">
+                        @foreach ($perguntas as $pergunta)
+                            <option value="">{{ $pergunta->pergunta }}</option>
+                        @endforeach
+                    </select>
+
+                </div>
+            </div>
             <div class="custom-control custom-input custom-control-inline">
                 <!-- Formulário Dinâmico -->
                 <div id="formulario">
                     <!-- Botão para chamar a função em JS que cria os campos -->
                     <div class="input-group mb-3">
                         <div class="col-sm-2">
-                            <label class="custom-control-label" for="customTextInline1">Opção: </label>
+                            <label class="custom-control-label" for="customTextInline1">Opção:</label>
                         </div>
-                        <button class="btn btn-outline-primary btn-success ml-4" type="button"
-                            id="button-addon1" onclick="adicionarCampo()"> + </button>
+                        <button class="btn btn-outline-primary btn-success ml-4" type="button" id="button-addon1"
+                            onclick="adicionarCampo()"> + </button>
                         <input type="text" class="form-control" for="option" name="option[]" id="option"
                             placeholder="Opção" aria-label="Option" aria-describedby="button-addon1">
                     </div>
@@ -39,14 +54,14 @@
                 <!-- FIM BLOCO -->
             </div>
         </div>
+
     </div>
-</fieldset>
-<div class="card-footer">
-    <div class="col-sm-10">
-        <button type="submit" class="btn btn-success float-right" value="Cadastrar"
-            name="cadastrar">Salvar</button>
+
+    <div class="card-footer">
+        <div class="col-sm-10">
+            <button type="submit" class="btn btn-success float-right" value="Cadastrar" name="cadastrar">Salvar</button>
+        </div>
     </div>
-</div>
 @stop
 
 <!-- Form -->
@@ -84,7 +99,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
     </script>
-    <script>
-        console.log('Hi!');
-    </script>
+
 @stop

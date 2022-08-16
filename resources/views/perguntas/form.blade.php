@@ -1,11 +1,11 @@
 @extends('adminlte::page')
 
-@section('title', 'Question Register')
+@section('title', 'Question Option')
 
 @section('content_header')
 
     <div class="card-header">
-        <h1 class="card-title">Acesso Administrativo</h1>
+        <h1 class="card-title">Opção de resposta</h1>
     </div>
 
 @stop
@@ -17,7 +17,7 @@
 
     <div class="card card-info">
         <div class="card-header">
-            <h3 class="card-title">Cadastrar pergunta</h3>
+            <h3 class="card-title">Cadastrar Opções de Resposta</h3>
         </div>
         <section>
             {{-- Formulário de cadastro --}}
@@ -165,11 +165,9 @@
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 @stop
 
 @section('js')
-    <script>
-        console.log('Hi!');
-    </script>
+
 @stop

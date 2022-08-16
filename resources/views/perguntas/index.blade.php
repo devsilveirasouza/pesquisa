@@ -37,7 +37,7 @@ $config = [
         ['data' => 'pergunta'],
         ['data' => 'respObrigatoria'],
         ['data' => 'tipoResposta'],
-        ['data' => 'usuario', 'orderable' => false],
+        ['data' => 'usuario', 'orderable' => false, 'visible' => false],
         ['data' => 'created_at', 'visible' => true],
         ['data' => 'buttons', 'orderable' => false, 'no-export' => true, 'width' => 5],
     ],

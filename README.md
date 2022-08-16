@@ -78,6 +78,8 @@ Composer 2.3.9
 Node v16.15.1
 Laravel 8
 
+*** php artisan optimize ***
+
 Server local: Laragon
 
 Implementações:

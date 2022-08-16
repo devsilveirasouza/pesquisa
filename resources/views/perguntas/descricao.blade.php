@@ -51,9 +51,6 @@
                                     <td>{{ date('d/m/Y', strtotime($pergunta->created_at)) }}</td>
                                     <td>
                                         <div class="button-group">
-                                            {{-- <a href=" {{ route('perguntas.index') }} " class="btn btn-primary btn-sm ml-2 mt-2">Home</a>
-                                    <a href=" {{ route('perguntas.edit', [$pergunta->id]) }}"
-                                        class="btn btn-warning btn-sm ml-2 mt-2">Editar</a> --}}
                                             <button type="button" value="Home"
                                                 class="home_pergunta btn btn-info btn-sm ml-1">Home</button>
                                             <button type="button" value=" {{ $pergunta->id }} "
