@@ -24,12 +24,7 @@ $config = [
     'ordering' => true,
     'ajax' => $url,
     'sDom' => 'blfrtip', // Configuração: 'DOM' de exibição do datatable
-    'columns' => [
-        ['data' => 'id', 'visible' => false],
-        ['data' => 'name'],
-        ['data' => 'email', 'orderable' => false],
-        ['data' => 'buttons', 'orderable' => false, 'no-export' => true, 'width' => 5]
-    ],
+    'columns' => [['data' => 'id', 'visible' => false], ['data' => 'name'], ['data' => 'email', 'orderable' => false], ['data' => 'buttons', 'orderable' => false, 'no-export' => true, 'width' => 5]],
 ];
 @endphp
 
@@ -51,11 +46,13 @@ $config = [
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="car-header">
-                        <h4 class="text-left mt-3 mb-2 ml-3">Dados dos usuários
-                            <a href="{{ route('user.create') }}"
-                                class="btn btn-primary float-end btn-sm mt-2 mb-2 mr-3 add_user">Cadastrar</a>
-                        </h4>
+                    <div class="card card-info">
+                        <div class="card card-header">
+                            <h4 class="text-left mt-3 mb-2 ml-3">Dados dos usuários
+                                <a href="{{ route('user.create') }}"
+                                    class="btn btn-warning float-end btn-sm mt-2 mb-2 mr-3 add_user">Cadastrar</a>
+                            </h4>
+                        </div>
                     </div>
                     <div class="card-body">
                         <x-adminlte-datatable id="consulta" class="consulta_table" :heads="$heads" :config="$config"

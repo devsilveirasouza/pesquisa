@@ -40,15 +40,22 @@ class OptionController extends Controller
         // dd($opcao);
         $opcao->save();
 
-        return redirect()->route('perguntas.index')
+        return redirect()->route('perguntasopcao.show')
             ->with('mensagem', 'Opção cadastrada com sucesso!');
     }
 
     public function show(Option $request)
     {
-        $options = $request->all();
+        $options        = $request->all();
 
-        // dd($options);
-        return view('perguntas.opcaoShow', ['options' => $options]);
+        $perguntas      = Question::all();
+
+        // $options = $pergunta;
+
+        // $options->id_pergunta = $pergunta->pergunta;
+        // $options->id_pergunta = $pergunta->pergunta;
+        // dd($pergunta);
+        return view('perguntas.opcaoShow', [ 'perguntas' => $perguntas, 'options' => $options]);
+        // return view('perguntas.opcaoShow', [ 'options' => $options ]);
     }
 }

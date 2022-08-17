@@ -109,7 +109,7 @@ class QuestionController extends Controller
 
         $nova_pergunta->save();
 
-        return redirect()->route('perguntas.index')
+        return redirect()->route('perguntasopcao.show')
             ->with('mensagem', 'Pergunta cadastrada com sucesso!');
     }
     // /**

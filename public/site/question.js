@@ -118,8 +118,8 @@ $(document).ready(function () {
         var url = "/perguntasopcao/";
         var rota = url + opcao_id;
 
-        // console.log(rota);
-        window.location.href = rota;
+        console.log(rota);
+        // window.location.href = rota;
     });
     // Cadastrar: Sweetalert2 para confirmação
     $(".form_create_opcao_pergunta").submit(function (e) {

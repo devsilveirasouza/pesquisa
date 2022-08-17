@@ -280,7 +280,7 @@ return [
                 ],
                 [
                     'text' => 'Opções de resposta',
-                    'url'  => '/perguntasopcao',
+                    'url'  => '/perguntas-opcao',
                     'icon' => 'fas fa-fw fa-list',
                 ],
                 [
