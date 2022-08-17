@@ -4,6 +4,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OptionController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\UserController;
+use App\Models\Option;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/',                                      HomeController::class);
@@ -34,6 +35,9 @@ Route::get('/pergunta/{pergunta}',                  [QuestionController::class, 
 
 Route::delete('/perguntas-delete/{id}',             [QuestionController::class, 'excluir'])->middleware('auth')->name('pergunta.delete');
 // -------------------------------------Opções Perguntas---------------------------------------------------------------------------------
-Route::get('/perguntasopcao',                       [OptionController::class, 'index']);
+Route::get('/perguntasopcao/{pergunta}',            [OptionController::class,   'create'])->name('opcao.create');
+Route::post('/perguntasopcao/store',                [OptionController::class,   'store'])->name('perguntasopcao.store');
+
+Route::get('/perguntas-opcao',                       [OptionController::class,   'show'])->name('perguntasopcao.show');
 
 require __DIR__ . '/auth.php';

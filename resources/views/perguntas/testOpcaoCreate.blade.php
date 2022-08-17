@@ -20,46 +20,55 @@
 
     {{-- Em desenvolvimento com campos dinâmicos --}}
     <div class="card card-info">
-
-        <div class="card-header">
-            <h3 class="card-title">Cadastrar opções de resposta</h3>
-        </div>
-        <div class="card-body">
-            <div class="input-group mb-3">
-                <div class="input-group-prepend ">
-                    <span class="input-group-text" id="basic-addon1">Pergunta</span>
-
-                    <select name="pergunta[]" id="pergunta" class="col-sm-10">
-                        @foreach ($perguntas as $pergunta)
-                            <option value="">{{ $pergunta->pergunta }}</option>
-                        @endforeach
-                    </select>
-
-                </div>
+        <form id="form_create_opcao_pergunta" class="form_create_opcao_pergunta" action="{{ route('perguntasopcao.store') }}"
+            method="post">
+            @csrf
+            <div class="card-header">
+                <h3 class="card-title">Cadastrar opções de resposta</h3>
             </div>
-            <div class="custom-control custom-input custom-control-inline">
-                <!-- Formulário Dinâmico -->
-                <div id="formulario">
-                    <!-- Botão para chamar a função em JS que cria os campos -->
-                    <div class="input-group mb-3">
-                        <div class="col-sm-2">
-                            <label class="custom-control-label" for="customTextInline1">Opção:</label>
-                        </div>
-                        <button class="btn btn-outline-primary btn-success ml-4" type="button" id="button-addon1"
-                            onclick="adicionarCampo()"> + </button>
-                        <input type="text" class="form-control" for="option" name="option[]" id="option"
-                            placeholder="Opção" aria-label="Option" aria-describedby="button-addon1">
+            <div class="card-body">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend ">
+                        <span class="input-group-text" id="basic-addon1">Pergunta</span>
+
+                        <select name="pergunta[]" id="pergunta" class="col-sm-10">
+                            @foreach ($perguntas as $pergunta)
+                                <option value="{{ $pergunta->id }}">{{ $pergunta->pergunta }}</option>
+                            @endforeach
+                        </select>
                     </div>
+
+                    <div class="input">
+                        @if ($pergunta->respObrigatoria === "Sim")
+                        <div class="custom-control custom-input custom-control-inline">
+                            <!-- Formulário Dinâmico -->
+                            <div id="formulario">
+                                <!-- Botão para chamar a função em JS que cria os campos -->
+                                <div class="input-group mb-3">
+                                    <div class="col-sm-2">
+                                        <label class="custom-control-label" for="customTextInline1">Opção:</label>
+                                    </div>
+                                    <button class="btn btn-outline-primary btn-success ml-4" type="button" id="button-addon1"
+                                        onclick="adicionarCampo()"> + </button>
+                                    <input type="text" class="form-control" for="option" name="option[]" id="option"
+                                        placeholder="Opção" aria-label="Option" aria-describedby="button-addon1">
+                                </div>
+                            </div>
+                            <!-- FIM BLOCO -->
+                        </div>
+                        @endif
+                    </div>
+
                 </div>
-                <!-- FIM BLOCO -->
+
             </div>
-        </div>
 
     </div>
 
     <div class="card-footer">
         <div class="col-sm-10">
-            <button type="submit" class="btn btn-success float-right" value="Cadastrar" name="cadastrar">Salvar</button>
+            <button type="submit" class="btn_opcao_pergunta btn btn-success float-right" value="Cadastrar"
+                name="cadastrar">Salvar</button>
         </div>
     </div>
 @stop

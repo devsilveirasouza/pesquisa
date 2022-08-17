@@ -10,15 +10,7 @@
 {{-- Configuração do datatables --}}
 @php
 // Definindo cabeçalho do datatables
-$heads = [
-    'ID',
-    'Pergunta.',
-    'Resp. Obrigatória',
-    'Tipo Resposta',
-    'Id User',
-    'Data de Cadastro ',
-    'Ações',
-];
+$heads = ['ID', 'Pergunta.', 'Resp. Obrigatória', 'Tipo Resposta', 'Id User', 'Data de Cadastro ', 'Ações'];
 // Rota do processamento ajax
 $url = route('perguntas.listagem');
 // configuração geral do processamento  dos dados
@@ -32,15 +24,7 @@ $config = [
     'ordering' => true,
     'ajax' => $url,
     'sDom' => 'blfrtip', // Configuração: 'DOM' de exibição do datatable
-    'columns' => [
-        ['data' => 'id', 'visible' => false],
-        ['data' => 'pergunta'],
-        ['data' => 'respObrigatoria'],
-        ['data' => 'tipoResposta'],
-        ['data' => 'usuario', 'orderable' => false, 'visible' => false],
-        ['data' => 'created_at', 'visible' => true],
-        ['data' => 'buttons', 'orderable' => false, 'no-export' => true, 'width' => 5],
-    ],
+    'columns' => [['data' => 'id', 'visible' => false], ['data' => 'pergunta'], ['data' => 'respObrigatoria'], ['data' => 'tipoResposta'], ['data' => 'usuario', 'orderable' => false, 'visible' => false], ['data' => 'created_at', 'visible' => true], ['data' => 'buttons', 'orderable' => false, 'no-export' => true, 'width' => 5]],
 ];
 @endphp
 
@@ -56,23 +40,39 @@ $config = [
 
 @section('content')
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="car-header">
-                    <h4 class="text-left mt-3 mb-2 ml-3">Perguntas cadastradas
-                        <a href="{{ route('perguntas.create') }}"
-                            class="btn btn-primary float-end btn-sm mt-2 mb-2 mr-3 add_user">Cadastrar</a>
-                    </h4>
-                </div>
-                <div class="card-body">
-                    <x-adminlte-datatable id="pergunta" :heads="$heads" :config="$config" striped hoverable bordered compressed with="buttons"/>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="text-left mt-3 mb-2 ml-3">Perguntas cadastradas
+                            <a href="{{ route('perguntas.create') }}"
+                                class="btn btn-primary float-end btn-sm mt-2 mb-2 mr-3 add_user">Cadastrar</a>
+                        </h3>
+                    </div>
+
+                    <div class="col-sm-mb-10">
+                        <div class="card-info">
+
+                            <div class="input-group input-daterange">
+                                <div id="datepicker" data-date="12/03/2012"></div>
+                                <input type="date" id="my_hidden_input">
+                                <div class="input-group-addon "> Até </div>
+                                <div id="datepicker" data-date="12/03/2022"></div>
+                                <input type="date" id="my_hidden_input">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <x-adminlte-datatable id="pergunta" :heads="$heads" :config="$config" striped hoverable bordered
+                            compressed with="buttons" />
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
-</div>
 
 @stop
 
@@ -91,6 +91,15 @@ $config = [
     <script src=" {{ asset('js/jquery-3.6.0.min.js') }} "></script>
     {{-- Scripts Perguntas --}}
     <script src=" {{ asset('site/question.js') }} "></script>
+
+    <script>
+        $('#datepicker').datepicker();
+        $('#datepicker').on('changeDate', function() {
+            $('#my_hidden_input').val(
+                $('#datepicker').datepicker('getFormattedDate')
+            );
+        });
+    </script>
     <!-- Datatables jquery min js -->
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <!-- Option 1: Bootstrap Bundle with Popper -->

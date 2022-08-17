@@ -5,17 +5,50 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Question;
 use App\Models\User;
+use App\Models\Option;
 
 class OptionController extends Controller
 {
     public function index()
     {
-        $perguntas = Question::all();
+        return "Indefinida ainda!";
+    }
 
-        return view('perguntas.opcaoPergunta')
-            ->with(['perguntas' => $perguntas]);
+    public function create(Question $pergunta)
+    {
+        /**
+         * -- Consulta o id de usuario informado na pergunta e
+         * busca o usuario e retorna o name  Users
+         **/
+        $usuario = User::find($pergunta->user_id);
+        // dd($usuario);
+
+        $pergunta->usuario = $usuario->name;
+
+        return view('perguntas.opcaoCreate', ['pergunta' => $pergunta]);
+    }
+
+    public function store(Request $request)
+    {
+        //$opcao = $request->all();
+        $opcao = new Option;
+
+        $opcao->id_pergunta = $request->id_pergunta;
+        $opcao->opcaoResposta = $request->option;
+        // $opcao->opcaoResposta = implode(',', ($request->option));
+
+        // dd($opcao);
+        $opcao->save();
+
+        return redirect()->route('perguntas.index')
+            ->with('mensagem', 'Opção cadastrada com sucesso!');
+    }
+
+    public function show(Option $request)
+    {
+        $options = $request->all();
+
+        // dd($options);
+        return view('perguntas.opcaoShow', ['options' => $options]);
     }
 }
-
-// $usuario = User::find($pergunta->user_id);
-// $pergunta->usuario = $usuario->name;

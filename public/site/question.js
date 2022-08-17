@@ -41,7 +41,7 @@ $(document).ready(function () {
             }
         });
     });
-    // Cadastrar Usuário: Sweetalert2 para confirmação
+    // Cadastrar: Sweetalert2 para confirmação
     $(".form_create_pergunta").submit(function (e) {
         e.preventDefault();
 
@@ -97,7 +97,7 @@ $(document).ready(function () {
         });
     });
 
-    //Editar: Ajax & Sweetalert2
+    // Visualizar: Ajax & Sweetalert2
     $(document).on("click", ".details_pergunta", function (e) {
         e.preventDefault();
 
@@ -109,7 +109,38 @@ $(document).ready(function () {
         // console.log(rota);
         window.location.href = rota;
     });
+    // Direciona para tela de Cadastro de Opções de respostas
+    $(document).on("click", ".opcao_create", function (e) {
+        e.preventDefault();
 
+        var opcao_id = $(this).val();
+        // console.log(user_id);
+        var url = "/perguntasopcao/";
+        var rota = url + opcao_id;
+
+        // console.log(rota);
+        window.location.href = rota;
+    });
+    // Cadastrar: Sweetalert2 para confirmação
+    $(".form_create_opcao_pergunta").submit(function (e) {
+        e.preventDefault();
+
+        Swal.fire({
+            title: "Você têm certeza ?",
+            text: "Quer salvar este registro!",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Sim, Salvar!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.submit();
+                Swal.fire("Salvo!", "O registro foi Salvo.", "success");
+            }
+        });
+    });
+    // Direciona para Home de perguntas
     $(document).on("click", ".home_pergunta", function (e) {
         e.preventDefault();
 

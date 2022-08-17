@@ -279,9 +279,9 @@ return [
                     'icon' => 'fas fa-fw fa-user',
                 ],
                 [
-                    'text' => 'Cadastrar de Pergunta',
-                    'url'  => '/pergunta/novo',
-                    'icon' => 'fas fa-fw fa-question',
+                    'text' => 'Opções de resposta',
+                    'url'  => '/perguntasopcao',
+                    'icon' => 'fas fa-fw fa-list',
                 ],
                 [
                     'text' => 'Register',

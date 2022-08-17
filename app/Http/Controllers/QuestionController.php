@@ -61,11 +61,11 @@ class QuestionController extends Controller
 
             // Criando os botões
             $btnEdit        = '<button type="button" value="' . $record->id . '" class="edit_pergunta btn btn-warning btn-sm ml-1">Editar</button>';
-            // <a href="'.route('perguntas.edit', ['pergunta'=>$record->id]).'" class="btn btn-primary btn-sm col-sm-1 ml-2 mt-2" >Editar</a>
             $btnDelete      = '<button type="button" value="' . $record->id . '" class="delete_pergunta btn btn-danger btn-sm ml-1">Deletar</button>';
-            $btnDetails     = '<button type="button" value="' . $record->id . '" class="details_pergunta btn btn-info btn-sm ml-1">Visualizar</button>';
+            $btnOption     = '<button type="button" value="' . $record->id . '" class="opcao_create btn btn-success btn-sm ml-1">Opção</button>';
+            $btnDetails     = '<button type="button" value="' . $record->id . '" class="details_pergunta btn btn-info btn-sm ml-1">View</button>';
 
-            $buttons                = ['<nobr>' . $btnDetails . $btnEdit . $btnDelete . '</nobr>'];
+            $buttons                = ['<nobr>' . $btnOption . $btnDetails . $btnEdit . $btnDelete . '</nobr>'];
             // Carregando as informações no array
             $data_arr[] = array(
                 "id"                => $id,
@@ -112,26 +112,27 @@ class QuestionController extends Controller
         return redirect()->route('perguntas.index')
             ->with('mensagem', 'Pergunta cadastrada com sucesso!');
     }
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Question  $question
-     * @return \Illuminate\Http\Response
-     */
-    /**
-     * Mostra um registro especifico passando id pela rota
-     */
+    // /**
+    //  * Display the specified resource.
+    //  *
+    //  * @param  \App\Models\Question  $question
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // /**
+    //  * Mostra um registro especifico passando id pela rota
+    //  */
+
     public function show(Question $pergunta)
     {
         /**
          * -- Consulta o id de usuario informado na pergunta e
          * busca o usuario e retorna o name  Users
          **/
-
         $usuario = User::find($pergunta->user_id);
+        // dd($usuario);
         $pergunta->usuario = $usuario->name;
 
-        return view('perguntas.descricao', ['pergunta' => $pergunta]);
+        return view('perguntas.show', ['pergunta' => $pergunta]);
     }
     /**
      * Chama o formulário para editar os dados */
