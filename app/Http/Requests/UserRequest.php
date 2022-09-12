@@ -30,7 +30,6 @@ class UserRequest extends FormRequest
             ]);
         }
     }
-
     /**
      * Busca as regras de validação e aplica na solicitação.
      *
@@ -39,9 +38,9 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'          => ['required', 'string'],
-            'email'         => ['required', 'string', 'email'],
-            'password'      => ['required', 'string'],
+            'name'          => 'bail|required|string|min:3|max:100',
+            'email'         => 'bail|required|email|unique:users,email',
+            'password'      => 'bail|required|string',
         ];
     }
 }

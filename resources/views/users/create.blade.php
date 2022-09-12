@@ -15,7 +15,6 @@
         <h2> {{ $status }} </h2>
     @endif
 
-
     <div class="card card-info">
         <div class="card-header">
             <h3 class="card-title">Cadastro de Usuário</h3>
@@ -24,31 +23,34 @@
         <form class="form-horizontal form_create_user" id="form_create_user" action="{{ route('user.store') }}" method="post">
             @csrf
             <div class="card-body">
+                {{-- Nome --}}
                 <div class="form-group row">
                     <label for="inputText3" class="col-sm-2 col-form-label">Name</label>
                     <div class="col-sm-10">
                         <input type="text" class="name form-control" id="inputText3" name="name" placeholder="Name"
-                            required>
+                            />
                         @if ($errors->has('name'))
                             <h6> Favor inserir seu nome! </h6>
                         @endif
                     </div>
                 </div>
+                {{-- Email --}}
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
                     <div class="col-sm-10">
                         <input type="email" class="email form-control" id="inputEmail3" name="email" placeholder="Email"
-                            required>
+                            />
                         @if ($errors->has('name'))
                             <h6> Favor inserir seu email! </h6>
                         @endif
                     </div>
                 </div>
+                {{-- Senha --}}
                 <div class="form-group row">
                     <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
                     <div class="col-sm-10">
                         <input type="password" class="password form-control" id="inputPassword3" name="password"
-                            placeholder="Password" required>
+                            placeholder="Password" />
                         @if ($errors->has('password'))
                             <h6> Favor inserir sua senha! </h6>
                         @endif

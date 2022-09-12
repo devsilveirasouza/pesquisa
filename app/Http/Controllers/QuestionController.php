@@ -3,17 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUpdateQuestionRequest;
+use App\Models\Option;
 use Illuminate\Http\Request;
 
 use App\Models\Question;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class QuestionController extends Controller
 {
     // Chama view principal das perguntas
-    public function indexPerguntas()
+    public function index()
     {
-        return view('perguntas.index');
+        return view('questions.index');
     }
     // Realiza a busca e monta os dados do datatable
     public function buscaDados(Request $request)
@@ -36,13 +38,13 @@ class QuestionController extends Controller
         $totalRecords               = Question::select('count(*) as allcount')->count();
         // Total de registros com filtros
         $totalRecordswithFilter     = Question::select('count(*) as allcount')
-            ->where('pergunta', 'like', '%' . $searchValue . '%')
-            ->orWhere('tipoResposta', 'like', '%' . $searchValue . '%')
+            ->where('titulo', 'like', '%' . $searchValue . '%')
+            ->orWhere('tipo', 'like', '%' . $searchValue . '%')
             ->count();
         // Buscar registros
         $records                    = Question::orderBy($columnName, $columnSortOrder)
-            ->where('pergunta', 'like', '%' . $searchValue . '%')
-            ->orWhere('tipoResposta', 'like', '%' . $searchValue . '%')
+            ->where('titulo', 'like', '%' . $searchValue . '%')
+            ->orWhere('tipo', 'like', '%' . $searchValue . '%')
             ->select('questions.*')
             ->skip($start)
             ->take($rowperpage)
@@ -53,26 +55,26 @@ class QuestionController extends Controller
         // Atribuindo as informações
         foreach ($records as $record) {
             $id                     = $record->id;
-            $pergunta               = $record->pergunta;
-            $respObrigatoria        = $record->respObrigatoria;
-            $tipoResposta           = $record->tipoResposta;
-            $usuario                = $record->user_id;
+            $titulo                 = $record->titulo;
+            $obrigatoria            = $record->obrigatoria;
+            $tipo                   = $record->tipo;
+            $user_id                = $record->user_id;
+
             $created_at             = \Carbon\Carbon::parse($record->created_at)->format('d/m/Y');
 
-            // Criando os botões
-            $btnEdit        = '<button type="button" value="' . $record->id . '" class="edit_pergunta btn btn-warning btn-sm ml-1">Editar</button>';
-            $btnDelete      = '<button type="button" value="' . $record->id . '" class="delete_pergunta btn btn-danger btn-sm ml-1">Deletar</button>';
-            $btnOption     = '<button type="button" value="' . $record->id . '" class="opcao_create btn btn-success btn-sm ml-1">Opção</button>';
-            $btnDetails     = '<button type="button" value="' . $record->id . '" class="details_pergunta btn btn-info btn-sm ml-1">View</button>';
+            // Criantipodo os botões
+            $btnEdit        = '<button type="button" value="' . $id . '" class="edit_pergunta btn btn-warning btn-sm ml-1">Edit</button>';
+            $btnDelete      = '<button type="button" value="' . $id . '" class="delete_pergunta btn btn-danger btn-sm ml-1">Delete</button>';
+            $btnDetails     = '<button type="button" value="' . $id . '" class="details_pergunta btn btn-info btn-sm ml-1">Detaills</button>';
 
-            $buttons                = ['<nobr>' . $btnOption . $btnDetails . $btnEdit . $btnDelete . '</nobr>'];
+            $buttons                = ['<nobr>' . $btnDetails . $btnEdit . $btnDelete . '</nobr>'];
             // Carregando as informações no array
             $data_arr[] = array(
                 "id"                => $id,
-                "pergunta"          => $pergunta,
-                "respObrigatoria"   => $respObrigatoria,
-                "tipoResposta"      => $tipoResposta,
-                "usuario"           => $usuario,
+                "titulo"            => $titulo,
+                "obrigatoria"       => $obrigatoria,
+                "tipo"              => $tipo,
+                "user_id"           => $user_id,
                 "created_at"        => $created_at,
                 "buttons"           => $buttons
             );
@@ -93,23 +95,31 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        return view('perguntas.create');
+        $options = Option::all();
+
+        return view('questions.create')
+            ->with('options', $options);
     }
-    // Cadastra os dados no banco
+    // Cadastrar os dados no banco
     public function store(StoreUpdateQuestionRequest $request)
     {
-        // $question = $request->all();
-        // dd($question);
-        $nova_pergunta = new Question();
-        //   ---   Campo DB   ----------------------   Campos Input   ---------------------------------   //
-        $nova_pergunta->pergunta            = request('pergunta');
-        $nova_pergunta->respObrigatoria     = implode(',', request('obrigatoria'));
-        $nova_pergunta->tipoResposta        = implode(',', request('tipoResposta'));
-        $nova_pergunta->user_id             = request('usuario');
 
-        $nova_pergunta->save();
+        DB::beginTransaction();
+        // Recuperando o dado inserido no banco
+        $question = Question::create($request->all());
+        // Verifica se se existe um campo chamado options na requisição
+        if ($request->has('options')) {
+            /** chamando o relacionamento (options)
+             * attach => adicione (aceita array de ids) => somente adiciona
+             *  */
+            // $question->options()->attach($request->options);
+            /** sync => atualiza o registro dos relacionamentos */
+            $question->options()->sync($request->options);
+        }
 
-        return redirect()->route('perguntasopcao.show')
+        DB::commit();
+
+        return redirect()->route('perguntas.index')
             ->with('mensagem', 'Pergunta cadastrada com sucesso!');
     }
     // /**
@@ -122,27 +132,35 @@ class QuestionController extends Controller
     //  * Mostra um registro especifico passando id pela rota
     //  */
 
-    public function show(Question $pergunta)
+    public function show($id)
     {
         /**
          * -- Consulta o id de usuario informado na pergunta e
          * busca o usuario e retorna o name  Users
          **/
-        $usuario = User::find($pergunta->user_id);
-        // dd($usuario);
-        $pergunta->usuario = $usuario->name;
+        $question = Question::with(['user', 'options'])->find($id);
 
-        return view('perguntas.show', ['pergunta' => $pergunta]);
+        $user       =   User::all();
+        $options    =   Option::all();
+
+        return view('questions.show')
+            ->with('question', $question)
+            ->with('user', $user)
+            ->with('options', $options);
     }
     /**
      * Chama o formulário para editar os dados */
     public function edit($id)
     {
-        $perguntas = Question::where('id', $id)->get();
+        $question = Question::with(['user', 'options'])->find($id);
 
-        return view('perguntas.edit', [
-            'perguntas' => $perguntas
-        ]);
+        $user = User::all();
+        $options = Option::all();
+
+        return view('questions.edit')
+            ->with('question', $question)
+            ->with('user', $user)
+            ->with('options', $options);
     }
     /**
      * Atualiza os dados enviados pelo formulário de edição
@@ -151,14 +169,20 @@ class QuestionController extends Controller
      * @param  \App\Models\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        $pergunta = Question::find($request->id);
-        $pergunta->pergunta             = $request->pergunta;
-        $pergunta->respObrigatoria      = implode(',', $request->obrigatoria);
-        $pergunta->tipoResposta         = implode(',', $request->tipoResposta);
-        $pergunta->user_id              = $request->usuario;
-        $pergunta->update();
+
+        $question = Question::find($id);
+
+        DB::beginTransaction();
+
+        $question->update($request->all());
+
+        if ($request->has('options')) {
+            $question->options()->sync($request->options);
+        }
+
+        DB::commit();
 
         return redirect()->route('perguntas.index')
             ->with('mensagem', 'Atualização realizada com sucesso!');
@@ -169,16 +193,19 @@ class QuestionController extends Controller
      * @param  \App\Models\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function excluir($id)
+    public function excluir(Request $request, $id)
     {
-        // dd($id);
-        $pergunta = Question::find($id);
-        $pergunta->delete();
+        $question = Question::find($id);
 
-        // return redirect()->route('perguntas.index');
-            return response()->json([
-                'status' => 200,
-                'mensagem' => 'Pergunta excluída com sucesso!',
-            ]);
+        DB::beginTransaction();
+
+        $question->delete();
+
+        DB::commit();
+
+        return response()->json([
+            'status' => 200,
+            'mensagem' => 'Pergunta excluída com sucesso!',
+        ]);
     }
 }

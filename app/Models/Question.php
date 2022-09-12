@@ -13,36 +13,19 @@ class Question extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $table        = "questions";
-    protected $primaryKey   = "id";
-
     protected $fillable     =   [
 
-        'pergunta','respObrigatoria','tipoResposta'
-    ];
-
-    // protected $dates        = [ 'deleted_at' ];
-
-    // protected $hidden       =  ['deleted_at'];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts        = [
-        'respObrigatoria'   => 'array',
-        'tipoResposta'      => 'array',
+        'titulo','obrigatoria','tipo','user_id'
     ];
 
     public function user()
-    {
-        return $this->belongsTo('App\Models\User');
+    {   // Pertence á User
+        return $this->belongsTo(User::class);
     }
 
-    public function option()
-    {
-        return $this->belongsToMany('App\Models\Option');
+    public function options()
+    {   // Têm muitas Options
+        return $this->belongsToMany(Option::class)->withTimestamps();
     }
 
 }

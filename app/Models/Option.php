@@ -13,18 +13,10 @@ class Option extends Model
 
     protected $dates                = ['deleted_at'];
 
-    protected $table                = "options";
+    protected $fillable             = ['titulo'];
 
-    protected $primaryKey           = "id";
-
-    protected $fillable             = ['id_pergunta'];
-
-    protected $casts                = [
-        'opcaoResposta'             => 'array'
-    ];
-
-    public function question()
-    {
-        return $this->belongsToMany('App\Models\Question');
+    public function questions()
+    {   // Têm muitas Options
+        return $this->belongsToMany(Question::class)->withTimestamps();
     }
 }

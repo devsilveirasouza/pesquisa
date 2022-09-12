@@ -24,9 +24,9 @@ class StoreUpdateQuestionRequest extends FormRequest
     public function rules()
     {
         return [
-            'pergunta'          => ['required'],
-            'obrigatoria'       => ['required'],
-            'tipoResposta'      => ['required']
+            'titulo'            => 'bail|required',
+            'obrigatoria'       => 'bail|required',
+            'tipo'              => 'bail|required'
         ];
     }
 }

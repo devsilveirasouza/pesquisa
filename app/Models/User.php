@@ -18,7 +18,6 @@ class User extends Authenticatable
 
     protected $dates = ['deleted_at'];
 
-    protected $table        = "users";
     protected $primaryKey   = "id";
 
     public function sendPasswordResetNotification($token)
@@ -35,7 +34,7 @@ class User extends Authenticatable
     protected $fillable     = [
         'name',
         'email',
-        'password',
+        'password'
     ];
 
     /**
@@ -45,8 +44,9 @@ class User extends Authenticatable
      */
     protected $hidden       = [
         'password',
-        'remember_token',
+        'remember_token'
     ];
+
     /**
      * The attributes that should be cast.
      *
@@ -56,8 +56,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function perguntas()
-    {   // Um pra muitos
-        return $this->hasMany('App\Models\Question');
+    public function questions()
+    {   // Têm muitas Questions
+        return $this->hasMany(Question::class);
     }
 }

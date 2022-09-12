@@ -42,24 +42,24 @@ $(document).ready(function () {
         });
     });
     // Cadastrar: Sweetalert2 para confirmação
-    $(".form_create_pergunta").submit(function (e) {
-        e.preventDefault();
+    // $(".form_create_pergunta").submit(function (e) {
+    //     e.preventDefault();
 
-        Swal.fire({
-            title: "Você têm certeza ?",
-            text: "Quer salvar este registro!",
-            icon: "question",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Sim, Salvar!",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                this.submit();
-                Swal.fire("Salvo!", "O registro foi Salvo.", "success");
-            }
-        });
-    });
+    //     Swal.fire({
+    //         title: "Você têm certeza ?",
+    //         text: "Quer salvar este registro!",
+    //         icon: "question",
+    //         showCancelButton: true,
+    //         confirmButtonColor: "#3085d6",
+    //         cancelButtonColor: "#d33",
+    //         confirmButtonText: "Sim, Salvar!",
+    //     }).then((result) => {
+    //         if (result.isConfirmed) {
+    //             this.submit();
+    //             Swal.fire("Salvo!", "O registro foi Salvo.", "success");
+    //         }
+    //     });
+    // });
     //Editar: Ajax & Sweetalert2
     $(document).on("click", ".edit_pergunta", function (e) {
         e.preventDefault();
@@ -102,7 +102,7 @@ $(document).ready(function () {
         e.preventDefault();
 
         var pergunta_id = $(this).val();
-        // console.log(user_id);
+        // console.log(pergunta_id);
         var url = "/pergunta/";
         var rota = url + pergunta_id;
 
@@ -114,12 +114,15 @@ $(document).ready(function () {
         e.preventDefault();
 
         var opcao_id = $(this).val();
-        // console.log(user_id);
+        // console.log(opcao_id);
         var url = "/perguntasopcao/";
         var rota = url + opcao_id;
 
-        console.log(rota);
-        // window.location.href = rota;
+        // console.log(rota);
+        setTimeout(function() {
+            window.location.href = rota;
+        }, 1500);
+
     });
     // Cadastrar: Sweetalert2 para confirmação
     $(".form_create_opcao_pergunta").submit(function (e) {

@@ -15,12 +15,9 @@ class CreateOptionsTable extends Migration
     {
         Schema::create('options', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_pergunta');
-            $table->json('opcaoResposta');
+            $table->string('titulo');
             $table->softDeletes();
             $table->timestamps();
-
-            $table->foreign('id_pergunta') ->references('id') -> on ('questions');
         });
     }
     /**

@@ -1,23 +1,23 @@
 $(document).ready(function () {
     // Cadastrar Usuário: Sweetalert2 para confirmação
-    $(".form_create_user").submit(function (e) {
-        e.preventDefault();
+    // $(".form_create_user").submit(function (e) {
+    //     e.preventDefault();
 
-        Swal.fire({
-            title: "Você têm certeza?",
-            text: "Quer salvar este registro!",
-            icon: "question",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Sim, Salvar!",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                this.submit();
-                Swal.fire("Saved!", "O registro foi salvo com sucesso!", "success");
-            }
-        });
-    });
+    //     Swal.fire({
+    //         title: "Você têm certeza?",
+    //         text: "Quer salvar este registro!",
+    //         icon: "question",
+    //         showCancelButton: true,
+    //         confirmButtonColor: "#3085d6",
+    //         cancelButtonColor: "#d33",
+    //         confirmButtonText: "Sim, Salvar!",
+    //     }).then((result) => {
+    //         if (result.isConfirmed) {
+    //             this.submit();
+    //             Swal.fire("Saved!", "O registro foi salvo com sucesso!", "success");
+    //         }
+    //     });
+    // });
     // Deletar: Ajax & Sweetalert2
     $(document).on("click", ".delete_user", function (e) {
         e.preventDefault();

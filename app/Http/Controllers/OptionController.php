@@ -2,60 +2,123 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Question;
-use App\Models\User;
 use App\Models\Option;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OptionController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        return "Indefinida ainda!";
+        $options = Option::all();
+
+        return view('options.index')
+        ->with('options', $options);
     }
 
-    public function create(Question $pergunta)
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-        /**
-         * -- Consulta o id de usuario informado na pergunta e
-         * busca o usuario e retorna o name  Users
-         **/
-        $usuario = User::find($pergunta->user_id);
-        // dd($usuario);
-
-        $pergunta->usuario = $usuario->name;
-
-        return view('perguntas.opcaoCreate', ['pergunta' => $pergunta]);
+        return view('options.create');
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
-        //$opcao = $request->all();
-        $opcao = new Option;
+        // dd($request->all());
 
-        $opcao->id_pergunta = $request->id_pergunta;
-        $opcao->opcaoResposta = $request->option;
-        // $opcao->opcaoResposta = implode(',', ($request->option));
+        DB::beginTransaction();
 
-        // dd($opcao);
-        $opcao->save();
+        Option::create($request->all());
 
-        return redirect()->route('perguntasopcao.show')
-            ->with('mensagem', 'Opção cadastrada com sucesso!');
+        DB::commit();
+
+        return redirect()->route('options.index')
+        ->with('mensagem', "Opção cadastrada com sucesso!");
     }
 
-    public function show(Option $request)
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
     {
-        $options        = $request->all();
+        //
+    }
 
-        $perguntas      = Question::all();
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $option = Option::find($id);
 
-        // $options = $pergunta;
+        return view('options.edit')
+            ->with('option', $option);
+    }
 
-        // $options->id_pergunta = $pergunta->pergunta;
-        // $options->id_pergunta = $pergunta->pergunta;
-        // dd($pergunta);
-        return view('perguntas.opcaoShow', [ 'perguntas' => $perguntas, 'options' => $options]);
-        // return view('perguntas.opcaoShow', [ 'options' => $options ]);
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $option = Option::find($id);
+
+        if($option) {
+
+        DB::beginTransaction();
+
+        $option->update($request->all());
+
+        DB::commit();
+
+        return redirect()->route('options.index')
+        ->with('mensagem', "Opção atualizada com sucesso!");
+
+        } else {
+
+            return back()->with('mensagem', "Não foi possível realizar a atualização.");
+
+        }
+
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $option = Option::find($id);
+
+        $option->delete();
+
+        return redirect()->route('options.index')
+            ->with('mensagem', "Registro excluído com sucesso!");
     }
 }

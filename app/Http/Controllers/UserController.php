@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -95,20 +96,22 @@ class UserController extends Controller
     // Realiza o cadastro do registro
     public function store(UserRequest $request)
     {
-        /**
-         * Realiza consulta de email ou nome de usuário no banco
-         * Se não existir realiza o cadastros
-         * Se não retorna mensagem, cadastro já existe
-         * */
-        $consulta = User::where('email', $request->email)->first();
-        $consulta = User::orWhere('name', $request->name)->first();
-        // dd($consulta->email);
-        if ($consulta === null) {
+
+        $email      = User::where('email', $request->email)->first();
+        $name       = User::Where('name', $request->name)->first();
+
+        if ($email == null and $name == null ){
+
+            DB::beginTransaction();
+
             User::create($request->all());
+
+            DB::commit();
+
             return redirect()->route('user.list')
                 ->with('mensagem', 'Cadastrado com sucesso!');
         } else {
-            return back()->with('mensagem', 'Este usuário já existe!');
+            return back()->with('mensagem', 'Este usuário ou email já existe!');
         }
     }
     /**
@@ -116,19 +119,21 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        // return $user;
-        return view('users.edit', [
-            'user' => $user
-        ]);
+
+        return view('users.edit')
+            ->with('user', $user);
     }
     /**
      * Atualiza registro
      */
     public function update(UserRequest $request, User $user)
     {
-        // $user -> $request;
-        // dd($user);
+        DB::beginTransaction();
+
         $user->update($request->all());
+
+        DB::commit();
+
         return redirect()->route('user.list')
             ->with('mensagem', 'Alteração realizada com sucesso!');
     }
@@ -136,8 +141,13 @@ class UserController extends Controller
     public function excluir($id)
     {
         $user = User::find($id);
+
+        DB::beginTransaction();
+
         $user->delete();
-        // dd($user);
+
+        DB::commit();
+
         return response()->json([
                 'status'    => 200,
                 'message'   => 'Usuário excluído com sucesso!',
