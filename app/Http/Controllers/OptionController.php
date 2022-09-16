@@ -17,7 +17,7 @@ class OptionController extends Controller
     {
         $options = Option::all();
 
-        return view('options.index')
+        return view('admin.options.index')
         ->with('options', $options);
     }
 
@@ -28,7 +28,7 @@ class OptionController extends Controller
      */
     public function create()
     {
-        return view('options.create');
+        return view('admin.options.create');
     }
 
     /**
@@ -52,17 +52,6 @@ class OptionController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -72,7 +61,7 @@ class OptionController extends Controller
     {
         $option = Option::find($id);
 
-        return view('options.edit')
+        return view('admin.options.edit')
             ->with('option', $option);
     }
 
@@ -95,8 +84,9 @@ class OptionController extends Controller
 
         DB::commit();
 
-        return redirect()->route('options.index')
-        ->with('mensagem', "Opção atualizada com sucesso!");
+        $request->session()->flash('mensagem', "Opção atualizada com sucesso!");
+
+        return redirect()->route('options.index');
 
         } else {
 
@@ -112,13 +102,19 @@ class OptionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $option = Option::find($id);
 
+        DB::beginTransaction();
+
         $option->delete();
 
-        return redirect()->route('options.index')
-            ->with('mensagem', "Registro excluído com sucesso!");
+        DB::commit();
+
+        $request->session()->flash('mensagem', "Registro excluído com sucesso!");
+
+        return redirect()->route('options.index');
+
     }
 }

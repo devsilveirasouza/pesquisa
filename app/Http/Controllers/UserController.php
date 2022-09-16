@@ -12,7 +12,7 @@ class UserController extends Controller
     // Dev - 27/06/2022 - wss
     public function indexUsuarios()
     {
-        return view('users.index');
+        return view('admin.users.index');
     }
     public function buscaDados(Request $request)
     {
@@ -85,7 +85,7 @@ class UserController extends Controller
     public function createUser()
     {
         // Chamar a view de cadastro
-        return view('users.create');
+        return view('admin.users.create');
     }
     /**
      * Store a newly created resource in storage.
@@ -120,7 +120,7 @@ class UserController extends Controller
     public function edit(User $user)
     {
 
-        return view('users.edit')
+        return view('admin.users.edit')
             ->with('user', $user);
     }
     /**
@@ -158,6 +158,6 @@ class UserController extends Controller
     {
         $user = User::find($id);
         //dd($user);
-        return view('users.show', ['user' => $user]);
+        return view('admin.users.show', ['user' => $user]);
     }
 }

@@ -9,7 +9,7 @@
 @section('content_header')
 
     <div class="card-header">
-        <h1 class="text text-center">Opções de Respostas Cadastradas</h1>
+        <h3 class="text-center">Títulos de Pesquisa</h3>
     </div>
 
 @stop
@@ -25,38 +25,38 @@
             <div class="card card-header">
                 <div class="row">
                     <h3 class="text-left mt-3 mb-2 ml-3">
-                        <a href="{{ route('options.create') }}"
+                        <a href="{{ route('questionnaires.create') }}"
                             class="btn btn-warning float-inline btn-sm mt-2 mb-2 mr-3 add_option">Cadastrar</a>
-                        Opções Cadastradas
-                        <a href="{{ route('perguntas.index') }}" type="button" value=""
-                            class="perguntas_index btn btn-info float-inline float-end btn-sm ml-1">Perguntas</a>
+                        Títulos Cadastrados
+                        <a href="#" type="button" value=""
+                            class="perguntas_index btn btn-info float-inline float-end btn-sm ml-1">A definir</a>
                     </h3>
                 </div>
             </div>
             <div class="card-body">
-                <div class="table-responsive">
+                <div class="table-responsive col-md-12">
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>ID Opção</th>
-                                <th>Opções de respostas</th>
+                                <th>ID</th>
+                                <th>Título</th>
                                 <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($options as $option)
+                            @foreach ($questionnaires as $questionnaire)
                                 <tr>
-                                    <td>{{ $option->id }}</td>
-                                    <td>{{ $option->titulo }}</td>
+                                    <td>{{ $questionnaire->id }}</td>
+                                    <td>{{ $questionnaire->titulo }}</td>
                                     <td>
-                                        <form method="post" action="{{ route('options.destroy', [$option->id]) }}"
-                                            class="form_delete_option">
+                                        <form method="post" action="{{ route('questionnaires.destroy', [$questionnaire->id]) }}"
+                                            class="form_delete_questionnaire">
 
-                                            <a href="{{ route('options.edit', [$option->id]) }}" value="{{ $option->id }}"
-                                                class="edit_option btn btn-warning btn-sm ml-1">Edit</a>
+                                            <a href="{{ route('questionnaires.edit', [$questionnaire->id]) }}" value="{{ $questionnaire->id }}"
+                                                class="edit_questionnaire btn btn-warning btn-sm ml-1">Edit</a>
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" value="{{ $option->id }}"
+                                            <button type="submit" value="{{ $questionnaire->id }}"
                                                 class="delete_option btn btn-danger btn-sm ml-1">Delete</button>
                                         </form>
 
@@ -66,22 +66,6 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
-            <div class="card-footer">
-                <a href="{{ route('options.create') }}"><svg xmlns="http://www.w3.org/2000/svg" width="32"
-                        height="32" fill="currentColor" class="bi bi-plus-circle-fill text-danger float-right mr-2"
-                        viewBox="0 0 16 16">
-                        <path
-                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
-                    </svg></a>
-
-                <a href="{{ route('options.index') }}"><svg xmlns="http://www.w3.org/2000/svg" width="32"
-                        height="32" fill="currentColor" class="bi bi-house-fill float-right mr-3" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd"
-                            d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
-                        <path fill-rule="evenodd"
-                            d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z" />
-                    </svg></a>
             </div>
         </div>
     </div>

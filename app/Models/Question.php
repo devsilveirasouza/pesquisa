@@ -28,4 +28,9 @@ class Question extends Model
         return $this->belongsToMany(Option::class)->withTimestamps();
     }
 
+    public function questionnaires()
+    {   // Têm muitas
+        return $this->belongsToMany(Questionnaire::class)->withTimestamps();
+    }
+
 }

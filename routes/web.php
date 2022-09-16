@@ -3,8 +3,9 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OptionController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\QuestionnaireController;
 use App\Http\Controllers\UserController;
-
+use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/',                                      HomeController::class);
@@ -29,12 +30,13 @@ Route::get('/pergunta/novo',                        [QuestionController::class, 
 Route::post('/pergunta/store',                      [QuestionController::class, 'store'])->middleware('auth')->name('perguntas.store');
 
 Route::get('/perguntas/edit/{id}',                  [QuestionController::class, 'edit'])->middleware('auth')->name('perguntas.edit');
-Route::put('/perguntas/atualizar/{id}',             [QuestionController::class, 'update'])->name('perguntas.update');
+Route::put('/perguntas/atualizar/{id}',             [QuestionController::class, 'update'])->Middleware('auth')->name('perguntas.update');
 
-Route::get('/pergunta/{pergunta}',                  [QuestionController::class, 'show'])->middleware('auth')->middleware('auth')->name('pergunta.listar');
+Route::get('/pergunta/{pergunta}',                  [QuestionController::class, 'show'])->middleware('auth')->name('pergunta.listar');
 
 Route::delete('/perguntas-delete/{id}',             [QuestionController::class, 'excluir'])->middleware('auth')->name('pergunta.delete');
 // -------------------------------------Opções Perguntas---------------------------------------------------------------------------------
-Route::resource('/options',                              OptionController::class);
+Route::resource('/options',                     OptionController::class)->except('show');
+Route::resource('/questionnaires',              QuestionnaireController::class)->except('show');
 
 require __DIR__ . '/auth.php';

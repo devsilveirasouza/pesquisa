@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUpdateQuestionRequest;
 use App\Models\Option;
-use Illuminate\Http\Request;
-
 use App\Models\Question;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class QuestionController extends Controller
@@ -15,7 +14,7 @@ class QuestionController extends Controller
     // Chama view principal das perguntas
     public function index()
     {
-        return view('questions.index');
+        return view('admin.questions.index');
     }
     // Realiza a busca e monta os dados do datatable
     public function buscaDados(Request $request)
@@ -97,7 +96,7 @@ class QuestionController extends Controller
     {
         $options = Option::all();
 
-        return view('questions.create')
+        return view('admin.questions.create')
             ->with('options', $options);
     }
     // Cadastrar os dados no banco
@@ -143,7 +142,7 @@ class QuestionController extends Controller
         $user       =   User::all();
         $options    =   Option::all();
 
-        return view('questions.show')
+        return view('admin.questions.show')
             ->with('question', $question)
             ->with('user', $user)
             ->with('options', $options);
@@ -157,7 +156,7 @@ class QuestionController extends Controller
         $user = User::all();
         $options = Option::all();
 
-        return view('questions.edit')
+        return view('admin.questions.edit')
             ->with('question', $question)
             ->with('user', $user)
             ->with('options', $options);
@@ -171,7 +170,6 @@ class QuestionController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $question = Question::find($id);
 
         DB::beginTransaction();
