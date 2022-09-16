@@ -58,7 +58,6 @@
                                 <p>{{ $question->user->name }}.</p>
                                 <label for="">Data de Cadastro:</label>
                                 <p>{{ date('d/m/Y', strtotime($question->created_at)) }}.</p>
-
                             </div>
                             <div class="card-footer">
                                 <div class="col-sm-10">
@@ -66,7 +65,6 @@
                                     <div class="button-group">
                                         <a href=" {{ route('perguntas.index') }} "
                                             class="btn btn-primary btn-sm ml-2 mt-2">Home</a>
-
                                     </div>
                                 </div>
                             </div>

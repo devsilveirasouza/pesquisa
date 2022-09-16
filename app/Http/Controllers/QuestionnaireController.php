@@ -121,4 +121,15 @@ class QuestionnaireController extends Controller
         return redirect()->route('questionnaires.index');
 
     }
+    public function show($id)
+    {
+        $questionnaire = Questionnaire::with('questions')->find($id);
+
+        $questions = Question::all();
+
+        return view('admin.questionnaires.show')
+            ->with('questionnaire', $questionnaire)
+            ->with('questions', $questions);
+
+    }
 }

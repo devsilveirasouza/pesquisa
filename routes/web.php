@@ -37,6 +37,6 @@ Route::get('/pergunta/{pergunta}',                  [QuestionController::class, 
 Route::delete('/perguntas-delete/{id}',             [QuestionController::class, 'excluir'])->middleware('auth')->name('pergunta.delete');
 // -------------------------------------Opções Perguntas---------------------------------------------------------------------------------
 Route::resource('/options',                     OptionController::class)->except('show');
-Route::resource('/questionnaires',              QuestionnaireController::class)->except('show');
+Route::resource('/questionnaires',              QuestionnaireController::class);
 
 require __DIR__ . '/auth.php';

@@ -52,6 +52,9 @@
                                         <form method="post" action="{{ route('questionnaires.destroy', [$questionnaire->id]) }}"
                                             class="form_delete_questionnaire">
 
+                                            <a href="{{ route('questionnaires.show', [$questionnaire->id]) }}" value="{{ $questionnaire->id }}"
+                                                class="details_questionnaire btn btn-info btn-sm ml-1">View</a>
+
                                             <a href="{{ route('questionnaires.edit', [$questionnaire->id]) }}" value="{{ $questionnaire->id }}"
                                                 class="edit_questionnaire btn btn-warning btn-sm ml-1">Edit</a>
                                             @csrf
