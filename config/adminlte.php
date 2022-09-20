@@ -270,8 +270,8 @@ return [
             'icon' => 'fas fa-fw fa-list',
         ],
         [
-            'text' => 'Pesquisa',
-            'url'  => 'questionnaires',
+            'text' => 'Pesquisas',
+            'url'  => 'pesquisas',
             'icon' => 'fas fa-fw fa-question',
         ],
         [
@@ -282,6 +282,11 @@ return [
                     'text' => 'Cadastrar de Usuário',
                     'url'  => '/usuarios/novo',
                     'icon' => 'fas fa-fw fa-user',
+                ],
+                [
+                    'text' => 'Questionários',
+                    'url'  => 'questionnaires',
+                    'icon' => 'fas fa-fw fa-question',
                 ],
                 [
                     'text' => 'Opções de resposta',

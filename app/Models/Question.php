@@ -33,4 +33,9 @@ class Question extends Model
         return $this->belongsToMany(Questionnaire::class)->withTimestamps();
     }
 
+    public function pesquisas()
+    {
+        return $this->belongsToMany(Pesquisa::class)->withTimestamps();
+    }
+
 }

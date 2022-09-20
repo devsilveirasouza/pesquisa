@@ -4,12 +4,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 @stop
 
-@section('title', 'Option List')
+@section('title', 'Pesquisas Cadastradas')
 
 @section('content_header')
 
     <div class="card-header">
-        <h3 class="text-center">Títulos de Pesquisa</h3>
+        <h3 class="text-center">Responder pesquisa</h3>
     </div>
 
 @stop
@@ -24,12 +24,9 @@
         <div class="card-success">
             <div class="card card-header">
                 <div class="row">
-                    <h3 class="text-left mt-3 mb-2 ml-3">
-                        <a href="{{ route('questionnaires.create') }}"
-                            class="btn btn-warning float-inline btn-sm mt-2 mb-2 mr-3 add_option">Cadastrar</a>
-                        Títulos Cadastrados
-                        <a href="{{ route('pesquisas.index') }}" type="button" value=""
-                            class="pesquisas_index btn btn-info float-inline float-end btn-sm ml-1">Pesquisas</a>
+                    <h3 class="text-center mt-3 mb-2 ml-3">
+                        <a href="" class="btn btn-warning float-center btn-lg mt-2 mb-2 mr-3 add_option">Iniciar
+                            pesquisa</a>
                     </h3>
                 </div>
             </div>
@@ -49,20 +46,12 @@
                                     <td>{{ $questionnaire->id }}</td>
                                     <td>{{ $questionnaire->titulo }}</td>
                                     <td>
-                                        <form method="post" action="{{ route('questionnaires.destroy', [$questionnaire->id]) }}"
-                                            class="form_delete_questionnaire">
-
-                                            <a href="{{ route('pesquisas.show', [$questionnaire->id]) }}" value="{{ $questionnaire->id }}"
-                                                class="details_questionnaire btn btn-info btn-sm ml-1">View</a>
-
-                                            <a href="{{ route('questionnaires.edit', [$questionnaire->id]) }}" value="{{ $questionnaire->id }}"
-                                                class="edit_questionnaire btn btn-warning btn-sm ml-1">Edit</a>
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" value="{{ $questionnaire->id }}"
-                                                class="delete_option btn btn-danger btn-sm ml-1">Delete</button>
-                                        </form>
-
+                                        <div class="float-end">
+                                            <a href="{{ route('pesquisas.create', [ $questionnaire->id ]) }}"
+                                                value="{{ $questionnaire->id }}"
+                                                class="details_questionnaire btn btn-warning btn-sm ml-1">Iniciar
+                                                pesquisa</a>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
@@ -100,30 +89,5 @@
     </script>
     {{-- Sweetalert2 --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-
-    <script>
-        $('.form_delete_option').submit(function(e) {
-            e.preventDefault();
-
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire(
-                        'Deleted!',
-                        'Your file has been deleted.',
-                        'success'
-                    )
-                    this.submit();
-                }
-            })
-        });
-    </script>
 
 @stop

@@ -20,6 +20,6 @@
 @section('js')
     <script>
         //Teste de scripts
-        //console.log('Hi!');
+        console.log('Olá Mundo!');
     </script>
 @stop

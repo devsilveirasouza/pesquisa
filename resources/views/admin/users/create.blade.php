@@ -27,8 +27,7 @@
                 <div class="form-group row">
                     <label for="inputText3" class="col-sm-2 col-form-label">Name</label>
                     <div class="col-sm-10">
-                        <input type="text" class="name form-control" id="inputText3" name="name" placeholder="Name"
-                            />
+                        <input type="text" class="name form-control" id="inputText3" name="name" placeholder="Name" />
                         @if ($errors->has('name'))
                             <h6> Favor inserir seu nome! </h6>
                         @endif
@@ -38,8 +37,8 @@
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
                     <div class="col-sm-10">
-                        <input type="email" class="email form-control" id="inputEmail3" name="email" placeholder="Email"
-                            />
+                        <input type="email" class="email form-control" id="inputEmail3" name="email"
+                            placeholder="Email" />
                         @if ($errors->has('name'))
                             <h6> Favor inserir seu email! </h6>
                         @endif
@@ -58,8 +57,11 @@
                 </div>
             </div>
             <div class="card-footer">
-                <button type="submit" class="addUser btn btn-info">Salvar</button>
-                <button type="reset" class="btn btn-danger float-right">Limpar</button>
+                <div class="button-group">
+                    <button type="submit" class="addUser btn btn-success btn-sm">Salvar</button>
+                    <button type="reset" class="btn btn-danger btn-sm float-right">Limpar</button>
+                    <button type="button" class="home_user btn btn-info btn-sm">Home</button>
+                </div>
             </div>
         </form>
         {{-- Formulário de cadastro --}}
