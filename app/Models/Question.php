@@ -15,27 +15,37 @@ class Question extends Model
 
     protected $fillable     =   [
 
-        'titulo','obrigatoria','tipo','user_id'
+        'titulo', 'obrigatoria', 'tipo', 'user_id'
     ];
 
+    // Uma questão pertence a um usuário
     public function user()
-    {   // Pertence á User
+    {
         return $this->belongsTo(User::class);
     }
-
+    // Uma Questão pertence a muitas opções
     public function options()
-    {   // Têm muitas Options
+    {
         return $this->belongsToMany(Option::class)->withTimestamps();
     }
-
+    // Uma questão pertence a muitos questionários
     public function questionnaires()
-    {   // Têm muitas
+    {
         return $this->belongsToMany(Questionnaire::class)->withTimestamps();
     }
-
+    // Uma questão têm muitos comentários
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+    // Uma questão pertence a muitas respostas
+    public function respostas()
+    {
+        return $this->belongsToMany(Option::class, 'pergunta_resposta', 'question_id')->withTimestamps();
+    }
+    // Uma questão pertence a muitos questionários
     public function pesquisas()
     {
         return $this->belongsToMany(Pesquisa::class)->withTimestamps();
     }
-
 }

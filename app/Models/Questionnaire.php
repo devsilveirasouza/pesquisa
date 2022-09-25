@@ -15,9 +15,5 @@ class Questionnaire extends Model
     {   // Têm muitas
         return $this->belongsToMany(Question::class)->withTimestamps();
     }
-
-    public function pesquisas()
-    {
-        return $this->belongsToMany(Pesquisa::class)->withTimestamps();
-    }
+    
 }

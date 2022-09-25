@@ -4,8 +4,7 @@ $(document).ready(function () {
         e.preventDefault();
         // alert('Ola!');
         var perguntaId = $(this).val();
-        //alert(perguntaId);
-
+        // alert(perguntaId);
         Swal.fire({
             title: "Você quer excluir?",
             text: "Não será mais possível usar este registro!",

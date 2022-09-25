@@ -15,8 +15,14 @@ class Option extends Model
 
     protected $fillable             = ['titulo'];
 
+    // Uma opção pertence a muitas questões
     public function questions()
-    {   // Têm muitas Options
+    {
         return $this->belongsToMany(Question::class)->withTimestamps();
+    }
+    // Uma opção pertence a muitas perguntas
+    public function perguntas()
+    {
+        return $this->belongsToMany(Question::class, 'pergunta_resposta', 'option_id')->withTimestamps();
     }
 }

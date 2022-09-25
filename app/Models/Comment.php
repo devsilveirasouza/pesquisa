@@ -5,16 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pesquisa extends Model
+class Comment extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'titulo'
+        'comment'
     ];
 
-    public function questions()
-    {   // Têm muitas
-        return $this->belongsToMany(Question::class)->withTimestamps();
+    // Um comentário pertence a uma pergunta
+    public function question()
+    {
+        return $this->belongsTo(Question::class);
     }
 }

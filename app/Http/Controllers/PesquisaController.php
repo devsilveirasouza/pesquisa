@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Answer;
 use App\Models\Pesquisa;
 use App\Models\Question;
 use App\Models\Questionnaire;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PesquisaController extends Controller
 {
@@ -16,15 +18,10 @@ class PesquisaController extends Controller
      */
     public function index()
     {
-        $pesquisas              = Pesquisa::with(['questionnaires','questions']);
-
         $questionnaires = Questionnaire::all();
-        $questions      = Question::all();
 
         return view('pesquisas.index')
-            ->with('pesquisas', $pesquisas)
-            ->with('questionnaires', $questionnaires)
-            ->with('questions', $questions);
+            ->with('questionnaires', $questionnaires);
     }
 
     /**
@@ -34,9 +31,6 @@ class PesquisaController extends Controller
      */
     public function create($idPesquisa)
     {
-
-        // return $idPesquisa;
-
         $questionnaire = Questionnaire::with('questions')->find($idPesquisa);
 
         $questions = Question::all();
@@ -54,13 +48,43 @@ class PesquisaController extends Controller
      */
     public function store(Request $request)
     {
-        return $request->all();
+
+        $pesquisa = Pesquisa::create($request->all());
+
+        // return $request->all();
+
+        // $answer = new Answer;
+        // $answer->questionnaire_id = $request->questionnaire_id;
+        // $questionnaire = $request->questionnaire_id;
+        // $question = $request->question_id;
+        // $option = $request->option_id;
+        // $comment = $request->comment;
+
+        // Answer::create($request->all());
+
+        // Answer::create([
+        //     'questionnaire_id'  =>  $request->questionnaire_id,
+        //     'question_id'       =>  implode(',', $request->question_id),
+        //     'option_id'         =>  implode(',', $request->option_id),
+        //     'comment'           =>  $request->comment
+
+        // ]);
+
+        // $answer = new Answer;
+        // $answer->questionnaire_id  =  $request->questionnaire_id;
+        // $answer->question_id       =  implode(',', $request->question_id);
+        // $answer->option_id         =  implode(',', $request->option_id);
+        // $answer->comment           =  $request->comment;
+        // $answer->save();
+
+        // return redirect()->back()
+        // ->with('mensagem', "Pesquisa finalizada com sucesso!");
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Pesquisa  $pesquisa
+     * @param  \App\Models\Answer  $pesquisa
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -79,7 +103,7 @@ class PesquisaController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Pesquisa  $pesquisa
+     * @param  \App\Models\Answer  $pesquisa
      * @return \Illuminate\Http\Response
      */
     public function edit(Pesquisa $pesquisa)

@@ -25,7 +25,7 @@
             <div class="card card-header">
                 <div class="row">
                     <h3 class="text-center mt-3 mb-2 ml-3">
-                        Pesquisas
+                        Questionário
                     </h3>
                 </div>
             </div>
@@ -34,30 +34,25 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                {{-- <th>ID</th> --}}
-                                <th>Temas das pesquisas</th>
-                                {{-- <th>Ações</th> --}}
+                                <th>ID</th>
+                                <th>Título</th>
+                                <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
-
-                            <tr>
-                                {{-- <td>{{ $questionnaire->id }}</td> --}}
-                                <td>
-                                    @foreach ($questionnaires as $questionnaire)
-                                        <a href="{{ route('pesquisas.create', $questionnaire->id) }}" value=""
-                                            class="view_questionnaire col-sm-2 btn btn-info btn-lg ml-1">{{ $questionnaire->titulo }}</a>
-                                    @endforeach
-                                </td>
-                                {{-- <td>
+                            @foreach ($questionnaires as $questionnaire)
+                                <tr>
+                                    <td>{{ $questionnaire->id }}</td>
+                                    <td>{{ $questionnaire->titulo }}</td>
+                                    <td>
                                         <div class="float-end">
                                             <a href="{{ route('pesquisas.create', $questionnaire->id) }}" value="#"
                                                 class="view_questionnaire btn btn-success btn-sm ml-1">Iniciar
                                                 pesquisa</a>
                                         </div>
-                                    </td> --}}
-                            </tr>
-
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

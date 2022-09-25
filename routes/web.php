@@ -37,10 +37,11 @@ Route::get('/pergunta/{pergunta}',                  [QuestionController::class, 
 Route::delete('/perguntas-delete/{id}',             [QuestionController::class, 'excluir'])->middleware('auth')->name('pergunta.delete');
 // -------------------------------------Opções Perguntas---------------------------------------------------------------------------------
 Route::resource('/options',                      OptionController::class)->except('show')->middleware('auth');
-Route::resource('/questionnaires',               QuestionnaireController::class)->middleware('auth');
-//   --- Área de Acesso público ---   //
+Route::resource('/questionnaires',               QuestionnaireController::class);
+//   --- Site: Acesso público ---   //
 Route::get('/pesquisas',                            [PesquisaController::class, 'index'])->name('pesquisas.index');
 Route::get('/pesquisas/create/{id}',                [PesquisaController::class, 'create'])->name('pesquisas.create');
 Route::post('/pesquisas/store',                     [PesquisaController::class, 'store'])->name('pesquisas.store');
+
 
 // require __DIR__ . '/auth.php';
