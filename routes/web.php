@@ -45,15 +45,15 @@ Route::post('/pesquisas/store',                     [PesquisaController::class, 
 
 //  --- Acesso a pesquisa ---   //
 Route::get('principal', [PesquisaController::class, 'pesquisa'])->name('pesquisa');
-
-Route::any('test', function() {
+// Questões da pesquisa
+Route::any('answer', function() {
     return view('site.answer');
 });
-
+// Inicia a pesquisa
 Route::any('start', function() {
     return view('site.start');
 });
-
+// Finaliza a pesquisa
 Route::any('end', function() {
     return view('site.end');
 });

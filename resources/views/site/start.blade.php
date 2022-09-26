@@ -6,12 +6,16 @@
     <div class="container-fluid">
 
         <div class="row">
-            <div class="col-md-5"></div>
+            <div class="col-md-3"></div>
             <div class="col-md-4" style="padding-top: 25vh;">
                 <h2 class="text text-white">Vamos começar ?</h2>
             </div>
-            <div class="col-md-3" style="padding-top: 60vh;">
+            <div class="col-md-5" style="padding-top: 60vh;">
                 <a href="{{ route('home') }}"><button class="btn btn-primary btn-md text-white" style="width: 150px;">Iniciar</button></a>
+
+                <div class="text text-center">
+                    <a href="{{ route('pesquisa') }}"><button class="btn btn-light btn-md text-success mt-2" style="width: 150px;">Home</button></a>
+                </div>
             </div>
         </div>
 
