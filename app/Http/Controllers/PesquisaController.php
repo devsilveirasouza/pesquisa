@@ -133,4 +133,9 @@ class PesquisaController extends Controller
     {
         //
     }
+    //  Acessar as pesquisas de forma publica   //
+    public function pesquisa()
+    {
+        return view('site.index');
+    }
 }

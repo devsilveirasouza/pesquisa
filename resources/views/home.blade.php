@@ -4,7 +4,7 @@
 
 @section('content_header')
     <div class="card-header">
-        <h1>Pesquisa de Satisfação do Cliente!</h1>
+        <a href="{{ route('pesquisa') }}"><button class="btn btn-primary btn-md">Pesquisa</button></a>
     </div>
 @stop
 

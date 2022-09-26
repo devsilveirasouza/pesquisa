@@ -8,7 +8,7 @@ use App\Http\Controllers\QuestionnaireController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/',                                      HomeController::class);
+Route::get('/',                                      HomeController::class)->name('home');
 // -------------------------------------Usuarios-----------------------------------------------------------------------------------------
 Route::get('/usuarios',                             [UserController::class,     'indexUsuarios'])->Middleware('auth')->name('user.list');
 Route::get('/usuarios-listagem',                    [UserController::class,     'buscaDados'])->Middleware('auth')->name('user.listAll');
@@ -43,5 +43,19 @@ Route::get('/pesquisas',                            [PesquisaController::class, 
 Route::get('/pesquisas/create/{id}',                [PesquisaController::class, 'create'])->name('pesquisas.create');
 Route::post('/pesquisas/store',                     [PesquisaController::class, 'store'])->name('pesquisas.store');
 
+//  --- Acesso a pesquisa ---   //
+Route::get('principal', [PesquisaController::class, 'pesquisa'])->name('pesquisa');
+
+Route::any('test', function() {
+    return view('site.answer');
+});
+
+Route::any('start', function() {
+    return view('site.start');
+});
+
+Route::any('end', function() {
+    return view('site.end');
+});
 
 // require __DIR__ . '/auth.php';
