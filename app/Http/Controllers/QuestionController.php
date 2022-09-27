@@ -220,31 +220,51 @@ class QuestionController extends Controller
     }
     public function submitans(Request $request)
     {
-        Answer::create($request->all());
+        $i_opt = 0;
+
+        return $answer = $request->all();
+
+        foreach ($answer as $option_id) {
+
+            $i_opt = +1;
+
+            if ($option_id->count < $i_opt) {
+                Answer::create($request->all());
+            }
+
+            if ($option_id->count == $i_opt) {
+                Answer::create([
+                    'question_id'       =>  $request->question_id,
+                    'option_id'         =>  $option_id[$i_opt],
+                    'comment'           =>  $request->comment
+                ]);
+            }
+        }
+
+        // Salvar resposta no DB
+
 
         // Inicializar index
         $nextq = 0;
-
-        // $validate       =   $request->validate([
-        //     'question_id' => 'required',
-        // ]);
 
         $nextq = Session::get('nextq');
         $nextq += 1;
 
         Session::put('nextq', $nextq);
 
-        $i = 0;
+        $i_q = 0;
+
         $questions = Question::all();
 
         foreach ($questions as $question) {
 
-            $i++;
+            $i_q++;
+
             if ($questions->count() < $nextq) {
                 return view('site.end');
             }
 
-            if ($i == $nextq) {
+            if ($i_q == $nextq) {
                 return view('site.answer')->with(['question' => $question]);
             }
         }

@@ -39,7 +39,7 @@
                         @foreach ($question->options as $option)
 
                             <div class="form-check">
-                                <input type="checkbox" name="option_id" value="{{ $option->id }}" />
+                                <input type="checkbox" name="option_id[]" value="{{ $option->id }}" />
                                 <label class="form-check-label">
                                     {{ $option->titulo }}
                                 </label>
