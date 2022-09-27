@@ -10,7 +10,7 @@ class Comment extends Model
     use HasFactory;
 
     protected $fillable = [
-        'comment'
+        'comment', 'question_id'
     ];
 
     // Um comentário pertence a uma pergunta

@@ -20,7 +20,6 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ 'asset/css/app.css' }}" />
-    <link rel="stylesheet" href="{{ asset('bootstrap-5.0.2/css/bootstrap.css')}}" />
 @stop
 
 @section('js')

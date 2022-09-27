@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUpdateQuestionRequest;
+use App\Models\Answer;
 use App\Models\Option;
 use App\Models\Question;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class QuestionController extends Controller
 {
@@ -205,5 +207,46 @@ class QuestionController extends Controller
             'status' => 200,
             'mensagem' => 'Pergunta excluída com sucesso!',
         ]);
+    }
+    //  --- Pesquisa --- ///
+    public function startquiz()
+    {
+
+        Session::put('nextq', '1');
+
+        $question = Question::all()->first();
+
+        return view('site.answer')->with(['question' => $question]);
+    }
+    public function submitans(Request $request)
+    {
+        Answer::create($request->all());
+
+        // Inicializar index
+        $nextq = 0;
+
+        // $validate       =   $request->validate([
+        //     'question_id' => 'required',
+        // ]);
+
+        $nextq = Session::get('nextq');
+        $nextq += 1;
+
+        Session::put('nextq', $nextq);
+
+        $i = 0;
+        $questions = Question::all();
+
+        foreach ($questions as $question) {
+
+            $i++;
+            if ($questions->count() < $nextq) {
+                return view('site.end');
+            }
+
+            if ($i == $nextq) {
+                return view('site.answer')->with(['question' => $question]);
+            }
+        }
     }
 }

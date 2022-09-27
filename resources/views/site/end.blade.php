@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="{{ asset('bootstrap-5.0.2/css/bootstrap.min.css') }}">
 <link rel="stylesheet" href="{{ asset('css/my.css') }}">
 
-<div class="back_1">
+<div class="back_4">
 
     <div class="container-fluid">
 
@@ -11,10 +11,10 @@
                 <h2 class="text text-white">Obrigado pela sua participação!</h2>
 
                 <div style="padding-top: 30vh; margin-left: 320px;">
-                    <a href="#"><button class="btn btn-primary btn-md text-white" style="width: 150px;">Finalizar</button></a>
+                    <a href="{{ route('startquiz') }}"><button class="btn btn-primary btn-md text-white" style="width: 150px;">Finalizar</button></a>
 
                     <div class="text text-center">
-                        <a href="{{ route('pesquisa') }}"><button class="btn btn-light btn-md text-success mt-2" style="width: 150px;">Home</button></a>
+                        <a href="{{ route('pesquisa') }}"><button class="btn btn-light btn-md text-success mt-2" style="width: 150px;">Home ?</button></a>
                     </div>
                 </div>
             </div>

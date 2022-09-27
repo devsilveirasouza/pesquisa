@@ -10,7 +10,7 @@
             <div class="col-md-5"></div>
 
             <div class="col-md-5" style="padding-top: 70vh;">
-                <a href="{{ route('home') }}" ><button style="width: 120px;"
+                <a href="{{ route('perguntas.index') }}" ><button style="width: 120px;"
                         class="btn btn-primary btn-md text-white">Admin</button></a>
                 <a href="/start" ><button style="width: 120px;"
                         class="btn btn-primary btn-md text-white">Pesquisa</button></a>

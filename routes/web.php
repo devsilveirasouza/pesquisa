@@ -6,9 +6,12 @@ use App\Http\Controllers\PesquisaController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\QuestionnaireController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/',                                      HomeController::class)->name('home');
+Auth::routes();
+
+Route::get('/',                                      HomeController::class);
 // -------------------------------------Usuarios-----------------------------------------------------------------------------------------
 Route::get('/usuarios',                             [UserController::class,     'indexUsuarios'])->Middleware('auth')->name('user.list');
 Route::get('/usuarios-listagem',                    [UserController::class,     'buscaDados'])->Middleware('auth')->name('user.listAll');
@@ -42,20 +45,23 @@ Route::resource('/questionnaires',               QuestionnaireController::class)
 Route::get('/pesquisas',                            [PesquisaController::class, 'index'])->name('pesquisas.index');
 Route::get('/pesquisas/create/{id}',                [PesquisaController::class, 'create'])->name('pesquisas.create');
 Route::post('/pesquisas/store',                     [PesquisaController::class, 'store'])->name('pesquisas.store');
-
+//  ------------------------------------------------------------------------------------------   ///
 //  --- Acesso a pesquisa ---   //
 Route::get('principal', [PesquisaController::class, 'pesquisa'])->name('pesquisa');
 // Questões da pesquisa
-Route::any('answer', function() {
+Route::any('answer', function () {
     return view('site.answer');
 });
 // Inicia a pesquisa
-Route::any('start', function() {
+Route::any('start', function () {
     return view('site.start');
 });
 // Finaliza a pesquisa
-Route::any('end', function() {
+Route::any('end', function () {
     return view('site.end');
 });
+
+Route::any('submitans', [QuestionController::class, 'submitans']);
+Route::any('startquiz', [QuestionController::class, 'startquiz'])->name('startquiz');
 
 // require __DIR__ . '/auth.php';
