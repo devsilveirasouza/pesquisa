@@ -19,11 +19,8 @@ class CreateQuestionsTable extends Migration
             $table->string('obrigatoria');
             $table->string('tipo');
             $table->softDeletes();
-
             $table->timestamp('last_used_at')->nullable();
             $table->timestamps();
-
-            // Chave estrangeira
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
         });
     }

@@ -211,7 +211,6 @@ class QuestionController extends Controller
     //  --- Pesquisa --- ///
     public function startquiz()
     {
-
         Session::put('nextq', '1');
 
         $question = Question::all()->first();
@@ -222,28 +221,36 @@ class QuestionController extends Controller
     {
         $i_opt = 0;
 
-        return $answer = $request->all();
+        $question_id    = $request->question_id;
+        $options        = $request->option_id;
+        $comment        = $request->comment;
+        $user_id        = $request->user_id;
 
-        foreach ($answer as $option_id) {
+        if (!isset($request->option_id)) {
 
-            $i_opt = +1;
+            Answer::create($request->all());
+        } elseif (count($request->option_id)  <= 1) {
 
-            if ($option_id->count < $i_opt) {
-                Answer::create($request->all());
-            }
-
-            if ($option_id->count == $i_opt) {
-                Answer::create([
-                    'question_id'       =>  $request->question_id,
-                    'option_id'         =>  $option_id[$i_opt],
-                    'comment'           =>  $request->comment
-                ]);
+            Answer::create([
+                'question_id'       =>  $request->question_id,
+                'option_id'         =>  $request->option_id[$i_opt],
+                'comment'           =>  $request->comment,
+                'user_id'           =>  $request->user_id
+            ]);
+        } else {
+            // echo "<pre>";
+            // print_r($request->all());
+            $i=0;
+            for ($i_o = 0; $i_o < count($request->option_id); $i_o++) {
+                $answer = new Answer;
+                $answer->question_id    = $request->question_id;
+                $answer->option_id      = $request->option_id[$i];
+                $answer->comment        = $request->comment;
+                $answer->user_id        = $request->user_id;
+                $answer->save();
+                $i++;
             }
         }
-
-        // Salvar resposta no DB
-
-
         // Inicializar index
         $nextq = 0;
 

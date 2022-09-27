@@ -27,7 +27,7 @@
                         @foreach ($question->options as $option)
                             {{-- Bloco Radio buttons --}}
                             <div class="form-check">
-                                <input type="radio" name="option_id" value="{{ $option->id }}" />
+                                <input type="radio" name="option_id[]" value="{{ $option->id }}" />
                                 <label class="form-check-label">
                                     {{ $option->titulo }}
                                 </label>

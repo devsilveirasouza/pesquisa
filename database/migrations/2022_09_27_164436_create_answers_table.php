@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePerguntaRespostaTable extends Migration
+class CreateAnswersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,15 @@ class CreatePerguntaRespostaTable extends Migration
      */
     public function up()
     {
-        Schema::create('pergunta_resposta', function (Blueprint $table) {
+        Schema::create('answers', function (Blueprint $table) {
 
             $table->foreignId('question_id')->constrained()->onDelete('cascade');
-            $table->foreignId('option_id')->constrained()->onDelete('cascade');
-
+            $table->integer('option_id')->nullable()->default(NULL);
+            $table->text('comment', 255)->nullable()->default(NULL);
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->softDeletes();
             $table->timestamps();
+
         });
     }
 
@@ -29,6 +32,6 @@ class CreatePerguntaRespostaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pergunta_resposta');
+        Schema::dropIfExists('answers');
     }
 }
