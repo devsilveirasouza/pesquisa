@@ -13,7 +13,7 @@
                 <a href="{{ route('perguntas.index') }}" ><button style="width: 120px;"
                         class="btn btn-primary btn-md text-white">Admin</button></a>
                 <a href="/start" ><button style="width: 120px;"
-                        class="btn btn-primary btn-md text-white">Pesquisa</button></a>
+                        class="btn btn-primary btn-md text-white">Iniciar</button></a>
             </div>
         </div>
 

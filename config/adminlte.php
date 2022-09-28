@@ -253,12 +253,7 @@ return [
             'label'       => 'Home',
             'label_color' => 'success',
         ],
-        ['header' => 'account_settings'],
-        [
-            'text' => 'Login',
-            'url'  => 'login',
-            'icon' => 'fas fa-fw fa-unlock',
-        ],
+
         [
             'text' => 'Usuários',
             'url'  => 'usuarios',
@@ -270,34 +265,41 @@ return [
             'icon' => 'fas fa-fw fa-list',
         ],
         [
-            'text' => 'Pesquisas',
-            'url'  => 'pesquisas',
+            'text' => 'Pesquisa',
+            'url'  => 'principal',
             'icon' => 'fas fa-fw fa-question',
         ],
         [
-            'text'    => 'Cadastros',
+            'text' => 'Respostas',
+            'url'  => 'respostas',
+            'icon' => 'fas fa-fw fa-list',
+        ],
+        [
+            'text'    => 'Menu',
             'icon'    => 'fas fa-fw fa-save',
             'submenu' => [
+                ['header' => 'account_settings'],
                 [
-                    'text' => 'Cadastrar de Usuário',
-                    'url'  => '/usuarios/novo',
-                    'icon' => 'fas fa-fw fa-user',
-                ],
-                [
-                    'text' => 'Questionários',
-                    'url'  => 'questionnaires',
-                    'icon' => 'fas fa-fw fa-question',
-                ],
-                [
-                    'text' => 'Opções de resposta',
-                    'url'  => '/perguntas-opcao',
-                    'icon' => 'fas fa-fw fa-list',
+                    'text' => 'Login',
+                    'url'  => 'login',
+                    'icon' => 'fas fa-fw fa-unlock',
                 ],
                 [
                     'text' => 'Register',
                     'url'  => '/register',
                     'icon' => 'fas fa-fw fa-save',
                 ],
+                [
+                    'text' => 'Option 1',
+                    'url'  => '#',
+                    'icon' => 'fas fa-fw fa-user',
+                ],
+                [
+                    'text' => 'Option 2',
+                    'url'  => '#',
+                    'icon' => 'fas fa-fw fa-list',
+                ],
+
             ],
         ],
     ],
@@ -428,12 +430,17 @@ return [
             ],
         ],
         'Sweetalert2' => [
-            'active' => true,
+            'active' => false,
             'files' => [
                 [
                     'type' => 'js',
-                    'asset' => false,
-                    'location' => '//cdn.jsdelivr.net/npm/sweetalert2@8',
+                    'asset' => true,
+                    'location' => 'vendor/sweetalert2/sweetalert2.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css',
                 ],
             ],
         ],

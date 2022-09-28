@@ -28,24 +28,9 @@ class Question extends Model
     {
         return $this->belongsToMany(Option::class)->withTimestamps();
     }
-    // Uma questão pertence a muitos questionários
-    public function questionnaires()
+
+    public function answers()
     {
-        return $this->belongsToMany(Questionnaire::class)->withTimestamps();
-    }
-    // Uma questão têm muitos comentários
-    public function comments()
-    {
-        return $this->hasMany(Comment::class);
-    }
-    // Uma questão pertence a muitas respostas
-    public function respostas()
-    {
-        return $this->belongsToMany(Option::class, 'pergunta_resposta', 'question_id')->withTimestamps();
-    }
-    // Uma questão pertence a muitos questionários
-    public function pesquisas()
-    {
-        return $this->belongsToMany(Pesquisa::class)->withTimestamps();
+        return $this->belongsToMany(Answer::class)->withTimestamps();
     }
 }

@@ -19,4 +19,8 @@ class Answer extends Model
 
     protected $casts = ['option_id'];
 
+    public function questions()
+    {
+        return $this->belongsToMany(Question::class)->withTimestamps();
+    }
 }

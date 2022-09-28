@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Session;
 
 class QuestionController extends Controller
 {
-    // Chama view principal das perguntas
     public function index()
     {
         return view('admin.questions.index');
@@ -91,9 +90,6 @@ class QuestionController extends Controller
         exit;
     }
     //-----------------------------Cadastrar--------------------------------
-    /**
-     * Chama a view de cadastro de perguntas
-     */
     public function create()
     {
         $options = Option::all();
@@ -101,7 +97,6 @@ class QuestionController extends Controller
         return view('admin.questions.create')
             ->with('options', $options);
     }
-    // Cadastrar os dados no banco
     public function store(StoreUpdateQuestionRequest $request)
     {
 
@@ -123,16 +118,6 @@ class QuestionController extends Controller
         return redirect()->route('perguntas.index')
             ->with('mensagem', 'Pergunta cadastrada com sucesso!');
     }
-    // /**
-    //  * Display the specified resource.
-    //  *
-    //  * @param  \App\Models\Question  $question
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // /**
-    //  * Mostra um registro especifico passando id pela rota
-    //  */
-
     public function show($id)
     {
         /**
@@ -209,6 +194,11 @@ class QuestionController extends Controller
         ]);
     }
     //  --- Pesquisa --- ///
+    //  Acessar as pesquisas de forma publica   //
+    public function pesquisa()
+    {
+        return view('site.index');
+    }
     public function startquiz()
     {
         Session::put('nextq', '1');
@@ -242,6 +232,7 @@ class QuestionController extends Controller
             // print_r($request->all());
             $i=0;
             for ($i_o = 0; $i_o < count($request->option_id); $i_o++) {
+
                 $answer = new Answer;
                 $answer->question_id    = $request->question_id;
                 $answer->option_id      = $request->option_id[$i];
@@ -249,6 +240,7 @@ class QuestionController extends Controller
                 $answer->user_id        = $request->user_id;
                 $answer->save();
                 $i++;
+
             }
         }
         // Inicializar index

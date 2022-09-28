@@ -13,11 +13,11 @@
 
                 <div class="col-md-4 text-light">
                     <!-- Input "user_id" do tipo: hidden - Verifica que existe usuário logado e recupera o id -->
-                    <input type="text" class="form-control" name="user_id" value="@if( isset( auth()->user()->id ) ) {{ $user = auth()->user()->id }} @endif"
+                    <input type="hidden" class="form-control" name="user_id" value="@if( isset( auth()->user()->id ) ) {{ $user = auth()->user()->id }} @endif"
                         aria-label="Textname" aria-describedby="basic-addon1">
 
                     {{-- Exibe a pergunta --}}
-                    <h4> # {{ Session::get('nextq') }} : {{ $question->titulo }}</h4>
+                    <h4> {{ Session::get('nextq') }}º : {{ $question->titulo }}</h4>
                     {{-- Recupera o id da pergunta e envia pelo formulário --}}
                     <input type="hidden" value="{{ $question->id }}" name="question_id">
                     <br>
