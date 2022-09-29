@@ -59,4 +59,9 @@ class User extends Authenticatable
     {   // Têm muitas Questions
         return $this->hasMany(Question::class);
     }
+        // Têm muitas respostas
+    public function answers()
+    {
+        return $this->hasMany(Answer::class, 'answers', 'user_id')->withTimestamps();
+    }
 }

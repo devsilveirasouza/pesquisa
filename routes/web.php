@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OptionController;
 use App\Http\Controllers\PesquisaController;
@@ -33,11 +34,14 @@ Route::delete('/perguntas-delete/{id}',             [QuestionController::class, 
 // -------------------------------------Opções Perguntas---------------------------------------------------------------------------------
 Route::resource('/options',                      OptionController::class)->except('show')->middleware('auth');
 //   --------------------------------------Pesquisa---------------------------------------------------------------------------------------
-Route::get('/respostas',                            [PesquisaController::class, 'index'])->middleware('auth')->name('respostas.index');
-Route::get('/respostas-listagem',                   [PesquisaController::class, 'getResponse'])->middleware('auth')->name('respostas.getResponse');
-Route::get('/respostas/show/',                 [PesquisaController::class, 'show'])->middleware('auth')->name('response.show');
+Route::get('/respostas',                            [AnswerController::class, 'index'])->middleware('auth')->name('respostas.index');
+Route::get('/respostas-listagem',                   [AnswerController::class, 'getResponse'])->middleware('auth')->name('respostas.getResponse');
+
+Route::get('/resposta/show/{id}',                  [AnswerController::class, 'show'])->name('resposta/show');
+Route::get('/respostamostrar',                     [AnswerController::class, 'mostrarResposta']);
+
 //  --- Acesso público a pesquisa ---   //
-Route::get('principal',                             [QuestionController::class, 'pesquisa'])->name('pesquisa');
+Route::get('principal',                            [QuestionController::class, 'pesquisa'])->name('pesquisa');
 
 // Questões da pesquisa
 Route::any('answer', function () {
@@ -49,13 +53,13 @@ Route::any('start', function () {
     return view('site.start');
 });
 
-Route::any('submitans',                             [QuestionController::class, 'submitans']);
-Route::any('startquiz',                             [QuestionController::class, 'startquiz'])->name('startquiz');
-
 // Finaliza a pesquisa
 Route::any('end', function () {
     return view('site.end');
 });
 
+Route::any('submitans',                             [QuestionController::class, 'submitans']);
+Route::any('startquiz',                             [QuestionController::class, 'startquiz'])->name('startquiz');
+//  Rotas com joins para teste  //
 Route::get('/join1',                                  [PesquisaController::class, 'join']);
 Route::get('/join2',                                  [PesquisaController::class, 'joinWithGroupBy']);

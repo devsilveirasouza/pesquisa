@@ -1,15 +1,6 @@
 @extends('adminlte::page')
 
-<!-- Ajustando o dataTable com CSS -->
-<style type="text/css">
-    table#lista_pergunta {
-        margin-bottom: 2px !important;
-        margin-top: 2px !important;
-        border-collapse: collapse !important;
-    }
-</style>
-
-@section('title', 'Resposta descrição')
+@section('title', 'Respostas das Pesquisas')
 
 @section('content_header')
 
@@ -33,46 +24,56 @@
                         <div class="col-md-10">
                             <div class="h-100 p-5 bg-light border rounded-3">
                                 {{-- Recuperando o Id da pergunta --}}
-                                <input type="hidden" class="form-control" name="question_id" value=" {{ $question->id }} "
-                                    aria-label="Textname" aria-describedby="basic-addon1">
-                                <label for="">Descrição da pergunta:</label>
-                                <p>{{ $question->titulo }}</p>
-                                <label for="">Resposta obrigatória:</label>
-                                <p>{{ $question->obrigatoria }}.</p>
-                                <label for="">Tipo de Resposta:</label>
-                                <p>{{ $question->tipo }}.</p>
+                                <input type="hidden" class="form-control" name="question_id"
+                                    value=" {{ $answers[0]->question_id }} " aria-label="Textname"
+                                    aria-describedby="basic-addon1">
 
+                                @if ($answers)
+                                    <p>{{ $answers[0]->question_titulo }}</p>
+                                @else
+                                    <p>Não existe pergunta respondida.</p>
+                                @endif
+                                {{-- Respostas cadastradas de seleção --}}
                                 <div class="row">
-                                    <ul><strong>Resposta de seleção cadastrada</strong></ul>
+                                    <ul><strong>Respostas de seleção</strong></ul>
+                                    @php
+                                        $id_opt = 0;
+                                        $c_opt = count($answers);
+                                    @endphp
 
-                                    @if ($question->options)
-                                        @forelse ($question->options as $option)
-                                            <li>{{ $option->titulo }}</li>
-                                        @empty
-                                            <li>Não existem respostas de seleção cadastradas nesta pergunta</li>
-                                        @endforelse
+                                    @while ($id_opt < $c_opt)
+                                        <li>{{ $answers[$id_opt]->option_id }}</li>
+                                        @php
+                                            $id_opt++;
+                                        @endphp
+                                    @endwhile
+                                </div>
+                                {{-- Respostas de comentário --}}
+                                <div class="row">
+                                    <ul><strong>Resposta de Comentário</strong></ul>
+                                    @php
+                                        $id_com = 0;
+                                        $c_com = count($answers);
+                                    @endphp
+                                    @if ($answers[$id_com]->comment)
+                                        @while ($id_com < $c_com)
+                                            <p>{{ $answers[$id_com]->comment }}</p>
+                                            @php
+                                                $id_com++;
+                                            @endphp
+                                        @endwhile
+                                    @else
+                                        <p>Não existe comentário para esta questão.</p>
                                     @endif
+
                                 </div>
 
-                                <div class="row">
-                                    <ul><strong>Resposta de text cadastrada</strong></ul>
-
-                                    @if ($question->answers->comment)
-                                        <p>{{ $question->answers->comment}}</p>
-                                    @endif
-                                </div>
-
-                                <label for="">Usuário de Cadastro:</label>
-                                <p>{{ $answer->user_id }}.</p>
-                                <label for="">Data de Cadastro:</label>
-                                <p>{{ date('d/m/Y', strtotime($answer->created_at)) }}.</p>
                             </div>
                             <div class="card-footer">
                                 <div class="col-sm-10">
                                     <label for="">Ações:</label><br>
                                     <div class="button-group">
-                                        <a href="#"
-                                            class="btn btn-primary btn-sm ml-2 mt-2">Home</a>
+                                        <a href="{{ route('respostas.index') }}" class="btn btn-primary btn-sm ml-2 mt-2">Home</a>
                                     </div>
                                 </div>
                             </div>

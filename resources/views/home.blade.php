@@ -10,22 +10,15 @@
 
 @section('content')
 
-    {{-- <img src=" img/pss.jpg " class="img-fluid" alt="wallpaper"> --}}
     <div class="row">
-        <h4 class="text text-center">Nosso objetivo é melhorar cada vez mais nosso atendimento proporcinando uma experiência
+        <h4 class="text text-center">Nosso objetivo é melhorar cada vez mais nosso atendimento proporcinando uma
+            experiência
             única aos nossos clientes!</h4>
     </div>
 
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="{{ 'asset/css/app.css' }}" />
-    <link rel="stylesheet" href="{{ asset('bootstrap-5.0.2/css/bootstrap.css')}}" />
-@stop
-
-@section('js')
-    <script>
-        //Teste de scripts
-        console.log('Olá Mundo!');
-    </script>
+    <link rel="stylesheet" href="{{ asset('/css/app.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bootstrap-5.0.2/css/bootstrap.css') }}" />
 @stop

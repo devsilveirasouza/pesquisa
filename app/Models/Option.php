@@ -20,4 +20,9 @@ class Option extends Model
     {
         return $this->belongsToMany(Question::class)->withTimestamps();
     }
+
+    public function answers()
+    {
+        return $this->belongsToMany(Answer::class, 'answers', 'option_id')->withTimestamps();
+    }
 }

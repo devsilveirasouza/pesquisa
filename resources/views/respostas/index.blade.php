@@ -17,7 +17,7 @@ $config = [
     'ordering' => true,
     'ajax' => $url,
     'sDom' => 'blfrtip', // Configuração: 'DOM' de exibição do datatable
-    'columns' => [['data' => 'question_id', 'visible' => true], ['data' => 'question_titulo', 'visible' => true], ['data' => 'option_id'], ['data' => 'comment'], ['data' => 'user_id', 'orderable' => false, 'visible' => true], ['data' => 'created_at', 'visible' => true], ['data' => 'buttons', 'orderable' => false, 'no-export' => true, 'width' => 5]],
+    'columns' => [['data' => 'question_id', 'visible' => true], ['data' => 'question_titulo', 'visible' => true], ['data' => 'option_title'], ['data' => 'comment'], ['data' => 'user_name', 'orderable' => false, 'visible' => true], ['data' => 'created_at', 'visible' => true], ['data' => 'buttons', 'orderable' => false, 'no-export' => true, 'width' => 5]],
 ];
 @endphp
 
@@ -61,8 +61,7 @@ $config = [
 
 @section('css')
     <!-- Bootstrap CSS -->
-    <link href="{https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous}">
+    <link href="{{asset('bootstrap-5.0.2/css/bootstrap.min.css')}}">
     <!-- Datatables jquery CSS -->
     <link rel="stylesheet" href="{{ asset('datatables/datatables.min.css') }}">
 @stop
@@ -79,14 +78,13 @@ $config = [
     <script src="{{ asset('bootstrap-5.0.2/js/bootstrap.bundle.min.js') }}"></script>
 
     <script>
-            $(document).on("click", ".btnDetails", function(e) {
-                e.preventDefault();
+        $(document).on("click", ".btnDetails", function(e) {
+            e.preventDefault();
 
-                var r_id = $(this).val();
-                var url  = "/respostas/show/";
-                window.location.href = url;
-                console.log(url + r_id)
-            });
+            var resposta_id = $(this).val();
+            console.log(resposta_id)
+            location.href="/resposta/show" +"/"+resposta_id;
+        });
     </script>
 
 @stop

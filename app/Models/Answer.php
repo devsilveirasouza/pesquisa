@@ -23,4 +23,14 @@ class Answer extends Model
     {
         return $this->belongsToMany(Question::class)->withTimestamps();
     }
+
+    public function options()
+    {
+        return $this->belongsToMany(Option::class)->withTimestamps();
+    }
+    // Uma questão pertence a um usuário
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

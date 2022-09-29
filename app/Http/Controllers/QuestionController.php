@@ -136,8 +136,7 @@ class QuestionController extends Controller
     }
     /**
      * Chama o formulário para editar os dados */
-    public function edit($id)
-    {
+    public function edit($id)   {
         $question = Question::with(['user', 'options'])->find($id);
 
         $user = User::all();
@@ -210,11 +209,6 @@ class QuestionController extends Controller
     public function submitans(Request $request)
     {
         $i_opt = 0;
-
-        $question_id    = $request->question_id;
-        $options        = $request->option_id;
-        $comment        = $request->comment;
-        $user_id        = $request->user_id;
 
         if (!isset($request->option_id)) {
 

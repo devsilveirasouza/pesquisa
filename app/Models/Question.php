@@ -13,11 +13,7 @@ class Question extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable     =   [
-
-        'titulo', 'obrigatoria', 'tipo', 'user_id'
-    ];
-
+    protected $fillable     =   ['titulo', 'obrigatoria', 'tipo', 'user_id'];
     // Uma questão pertence a um usuário
     public function user()
     {
@@ -31,6 +27,6 @@ class Question extends Model
 
     public function answers()
     {
-        return $this->belongsToMany(Answer::class)->withTimestamps();
+        return $this->belongsToMany(Answer::class, 'answers', 'question_id', 'question_id')->withTimestamps();
     }
 }
