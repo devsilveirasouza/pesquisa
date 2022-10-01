@@ -39,8 +39,8 @@
                 <div class="form-group row">
                     <label for="inputText3" class="col-sm-2 col-form-label">Name</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control user_name" id="inputText3" name="name" placeholder="Name"
-                            value="{{ $user->name }}" required>
+                        <input type="text" class="form-control user_name" id="inputText3" name="name"
+                            placeholder="Name" value="{{ $user->name }}" required>
                         @if ($errors->has('name'))
                             <h6> Favor inserir seu nome! </h6>
                         @endif
@@ -49,8 +49,8 @@
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
                     <div class="col-sm-10">
-                        <input type="email" class="form-control user_email" id="inputEmail3" name="email" placeholder="Email"
-                            value="{{ $user->email }}" required>
+                        <input type="email" class="form-control user_email" id="inputEmail3" name="email"
+                            placeholder="Email" value="{{ $user->email }}" required>
                         @if ($errors->has('name'))
                             <h6> Favor inserir seu email! </h6>
                         @endif
@@ -69,8 +69,8 @@
             </div>
 
             <div class="card-footer">
-                <button type="submit" class="btn btn-danger btn-md ml-2 mt-2">Atualizar</button>
-                <button type="button" class="btn btn-primary home_user btn-md col-sm-1 ml-2 mt-2">Home</button>
+                <button type="submit" class="btn btn-danger btn-sm ml-2 mt-2" style="width: 80px;">Atualizar</button>
+                <a href="{{ route('user.list') }}"><button type="button" class="btn btn-primary home_user btn-sm ml-2 mt-2" style="width: 80px;">Home</button></a>
             </div>
         </form>
     </div>
@@ -84,11 +84,39 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 @stop
 
+@section('plugins.Sweetalert2', true);
+
+@push('js')
+    <script>
+        $(document).ready(function() {
+            $(".form_edit_user").submit(function(editar) {
+                editar.preventDefault();
+                Swal.fire({
+                    title: "Você têm certeza?",
+                    text: "Quer atualizar este registro?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Sim, Atualizar!",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.submit();
+                        Swal.fire(
+                            "Atualizar!",
+                            "O registro foi atualizado!",
+                            "success"
+                        );
+                    }
+                });
+            });
+        });
+    </script>
+@endpush
+
 @section('js')
 
     <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
-    {{-- Script Users --}}
-    <script src="{{  asset('site/user.js') }}"></script>
 
 @stop

@@ -24,7 +24,7 @@ $config = [
     'ordering' => true,
     'ajax' => $url,
     'sDom' => 'blfrtip', // Configuração: 'DOM' de exibição do datatable
-    'columns' => [['data' => 'id', 'visible' => false], ['data' => 'name'], ['data' => 'email', 'orderable' => false], ['data' => 'buttons', 'orderable' => false, 'no-export' => true, 'width' => 5]],
+    'columns' => [['data' => 'id', 'visible' => false], ['data' => 'name'], ['data' => 'email', 'orderable' => false], ['data' => 'buttons', 'orderable' => false, 'no-export' => true, 'width' => 10]],
 ];
 @endphp
 
@@ -50,7 +50,7 @@ $config = [
                         <div class="card card-header">
                             <h4 class="text-left mt-3 mb-2 ml-3">Dados dos usuários
                                 <a href="{{ route('user.create') }}"
-                                    class="btn btn-warning float-end btn-sm mt-2 mb-2 mr-3 add_user">Cadastrar</a>
+                                    class="btn btn-warning float-end btn-sm mt-2 mb-2 mr-3 add_user"style="width: 80px;">Cadastrar</a>
                             </h4>
                         </div>
                     </div>
@@ -72,12 +72,51 @@ $config = [
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
 @stop
 
+@section('plugins.Sweetalert2', true);
+
+@push('js')
+    <script>
+        $(document).on("click", ".delete_user", function(e) {
+            e.preventDefault();
+            const user_id = $(this).val();
+            Swal.fire({
+                title: "Você quer excluir?",
+                text: "Não será mais possível usar este registro!",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Sim, Excluir!",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajaxSetup({
+                        headers: {
+                            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                                "content"
+                            ),
+                        },
+                    });
+                    //console.log(user_id);
+                    $.ajax({
+                        type: "DELETE",
+                        url: "/usuarios-delete/" + user_id,
+                    });
+                    Swal.fire(
+                        "Excluído!",
+                        "O registro foi excluído com sucesso!",
+                        "success"
+                    );
+                    location.href = "{{ route('user.list') }}";
+                }
+            });
+        });
+    </script>
+@endpush
+
 @section('js')
     <!-- SweetAlert -->
     <script src=" {{ asset('js/app.js') }} "></script>
     <script src=" {{ asset('js/jquery-3.6.0.min.js') }} "></script>
-    {{-- Scripts Users --}}
-    <script src=" {{ asset('site/user.js') }} "></script>
     <!-- Datatables jquery min js -->
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <!-- Option 1: Bootstrap Bundle with Popper -->

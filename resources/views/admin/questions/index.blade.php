@@ -1,4 +1,5 @@
 @extends('adminlte::page')
+
 <!-- Ajustando o dataTable com CSS -->
 <style type="text/css">
     table.pergunta {
@@ -33,7 +34,7 @@ $config = [
 @section('content_header')
 
     @if ($status = Session::get('mensagem'))
-        <h2> {{ $status }} </h2>
+        <h3 class="text text-center"> {{ $status }} </h3>
     @endif
 
 @stop
@@ -49,7 +50,8 @@ $config = [
                             <a href="{{ route('perguntas.create') }}"
                                 class="btn btn-warning float-inline btn-sm mt-2 mb-2 mr-3 add_user">Cadastrar</a>
                             Perguntas cadastradas
-                            <a href="{{ route('options.index') }}" type="button" class="opcao_index btn btn-success float-inline float-end btn-sm ml-1">Opções</a>
+                            <a href="{{ route('options.index') }}" type="button"
+                                class="opcao_index btn btn-success float-inline float-end btn-sm ml-1">Opções</a>
                         </h3>
                     </div>
 
@@ -72,13 +74,53 @@ $config = [
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
 @stop
 
+@section('plugins.Sweetalert2', true);
+
+@push('js')
+    <script>
+        // Deletar: Ajax & Sweetalert2
+        $(document).on("click", ".delete_pergunta", function(e) {
+            e.preventDefault();
+            // alert('Ola!');
+            var perguntaId = $(this).val();
+            // alert(perguntaId);
+            var html = "";
+
+            html =
+                '<div id="swal2-content" class="swal2-html-container" style="display: block;">{{ __('Confirmar exclusão') }}</div>';
+            html = html +
+                '<form action="{{ route('pergunta.delete', ' + perguntaId + ') }}" method="post">@csrf @method('delete') <br><button type="submit"';
+            html = html +
+                ' class="swal2-deny swal2-styled">{{ __('Sim') }}</button><button type="button" class="swal2-cancel swal2-styled"';
+            html = html + ' onclick="Swal.close();">{{ __('Não') }}</button></form>';
+
+            $(".delete_pergunta").click(() => Swal.fire({
+                title: "{{ __('Excluir registro') }}",
+                html: html,
+                icon: 'question',
+                showCancelButton: false,
+                showDenyButton: false,
+                showConfirmButton: false,
+                denyButtonText: "{{ __('messages.yes') }}",
+                cancelButtonText: "{{ __('messages.no') }}",
+                iconColor: "#ff1100",
+            }));
+            //console.log(response);
+            if (response.status == 400) {
+
+            } else if (response.status == 200) {
+                // success message
+                location.href = "route('perguntas.index')";
+            }
+        });
+    </script>
+@endpush
+
 @section('js')
 
     <!-- SweetAlert -->
     <script src=" {{ asset('js/app.js') }} "></script>
     <script src=" {{ asset('js/jquery-3.6.0.min.js') }} "></script>
-    {{-- Scripts Perguntas --}}
-    <script src=" {{ asset('site/question.js') }} "></script>
 
     <!-- Datatables jquery min js -->
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>

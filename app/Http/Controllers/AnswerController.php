@@ -59,9 +59,9 @@ class AnswerController extends Controller
         foreach ($records as $record) {
             $question_id        = $record->question_id;
             $question_titulo    = $record->question_titulo;
-            $option_title          = $record->option_title;
+            $option_title       = $record->option_title;
             $comment            = $record->comment;
-            $user_name            = $record->user_name;
+            $user_name          = $record->user_name;
             $created_at         = \Carbon\Carbon::parse($record->created_at)->format('d/m/Y');
 
             $btnDetails = '<button value="' . $question_id . '" class="btnDetails btn btn-xs btn-dark text-teal mx-1 shadow" title="Details">

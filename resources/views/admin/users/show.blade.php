@@ -1,9 +1,5 @@
 @extends('adminlte::page')
 
-{{-- @section('plugins.Datatables', true) --}}
-
-{{-- @section('plugins.DatatablesPlugin', true) --}}
-
 @section('title', 'Users List All')
 
 @section('content_header')
@@ -35,13 +31,16 @@
                             <td>{{ $user->email }}</td>
                             <td>{{ date('d/m/Y', strtotime($user->created_at)) }}</td>
                             <td>
-                                <div class="btn-group">
-                                    <button type="button" value="{{ $user->id }}"
-                                        class="edit_user btn btn-warning btn-sm ml-1">Edit</button>
-                                    <button type="button" value="{{ $user->id }}"
-                                        class="delete_user btn btn-danger btn-sm ml-1">Delete</button>
-                                    <button type="button" class="home_user btn btn-info btn-sm ml-1">Home</button>
-                                </div>
+                                <a href="{{ route('user.edit', [$user->id]) }}"><button value="{{ $user->id }}"
+                                        class="edit_user btn btn-xs btn-default text-primary mx-1 shadow"
+                                        style="width: 42px; height: 42px;"><i class="fa fa-lg fa-fw fa-pen"></i></button></a>
+                                <button value="{{ $user->id }}"
+                                    class="delete_user btn btn-xs btn-default text-danger mx-1 shadow"
+                                    style="width: 42px; height: 42px;"><i class="fa fa-lg fa-fw fa-trash"></i></button>
+                                <a href="{{ route('user.list') }}"><button
+                                        class="btn btn-primary home_user btn-sm ml-2 mt-2"
+                                        style="width: 42px; height: 42px;"><i
+                                            class="fa fa-lg fa-fw fa-home"></i></button></a>
                             </td>
                         </tr>
                     </tbody>
@@ -53,14 +52,59 @@
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Datatables jquery CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
 @stop
 
-@section('js')
+@section('plugins.Sweetalert2', true);
 
+@push('js')
+    <script>
+        $(document).on("click", ".delete_user", function(e) {
+            e.preventDefault();
+            const user_id = $(this).val();
+            Swal.fire({
+                title: "Você quer excluir?",
+                text: "Não será mais possível usar este registro!",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Sim, Excluir!",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajaxSetup({
+                        headers: {
+                            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                                "content"
+                            ),
+                        },
+                    });
+                    //console.log(user_id);
+                    $.ajax({
+                        type: "DELETE",
+                        url: "/usuarios-delete/" + user_id,
+                    });
+                    Swal.fire(
+                        "Excluído!",
+                        "O registro foi excluído com sucesso!",
+                        "success"
+                    );
+                    location.href = "{{ route('user.list') }}";
+                }
+            });
+        });
+    </script>
+@endpush
+
+@section('js')
+    <!-- SweetAlert -->
     <script src=" {{ asset('js/app.js') }} "></script>
     <script src=" {{ asset('js/jquery-3.6.0.min.js') }} "></script>
-    {{-- Script Users --}}
-    <script src=" {{ asset('site/user.js') }} "></script>
-
+    <!-- Datatables jquery min js -->
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 @stop

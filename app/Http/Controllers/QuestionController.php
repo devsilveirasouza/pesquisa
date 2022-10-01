@@ -53,19 +53,19 @@ class QuestionController extends Controller
         // Criando o array que vai receber as informações
         $data_arr = array();
         // Atribuindo as informações
-        foreach ($records as $record) {
-            $id                     = $record->id;
-            $titulo                 = $record->titulo;
-            $obrigatoria            = $record->obrigatoria;
-            $tipo                   = $record->tipo;
-            $user_id                = $record->user_id;
+        foreach ($records as $question) {
+            $id                     = $question->id;
+            $titulo                 = $question->titulo;
+            $obrigatoria            = $question->obrigatoria;
+            $tipo                   = $question->tipo;
+            $user_id                = $question->user_id;
 
-            $created_at             = \Carbon\Carbon::parse($record->created_at)->format('d/m/Y');
+            $created_at             = \Carbon\Carbon::parse($question->created_at)->format('d/m/Y');
 
-            // Criantipodo os botões
-            $btnEdit        = '<button type="button" value="' . $id . '" class="edit_pergunta btn btn-warning btn-sm ml-1">Edit</button>';
-            $btnDelete      = '<button type="button" value="' . $id . '" class="delete_pergunta btn btn-danger btn-sm ml-1">Delete</button>';
-            $btnDetails     = '<button type="button" value="' . $id . '" class="details_pergunta btn btn-info btn-sm ml-1">Detaills</button>';
+            // Criando os botões
+            $btnEdit        = '<a href="' . route('perguntas.edit', [$question->id]) . '"><button value="' . $question->id . '" class="edit_pergunta btn btn-xs btn-default text-primary mx-1 shadow"><i class="fa fa-lg fa-fw fa-pen"></i></button></a>';
+            $btnDelete      = '<button value="' . $question->id . '" class="delete_pergunta btn btn-xs btn-default text-danger mx-1 shadow"><i class="fa fa-lg fa-fw fa-trash"></i></button>';
+            $btnDetails     = '<a href="' . route('pergunta.listar', [$question->id]) . '"><button value="' . $question->id . '" class="details_pergunta btn btn-xs btn-default text-teal mx-1 shadow"><i class="fa fa-lg fa-fw fa-eye"></i></button></a>';
 
             $buttons                = ['<nobr>' . $btnDetails . $btnEdit . $btnDelete . '</nobr>'];
             // Carregando as informações no array
@@ -99,7 +99,6 @@ class QuestionController extends Controller
     }
     public function store(StoreUpdateQuestionRequest $request)
     {
-
         DB::beginTransaction();
         // Recuperando o dado inserido no banco
         $question = Question::create($request->all());
@@ -112,9 +111,7 @@ class QuestionController extends Controller
             /** sync => atualiza o registro dos relacionamentos */
             $question->options()->sync($request->options);
         }
-
         DB::commit();
-
         return redirect()->route('perguntas.index')
             ->with('mensagem', 'Pergunta cadastrada com sucesso!');
     }
@@ -125,7 +122,6 @@ class QuestionController extends Controller
          * busca o usuario e retorna o name  Users
          **/
         $question = Question::with(['user', 'options'])->find($id);
-
         $user       =   User::all();
         $options    =   Option::all();
 
@@ -136,7 +132,8 @@ class QuestionController extends Controller
     }
     /**
      * Chama o formulário para editar os dados */
-    public function edit($id)   {
+    public function edit($id)
+    {
         $question = Question::with(['user', 'options'])->find($id);
 
         $user = User::all();
@@ -157,19 +154,20 @@ class QuestionController extends Controller
     public function update(Request $request, $id)
     {
         $question = Question::find($id);
-
-        DB::beginTransaction();
-
-        $question->update($request->all());
-
-        if ($request->has('options')) {
-            $question->options()->sync($request->options);
-        }
-
-        DB::commit();
-
-        return redirect()->route('perguntas.index')
-            ->with('mensagem', 'Atualização realizada com sucesso!');
+        // $answer = Answer::where('question_id', $id);
+        // if ($answer) {
+        //     //Se for encontrado os parametros retorna mensagem abaixo
+        //     return back()->with('mensagem', "Pergunta já respondida, não é possível mais alterar.");
+        // } else {
+            DB::beginTransaction();
+            $question->update($request->all());
+            if ($request->has('options')) {
+                $question->options()->sync($request->options);
+            }
+            DB::commit();
+            return redirect()->route('perguntas.index')
+                ->with('mensagem', 'Atualização realizada com sucesso!');
+        // }
     }
     /**
      * Exclui um registro.
@@ -177,20 +175,20 @@ class QuestionController extends Controller
      * @param  \App\Models\Question  $question
      * @return \Illuminate\Http\Response
      */
+
     public function excluir(Request $request, $id)
     {
         $question = Question::find($id);
-
-        DB::beginTransaction();
-
-        $question->delete();
-
-        DB::commit();
-
-        return response()->json([
-            'status' => 200,
-            'mensagem' => 'Pergunta excluída com sucesso!',
-        ]);
+        $answer = Answer::where('question_id', $id);
+        if ($answer) {
+            //Se for encontrado os parametros retorna mensagem abaixo
+            return back()->with('mensagem', "Não foi possível excluír este registro.");
+        } else {
+            DB::beginTransaction();
+            $question->delete();
+            DB::commit();
+            return back()->with('mesagem', "Registro excluído com sucesso!");
+        }
     }
     //  --- Pesquisa --- ///
     //  Acessar as pesquisas de forma publica   //
@@ -224,7 +222,7 @@ class QuestionController extends Controller
         } else {
             // echo "<pre>";
             // print_r($request->all());
-            $i=0;
+            $i = 0;
             for ($i_o = 0; $i_o < count($request->option_id); $i_o++) {
 
                 $answer = new Answer;
@@ -234,7 +232,6 @@ class QuestionController extends Controller
                 $answer->user_id        = $request->user_id;
                 $answer->save();
                 $i++;
-
             }
         }
         // Inicializar index

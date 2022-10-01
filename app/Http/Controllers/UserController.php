@@ -53,9 +53,9 @@ class UserController extends Controller
             $email = $user->email;
 
             // Criando os botões
-            $btnEdit        = '<button type="button" value="' . $user->id . '" class="edit_user btn btn-warning btn-sm ml-1">Edit</button>';
-            $btnDelete      = '<button type="button" value="' . $user->id . '" class="delete_user btn btn-danger btn-sm ml-1">Delete</button>';
-            $btnDetails     = '<button type="button" value="' . $user->id . '" class="details_user btn btn-info btn-sm ml-1">View</button>';
+            $btnEdit        = '<a href="' . route('user.edit', [$user->id]) . '"><button value="' . $user->id . '" class="edit_user btn btn-xs btn-default text-primary mx-1 shadow"><i class="fa fa-lg fa-fw fa-pen"></i></button></a>';
+            $btnDelete      = '<button value="' . $user->id . '" class="delete_user btn btn-xs btn-default text-danger mx-1 shadow"><i class="fa fa-lg fa-fw fa-trash"></i></button>';
+            $btnDetails     = '<a href="' . route('user.listUser', [$user->id]) . '"><button value="' . $user->id . '" class="details_user btn btn-xs btn-default text-teal mx-1 shadow"><i class="fa fa-lg fa-fw fa-eye"></i></button></a>';
 
             $buttons = ['<nobr>' . $btnDetails . $btnEdit . $btnDelete . '</nobr>'];
 
@@ -100,7 +100,7 @@ class UserController extends Controller
         $email      = User::where('email', $request->email)->first();
         $name       = User::Where('name', $request->name)->first();
 
-        if ($email == null and $name == null ){
+        if ($email == null and $name == null) {
 
             DB::beginTransaction();
 
@@ -149,9 +149,9 @@ class UserController extends Controller
         DB::commit();
 
         return response()->json([
-                'status'    => 200,
-                'message'   => 'Usuário excluído com sucesso!',
-            ]);
+            'status'    => 200,
+            'message'   => 'Usuário excluído com sucesso!',
+        ]);
     }
     // Mostra registro
     public function show($id)

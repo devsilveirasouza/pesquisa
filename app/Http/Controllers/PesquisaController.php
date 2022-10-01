@@ -16,12 +16,10 @@ class PesquisaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index()  {
         return view('respostas.index');
     }
-    public function getResponse(Request $request)
-    {
+    public function getResponse(Request $request)   {
         // Leitura dos valores
         $draw                       = $request->get('draw');
         $start                      = $request->get('start');
@@ -97,9 +95,7 @@ class PesquisaController extends Controller
         echo json_encode($response);
         exit;
     }
-
-    public function show($id)
-    {
+    public function show($id)   {
         $answer = DB::table('answers')
             ->where('answers.question_id', '=', $id)
             ->select('questions.id as question_id', 'questions.titulo as question_titulo', 'options.titulo as option_id', 'answers.comment', 'users.name as user_id')
@@ -109,11 +105,8 @@ class PesquisaController extends Controller
             ->get();
 
         return $answer;
-
     }
-
-    public function joinWithGroupBy()
-    {
+    public function joinWithGroupBy()   {
 
         $records = DB::table('questions')
             ->join('answers', 'answers.question_id', '=', 'questions.id')
@@ -132,9 +125,7 @@ class PesquisaController extends Controller
 
         return $records;
     }
-
-    public function join()
-    {
+    public function join()  {
         $records = DB::table('answers')
             ->select('questions.titulo as QuestionName', 'options.titulo as OptionName', 'answers.comment', 'users.name as UserName')
             ->leftJoin('questions', 'questions.id', 'answers.question_id')
@@ -144,5 +135,9 @@ class PesquisaController extends Controller
             ->get();
 
         return $records;
+    }
+    public function getData()
+    {
+        return view('test-datatable');
     }
 }

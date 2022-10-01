@@ -26,14 +26,8 @@
 
 @section('content')
     @if ($status = Session::get('mensagem'))
-        <h2> {{ $status }} </h2>
+        <h3> {{ $status }} </h3>
     @endif
-
-    {{-- Teste de parametros --}}
-    {{-- @php
-    $resposta = json_decode($perguntas[0]);
-    print_r($resposta);
-    @endphp --}}
 
     {{-- Formulário de Edição --}}
     <div class="card card-info">
@@ -140,6 +134,33 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 @stop
+
+@section('plugins.Sweetalert2', true);
+
+@push('js')
+    <script>
+        // // Confirma o envio dos dados para atualização
+        $(document).ready(function() {
+            $(".form_pergunta_edit").submit(function(e) {
+                e.preventDefault();
+
+                Swal.fire({
+                    title: "Você têm certeza?",
+                    text: "Quer atualizar este registro?",
+                    icon: "question",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Sim",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.submit();
+                    }
+                });
+            });
+        });
+    </script>
+@endpush
 
 @section('js')
 

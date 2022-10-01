@@ -118,6 +118,33 @@
 
 @stop
 
+@section('plugins.Sweetalert2', true);
+
+@push('js')
+
+<script>
+    // Salvar registro
+    $(".form_create_pergunta").submit(function (e) {
+        e.preventDefault();
+
+        Swal.fire({
+            title: "Você têm certeza ?",
+            text: "Quer salvar este registro!",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Sim, Salvar!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.submit();
+                Swal.fire("Salvo!", "O registro foi Salvo.", "success");
+            }
+        });
+    });
+</script>
+
+@endpush
 
 @section('js')
     <!-- Optional JavaScript -->

@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/',                                      HomeController::class);
+Route::get('/',                                     HomeController::class);
 // -------------------------------------Usuarios-----------------------------------------------------------------------------------------
 Route::get('/usuarios',                             [UserController::class,     'indexUsuarios'])->Middleware('auth')->name('user.list');
 Route::get('/usuarios-listagem',                    [UserController::class,     'buscaDados'])->Middleware('auth')->name('user.listAll');
@@ -32,34 +32,28 @@ Route::put('/perguntas/atualizar/{id}',             [QuestionController::class, 
 Route::get('/pergunta/{pergunta}',                  [QuestionController::class, 'show'])->middleware('auth')->name('pergunta.listar');
 Route::delete('/perguntas-delete/{id}',             [QuestionController::class, 'excluir'])->middleware('auth')->name('pergunta.delete');
 // -------------------------------------Opções Perguntas---------------------------------------------------------------------------------
-Route::resource('/options',                      OptionController::class)->except('show')->middleware('auth');
-//   --------------------------------------Pesquisa---------------------------------------------------------------------------------------
-Route::get('/respostas',                            [AnswerController::class, 'index'])->middleware('auth')->name('respostas.index');
-Route::get('/respostas-listagem',                   [AnswerController::class, 'getResponse'])->middleware('auth')->name('respostas.getResponse');
-
-Route::get('/resposta/show/{id}',                  [AnswerController::class, 'show'])->name('resposta/show');
-Route::get('/respostamostrar',                     [AnswerController::class, 'mostrarResposta']);
-
+Route::resource('/options',                     OptionController::class)->except('show')->middleware('auth');
 //  --- Acesso público a pesquisa ---   //
-Route::get('principal',                            [QuestionController::class, 'pesquisa'])->name('pesquisa');
-
+Route::get('principal',                             [QuestionController::class, 'pesquisa'])->name('pesquisa');
 // Questões da pesquisa
 Route::any('answer', function () {
     return view('site.answer');
 });
-
 // Inicia a pesquisa
 Route::any('start', function () {
     return view('site.start');
 });
-
 // Finaliza a pesquisa
 Route::any('end', function () {
     return view('site.end');
 });
-
 Route::any('submitans',                             [QuestionController::class, 'submitans']);
 Route::any('startquiz',                             [QuestionController::class, 'startquiz'])->name('startquiz');
+//   --------------------------------------Pesquisa---------------------------------------------------------------------------------------
+Route::get('/respostas',                            [AnswerController::class, 'index'])->middleware('auth')->name('respostas.index');
+Route::get('/respostas-listagem',                   [AnswerController::class, 'getResponse'])->middleware('auth')->name('respostas.getResponse');
+Route::get('/resposta/show/{id}',                   [AnswerController::class, 'show'])->Middleware('auth')->name('resposta.show');
 //  Rotas com joins para teste  //
-Route::get('/join1',                                  [PesquisaController::class, 'join']);
-Route::get('/join2',                                  [PesquisaController::class, 'joinWithGroupBy']);
+Route::get('/join1',                                [PesquisaController::class, 'join']);
+Route::get('/join2',                                [PesquisaController::class, 'joinWithGroupBy']);
+

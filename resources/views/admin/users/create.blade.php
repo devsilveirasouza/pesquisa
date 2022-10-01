@@ -58,9 +58,9 @@
             </div>
             <div class="card-footer">
                 <div class="button-group">
-                    <button type="submit" class="addUser btn btn-success btn-sm">Salvar</button>
-                    <button type="reset" class="btn btn-danger btn-sm float-right">Limpar</button>
-                    <button type="button" class="home_user btn btn-info btn-sm">Home</button>
+                    <button type="submit" class="addUser btn btn-success btn-sm" style="width: 80px;">Salvar</button>
+                    <button type="reset" class="btn btn-danger btn-sm float-right" style="width: 80px;">Limpar</button>
+                    <a href="{{route('user.list')}}"><button type="button" class="home_user btn btn-info btn-sm" style="width: 80px;">Home</button></a>
                 </div>
             </div>
         </form>
@@ -68,6 +68,31 @@
     </div>
 
 @stop
+
+@section('plugins.Sweetalert2', true);
+
+@push('js')
+    <script>
+        // Cadastrar Usuário: Sweetalert2 para confirmação
+        $(".form_create_user").submit(function(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: "Você têm certeza?",
+                text: "Quer salvar este registro!",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Sim, Salvar!",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.submit();
+                    Swal.fire("Saved!", "O registro foi salvo com sucesso!", "success");
+                }
+            });
+        });
+    </script>
+@endpush
 
 @section('css')
     {{-- <link rel="stylesheet" href="/css/app.css"> --}}
@@ -79,6 +104,5 @@
 @section('js')
     <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
-    {{-- Scripts Users --}}
-    <script src="{{ asset('site/user.js') }}"></script>
+
 @stop
