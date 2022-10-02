@@ -106,7 +106,7 @@ $config = [
                 iconColor: "#ff1100",
             }));
             //console.log(response);
-            if (response.status == 400) {
+            if (response.status == 404) {
 
             } else if (response.status == 200) {
                 // success message

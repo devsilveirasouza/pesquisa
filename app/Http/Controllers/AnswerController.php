@@ -64,9 +64,9 @@ class AnswerController extends Controller
             $user_name          = $record->user_name;
             $created_at         = \Carbon\Carbon::parse($record->created_at)->format('d/m/Y');
 
-            $btnDetails = '<button value="' . $question_id . '" class="btnDetails btn btn-xs btn-dark text-teal mx-1 shadow" title="Details">
+            $btnDetails = '<a href="' . route('resposta.show', [$record->question_id]) . '"><button value="' . $question_id . '" class="btnDetails btn btn-xs btn-dark text-teal mx-1 shadow" title="Details">
                    <i class="fa fa-lg fa-fw fa-eye"></i>
-               </button>';
+               </button></a>';
 
             $buttons            = ['<nobr>' . $btnDetails . '</nobr>'];
 

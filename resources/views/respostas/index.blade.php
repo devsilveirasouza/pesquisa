@@ -1,11 +1,4 @@
 @extends('adminlte::page')
-{{-- With multiple slots, and plugin config parameter --}}
-@php
-$config = [
-    'placeholder' => 'Select multiple options...',
-    'allowClear' => true,
-];
-@endphp
 {{-- Configuração do datatables --}}
 @php
 // Definindo cabeçalho do datatables
@@ -23,7 +16,15 @@ $config = [
     'ordering' => true,
     'ajax' => $url,
     'sDom' => 'blfrtip', // Configuração: 'DOM' de exibição do datatable
-    'columns' => [['data' => 'question_id', 'visible' => true], ['data' => 'question_titulo', 'visible' => true], ['data' => 'option_title'], ['data' => 'comment'], ['data' => 'user_name', 'orderable' => false, 'visible' => true], ['data' => 'created_at', 'visible' => true], ['data' => 'buttons', 'orderable' => false, 'no-export' => true, 'width' => 5]],
+    'columns' => [
+        ['data' => 'question_id', 'visible' => true],
+        ['data' => 'question_titulo', 'visible' => true],
+        ['data' => 'option_title'],
+        ['data' => 'comment'],
+        ['data' => 'user_name', 'orderable' => false, 'visible' => true],
+        ['data' => 'created_at', 'visible' => true],
+        ['data' => 'buttons', 'orderable' => false, 'no-export' => true, 'width' => 5]
+    ],
 ];
 @endphp
 
@@ -56,17 +57,6 @@ $config = [
                 </div>
             </div>
             <div class="card-body">
-                <div class="row">
-                    <div class="col-md-4">
-
-                        <x-adminlte-select2 name="sel2Disabled" >
-                            <option disabled>Selecione uma pergunta</option>
-                            <option>Option 1</option>
-                            <option>Option 2</option>
-                        </x-adminlte-select2>
-
-                    </div>
-                </div>
                 <x-adminlte-datatable id="example" :heads="$heads" :config="$config" striped hoverable bordered
                     compressed />
             </div>

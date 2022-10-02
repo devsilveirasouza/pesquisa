@@ -3,17 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Answer;
 use App\Models\Api\Question;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class QuestionApiController extends Controller
 {
-    private $question;
-
-    public function __construct(Question $question)
-    {
-        $this->question = $question;
-    }
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +17,23 @@ class QuestionApiController extends Controller
      */
     public function index()
     {
-        return $this->question->all();
+        $questions = DB::table('option_question')
+            ->select('questions.id as question_id', 'questions.titulo as question', 'questions.obrigatoria as QuestionObrigatoria', 'questions.tipo as QuestionTipo', 'options.titulo as OptionTitle')
+            ->leftJoin('questions', 'questions.id', 'option_question.question_id')
+            ->leftJoin('options', 'options.id', 'option_question.option_id')
+            ->get();
+
+        $data_arr = array();
+
+        foreach($questions as $question) {
+            $question_id        = $question->question_id;
+            $question_titulo    = $question->question_titulo;
+            $option_title       = $question->option_title;
+            $comment            = $question->comment;
+            $user_name          = $question->user_name;
+        }
+
+        return $questions;
     }
 
     /**
