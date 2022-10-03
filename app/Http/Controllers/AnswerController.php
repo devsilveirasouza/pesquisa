@@ -95,7 +95,7 @@ class AnswerController extends Controller
 
     public function show($id)
     {
-        $answers = DB::table('answers')
+        $answers = Answer::orderBy('question_id')
             ->where('answers.question_id', '=', $id)
             ->select('questions.id as question_id', 'questions.titulo as question_titulo', 'options.titulo as option_id', 'answers.comment', 'users.name as user_id')
             ->leftJoin('questions', 'questions.id', 'answers.question_id')

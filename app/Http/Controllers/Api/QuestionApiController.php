@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\QuestionResource;
 use App\Models\Answer;
-use App\Models\Api\Question;
+use App\Models\Question;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class QuestionApiController extends Controller
 {
@@ -17,23 +19,9 @@ class QuestionApiController extends Controller
      */
     public function index()
     {
-        $questions = DB::table('option_question')
-            ->select('questions.id as question_id', 'questions.titulo as question', 'questions.obrigatoria as QuestionObrigatoria', 'questions.tipo as QuestionTipo', 'options.titulo as OptionTitle')
-            ->leftJoin('questions', 'questions.id', 'option_question.question_id')
-            ->leftJoin('options', 'options.id', 'option_question.option_id')
-            ->get();
+        $question = Question::with(['options']);
 
-        $data_arr = array();
-
-        foreach($questions as $question) {
-            $question_id        = $question->question_id;
-            $question_titulo    = $question->question_titulo;
-            $option_title       = $question->option_title;
-            $comment            = $question->comment;
-            $user_name          = $question->user_name;
-        }
-
-        return $questions;
+        return QuestionResource::collection($question->get())->response();
     }
 
     /**
@@ -42,9 +30,70 @@ class QuestionApiController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function submitAns(Request $request)
     {
-        //
+        $array = ['error' => ''];
+
+        $rules = [
+            'question_id' => 'required',
+            'user_id'       => 'required'
+        ];
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            $array['error'] =   $validator->messages();
+            return $array;
+        }
+
+        $i_opt = 0; // Index option
+
+        $question_id    = $request->input('question_id');
+        $option_id      = $request->input('option_id');
+        $comment        = $request->input('comment');
+        $user_id        = $request->input('user_id');
+
+        if (is_null($request->option_id)) {
+            $answer = new Answer();
+            $answer->question_id    = $question_id;
+            $answer->comment        = $comment;
+            $answer->user_id        = $user_id;
+            $answer->save();
+
+            // return $array;
+            return response()->json([
+                'status'    => 200,
+                'message'   =>  'Success'
+            ]);
+        } elseif (count($request->option_id) <= 1) {
+            $answer = new Answer();
+            $answer->question_id    = $question_id;
+            $answer->option_id      = $option_id[$i_opt];
+            $answer->user_id        = $user_id;
+            $answer->save();
+
+            // return $array;
+            return response()->json([
+                'status'    => 200,
+                'message'   =>  'Success'
+            ]);
+           } else {
+
+            $i = 0;
+            for ($i_o = 0; $i_o < count($request->option_id); $i_o++) {
+                $answer = new Answer;
+                $answer->question_id    = $request->question_id;
+                $answer->option_id      = $request->option_id[$i];
+                $answer->user_id        = $request->user_id;
+                $answer->save();
+                $i++;
+            }
+            // return $array;
+            return response()->json([
+                'status'    => 200,
+                'message'   =>  'Success'
+            ]);
+        }
+        return response()->json((['message' => 'Register Failed']), 400);
     }
 
     /**
@@ -55,7 +104,11 @@ class QuestionApiController extends Controller
      */
     public function show(Question $question)
     {
-        return $question;
+        $question = Question::find($question)->first();
+        if (is_null($question)) {
+            return response()->json((['message' => 'Question Not Found']), 404);
+        }
+        return (new QuestionResource($question->loadMissing(['options'])))->response();
     }
 
     /**

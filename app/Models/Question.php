@@ -27,6 +27,6 @@ class Question extends Model
 
     public function answers()
     {
-        return $this->belongsToMany(Answer::class, 'answers', 'question_id', 'question_id')->withTimestamps();
+        return $this->belongsToMany(Answer::class, 'answers', 'question_id')->withTimestamps();
     }
 }

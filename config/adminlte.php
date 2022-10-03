@@ -289,17 +289,6 @@ return [
                     'url'  => '/register',
                     'icon' => 'fas fa-fw fa-save',
                 ],
-                [
-                    'text' => 'Option 1',
-                    'url'  => '#',
-                    'icon' => 'fas fa-fw fa-user',
-                ],
-                [
-                    'text' => 'Option 2',
-                    'url'  => '#',
-                    'icon' => 'fas fa-fw fa-list',
-                ],
-
             ],
         ],
     ],

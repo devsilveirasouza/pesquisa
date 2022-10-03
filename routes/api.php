@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\Api\QuestionApiController;
+use App\Http\Controllers\QuestionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -11,3 +12,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/questions',            [QuestionApiController::class, 'index']);
 Route::get('/questions/{question}', [QuestionApiController::class, 'show']);
+
+// Pesquisa
+Route::post('/submitAns',       [QuestionApiController::class, 'submitAns']);
