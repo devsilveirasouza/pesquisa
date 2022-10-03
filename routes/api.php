@@ -14,4 +14,9 @@ Route::get('/questions',            [QuestionApiController::class, 'index']);
 Route::get('/questions/{question}', [QuestionApiController::class, 'show']);
 
 // Pesquisa
-Route::post('/submitAns',       [QuestionApiController::class, 'submitAns']);
+Route::get('/questionnaire',        [QuestionApiController::class, 'questionnaire'])->name('questionnaire');
+
+Route::get('/answers',              [QuestionControllerApi::class, 'answer'])->name('answers');
+Route::get('/startQuestions',       [QuestionApiController::class, 'startQuestions'])->name('startQuestions');
+
+Route::post('/submitAns',           [QuestionApiController::class, 'submitAns'])->name('submitAns');
