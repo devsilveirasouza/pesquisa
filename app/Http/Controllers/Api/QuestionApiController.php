@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\QuestionResource;
-use App\Models\Answer;
-use App\Models\Question;
+use App\Models\Api\Answer;
+use App\Models\Api\Question;
+use App\Models\Api\Option;
 use Illuminate\Cache\NullStore;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -20,6 +21,9 @@ class QuestionApiController extends Controller
      */
     public function index()
     {
+        // $questions = Question::all();
+
+        // return $questions;
         $question = Question::with(['options']);
 
         return QuestionResource::collection($question->get())->response();

@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Question extends Model
 {
-    use HasFactory;
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $dates = ['deleted_at'];
 

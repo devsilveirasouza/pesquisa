@@ -50,9 +50,23 @@ $config = [
                     </h3>
                 </div>
             </div>
+            {{-- Perguntas select --}}
+            <div class="row">
+                <div class="col-md-4 ml-3">
+                    <x-adminlte-select name="question_titulo" class="question_titulo">
+                        <option value="">Selecione uma pergunta...</option>
+
+                        @foreach ($questions as $question)
+                            <option name="question_titulo" value="{{ $question->id }}">{{ $question->titulo }}</option>
+                        @endforeach
+
+                    </x-adminlte-select>
+                </div>
+
+            </div>
             <div class="card-body">
-                <x-adminlte-datatable id="example" :heads="$heads" :config="$config" striped hoverable bordered
-                    compressed />
+                <x-adminlte-datatable id="perguntas" class="example" :heads="$heads" :config="$config" striped hoverable
+                    bordered compressed />
             </div>
         </div>
     </div>
@@ -86,31 +100,37 @@ $config = [
     <script src="{{ asset('bootstrap-5.0.2/js/bootstrap.bundle.min.js') }}"></script>
 
     {{-- Filtro por coluna --}}
-    {{-- <script>
+    <script>
         $(document).ready(function() {
-            // Setup - add a text input to each footer cell
-            $('#example tfoot th').each(function(i) {
-                var title = $('#example thead th').eq($(this).index()).text();
-                $(this).html('<input type="text" placeholder="' + title + '" data-index="' + i + '" />');
-            });
 
-            // DataTable
-            var table = $('#example').DataTable({
+            if ($.fn.dataTable.isDataTable('.example')) {
+                // Setup - add a text input to each footer cell
+                $('.example tfoot th').each(function(i) {
+                    var title = $('.example thead th').eq($(this).index()).text();
+                    $(this).html('<input type="text" placeholder="' + title + '" data-index="' + i +
+                        '" />');
+                });
+                // DataTable
+                var table = $('.example').DataTable();
                 scrollY: "300px",
-                scrollX: true,
-                scrollCollapse: true,
-                paging: false,
-                fixedColumns: true
-            });
+                    scrollX: true,
+                    scrollCollapse: true,
+                    paging: false,
+                    fixedColumns: true
 
-            // Filter event handler
-            $(table.table().container()).on('keyup', 'tfoot input', function() {
-                table
-                    .column($(this).data('index'))
-                    .search(this.value)
-                    .draw();
-            });
+                // Filter event handler
+                $(table.table().container()).on('keyup', 'tfoot input', function() {
+                    table
+                        .column($(this).data('index'))
+                        .search(this.value)
+                        .draw();
+                });
+            } else {
+                table = $('.example').DataTable({
+                    paging: false
+                });
+            }
         });
-    </script> --}}
+    </script>
 
 @stop

@@ -13,7 +13,9 @@ use Illuminate\Support\Facades\Response;
 class AnswerController extends Controller
 {
     public function index() {
-        return view('respostas.index');
+        $questions = Question::all();
+        return view('respostas.index')
+            ->with('questions', $questions);
     }
 
     public function getResponse(Request $request)   {
