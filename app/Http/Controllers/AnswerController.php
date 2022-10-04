@@ -45,7 +45,7 @@ class AnswerController extends Controller
         // Carrega dados do banco
         $records = Answer::orderBy($columnName, $columnSortOrder)
             ->where('questions.titulo', 'like', '%' . $searchValue . '%')
-            ->select('questions.id as question_id', 'questions.titulo as question_titulo', 'options.titulo as option_title', 'answers.comment', 'users.name as user_name')
+            ->select('questions.id as question_id', 'questions.titulo as question_titulo', 'questions.obrigatoria as obrigatoria', 'options.titulo as option_title', 'answers.comment as comment', 'users.name as user_name')
             ->leftJoin('questions', 'questions.id', 'answers.question_id')
             ->leftJoin('options', 'options.id', 'answers.option_id')
             ->leftJoin('users', 'users.id', 'answers.user_id')
@@ -59,6 +59,7 @@ class AnswerController extends Controller
         foreach ($records as $record) {
             $question_id        = $record->question_id;
             $question_titulo    = $record->question_titulo;
+            $obrigatoria        = $record->obrigatoria;
             $option_title       = $record->option_title;
             $comment            = $record->comment;
             $user_name          = $record->user_name;
@@ -74,6 +75,7 @@ class AnswerController extends Controller
             $data_arr[]     = array(
                 "question_id"               => $question_id,
                 "question_titulo"           => $question_titulo,
+                "obrigatoria"               => $obrigatoria,
                 "option_title"              => $option_title,
                 "comment"                   => $comment,
                 "user_name"                 => $user_name,

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Option;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class OptionController extends Controller
 {
@@ -39,16 +40,30 @@ class OptionController extends Controller
      */
     public function store(Request $request)
     {
+        $array = ['error' => ''];
+
+        $rules = [
+            'titulo' => 'required|min:3',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            $array['error'] =   $validator->messages();
+            // return $array;
+            return back()->with('mensagem', "Digite pelo menos 3 caracteres para o cadastro.");
+        }
+
         // dd($request->all());
+        if(!is_null($request->titulo)) {
+            DB::beginTransaction();
+            Option::create($request->all());
+            DB::commit();
+            return redirect()->route('options.index')
+            ->with('mensagem', "Opção cadastrada com sucesso!");
+        }
+        return back()->with('mensagem', "Não foi possível realizar o cadastro.");
 
-        DB::beginTransaction();
-
-        Option::create($request->all());
-
-        DB::commit();
-
-        return redirect()->route('options.index')
-        ->with('mensagem', "Opção cadastrada com sucesso!");
     }
 
     /**

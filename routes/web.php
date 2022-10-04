@@ -3,7 +3,6 @@
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OptionController;
-use App\Http\Controllers\PesquisaController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -32,7 +31,7 @@ Route::put('/perguntas/atualizar/{id}',             [QuestionController::class, 
 Route::get('/pergunta/{pergunta}',                  [QuestionController::class, 'show'])->middleware('auth')->name('pergunta.listar');
 Route::delete('/perguntas-delete/{id}',             [QuestionController::class, 'excluir'])->middleware('auth')->name('pergunta.delete');
 // -------------------------------------Opções Perguntas---------------------------------------------------------------------------------
-Route::resource('/options',                     OptionController::class)->except('show')->middleware('auth');
+Route::resource('/options',                      OptionController::class)->except('show')->middleware('auth');
 //  --- Acesso público a pesquisa ---   //
 Route::get('principal',                             [QuestionController::class, 'pesquisa'])->name('pesquisa');
 // Questões da pesquisa
@@ -53,7 +52,5 @@ Route::any('startquiz',                             [QuestionController::class, 
 Route::get('/respostas',                            [AnswerController::class, 'index'])->middleware('auth')->name('respostas.index');
 Route::get('/respostas-listagem',                   [AnswerController::class, 'getResponse'])->middleware('auth')->name('respostas.getResponse');
 Route::get('/resposta/show/{id}',                   [AnswerController::class, 'show'])->Middleware('auth')->name('resposta.show');
-//  Rotas com joins para teste  //
-Route::get('/join1',                                [PesquisaController::class, 'join']);
-Route::get('/join2',                                [PesquisaController::class, 'joinWithGroupBy']);
+
 

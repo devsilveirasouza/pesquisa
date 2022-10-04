@@ -2,9 +2,11 @@
 {{-- Configuração do datatables --}}
 @php
 // Definindo cabeçalho do datatables
-$heads = ['ID', 'Descrição da Pergunta', 'Opção respondida', 'Texto de Resposta', 'Usuário', 'Data da Resposta', 'Ações'];
+$heads = ['ID', 'Descrição da Pergunta', 'Resp. Obrigatória', 'Opção respondida', 'Texto de Resposta', 'Usuário', 'Data da Resposta', 'Ações'];
+
 // Rota do processamento ajax
 $url = route('respostas.getResponse');
+
 // configuração geral do processamento  dos dados
 $config = [
     'language' => [
@@ -16,15 +18,7 @@ $config = [
     'ordering' => true,
     'ajax' => $url,
     'sDom' => 'blfrtip', // Configuração: 'DOM' de exibição do datatable
-    'columns' => [
-        ['data' => 'question_id', 'visible' => true],
-        ['data' => 'question_titulo', 'visible' => true],
-        ['data' => 'option_title'],
-        ['data' => 'comment'],
-        ['data' => 'user_name', 'orderable' => false, 'visible' => true],
-        ['data' => 'created_at', 'visible' => true],
-        ['data' => 'buttons', 'orderable' => false, 'no-export' => true, 'width' => 5]
-    ],
+    'columns' => [['data' => 'question_id', 'visible' => true], ['data' => 'question_titulo', 'visible' => true], ['data' => 'obrigatoria'], ['data' => 'option_title'], ['data' => 'comment'], ['data' => 'user_name', 'orderable' => false, 'visible' => true], ['data' => 'created_at', 'visible' => true], ['data' => 'buttons', 'orderable' => false, 'no-export' => true, 'width' => 5]],
 ];
 @endphp
 
@@ -91,14 +85,32 @@ $config = [
     <!-- Bootstrap JS -->
     <script src="{{ asset('bootstrap-5.0.2/js/bootstrap.bundle.min.js') }}"></script>
 
-    <script>
-        $(document).on("click", ".btnDetails", function(e) {
-            e.preventDefault();
+    {{-- Filtro por coluna --}}
+    {{-- <script>
+        $(document).ready(function() {
+            // Setup - add a text input to each footer cell
+            $('#example tfoot th').each(function(i) {
+                var title = $('#example thead th').eq($(this).index()).text();
+                $(this).html('<input type="text" placeholder="' + title + '" data-index="' + i + '" />');
+            });
 
-            var resposta_id = $(this).val();
-            console.log(resposta_id)
-            location.href = "/resposta/show" + "/" + resposta_id;
+            // DataTable
+            var table = $('#example').DataTable({
+                scrollY: "300px",
+                scrollX: true,
+                scrollCollapse: true,
+                paging: false,
+                fixedColumns: true
+            });
+
+            // Filter event handler
+            $(table.table().container()).on('keyup', 'tfoot input', function() {
+                table
+                    .column($(this).data('index'))
+                    .search(this.value)
+                    .draw();
+            });
         });
-    </script>
+    </script> --}}
 
 @stop

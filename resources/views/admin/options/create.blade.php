@@ -25,11 +25,14 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <form id="form_opcao_resposta" class="form_opcao_resposta" action="{{ route('options.store') }}" method="post">
+
+                    <form id="form_opcao_resposta" class="form_opcao_resposta" action="{{ route('options.store') }}"
+                        method="post">
                         @csrf
                         <div class="card-header">
                             <h4>Cadastro de opções</h4>
                         </div>
+
                         <div class="card-body table-responsive p-6">
                             <div class="col-md-12">
                                 <div class="h-100 p-5 bg-light border rounded-3">
@@ -38,14 +41,17 @@
                                         <span class="input-group-text" id="basic-addon2">Opção de resposta</span>
                                         <input type="text" class="form-control" name="titulo"
                                             placeholder="Opção de resposta..." aria-label="Recipient's option"
-                                            aria-describedby="basic-addon2">
-
+                                            aria-describedby="basic-addon2" required>
+                                        @if ($errors->has('name'))
+                                            <h6> Favor inserir seu nome! </h6>
+                                        @endif
                                     </div>
 
                                     <div class="card-footer">
                                         <div class="col-sm-10">
                                             <div class="button-group">
-                                                <a href="{{ route('options.index') }}" class="btn btn-primary btn-sm ml-2 mt-2">Home</a>
+                                                <a href="{{ route('options.index') }}"
+                                                    class="btn btn-primary btn-sm ml-2 mt-2">Home</a>
                                                 <button type="submit"
                                                     class="btn btn-primary float-end btn-sm mt-2 mb-2 mr-3"
                                                     value="Cadastrar">Salvar</button>
@@ -55,7 +61,9 @@
                                 </div>
                             </div>
                         </div>
+
                     </form>
+
                 </div>
             </div>
         </div>

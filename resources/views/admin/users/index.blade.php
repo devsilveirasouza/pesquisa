@@ -101,11 +101,6 @@ $config = [
                         type: "DELETE",
                         url: "/usuarios-delete/" + user_id,
                     });
-                    Swal.fire(
-                        "Excluído!",
-                        "O registro foi excluído com sucesso!",
-                        "success"
-                    );
                     location.href = "{{ route('user.list') }}";
                 }
             });

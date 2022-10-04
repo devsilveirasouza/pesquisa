@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
+use App\Models\Answer;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -141,17 +142,27 @@ class UserController extends Controller
     public function excluir($id)
     {
         $user = User::find($id);
+        // Verifica se usuario já têm resposta cadastrada
+        $answer = Answer::where('user_id', "-", $id);
 
-        DB::beginTransaction();
+        if (is_null($answer)) {
 
-        $user->delete();
+            DB::beginTransaction();
 
-        DB::commit();
+            $user->delete();
 
-        return response()->json([
-            'status'    => 200,
-            'message'   => 'Usuário excluído com sucesso!',
-        ]);
+            DB::commit();
+
+            return response()->json([
+                'status'    => 200,
+                'message'   => 'Usuário excluído com sucesso!',
+            ]);
+        } else {
+            return response()->json([
+                'status'    => 400,
+                'message'   => 'Não é possível excluir este usuário.',
+            ]);
+        }
     }
     // Mostra registro
     public function show($id)
