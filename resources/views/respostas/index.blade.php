@@ -27,7 +27,7 @@ $config = [
 @section('content_header')
     <!-- Ajustando o dataTable com CSS -->
     <style type="text/css">
-        table.example {
+        table.perguntas {
             margin-bottom: 0px !important;
             margin-top: 0px !important;
             border-collapse: collapse !important;
@@ -65,7 +65,7 @@ $config = [
 
             </div>
             <div class="card-body">
-                <x-adminlte-datatable id="perguntas" class="example" :heads="$heads" :config="$config" striped hoverable
+                <x-adminlte-datatable id="perguntas" class="perguntas" :heads="$heads" :config="$config" striped hoverable
                     bordered compressed />
             </div>
         </div>
@@ -76,15 +76,14 @@ $config = [
 @section('css')
     <!-- Bootstrap CSS -->
     <link href="{{ asset('bootstrap-5.0.2/css/bootstrap.min.css') }}">
+
     <!-- Datatables jquery CSS -->
     <link rel="stylesheet" href="{{ asset('datatables/datatables.min.css') }}">
-    <style>
-        tfoot input {
-            width: 100%;
-            padding: 3px;
-            box-sizing: border-box;
-        }
-    </style>
+
+    {{-- Scripts Datatable --}}
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    {{-- <link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.2.4/css/fixedHeader.dataTables.min.css"> --}}
+
 @stop
 
 @section('js')
@@ -95,41 +94,31 @@ $config = [
 
     <!-- Jquery DataTable JS -->
     <script src="{{ asset('datatables/cdn.datatables.net_1.11.5.jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('datatables/dataTables.fixedHeader.min.js') }}"></script>
+    {{-- <script src="{{ asset('datatables/dataTables.fixedHeader.min.js') }}"></script> --}}
+
     <!-- Bootstrap JS -->
     <script src="{{ asset('bootstrap-5.0.2/js/bootstrap.bundle.min.js') }}"></script>
 
     {{-- Filtro por coluna --}}
     <script>
-        $(document).ready(function() {
+        $('document').ready(function() {
 
-            if ($.fn.dataTable.isDataTable('.example')) {
-                // Setup - add a text input to each footer cell
-                $('.example tfoot th').each(function(i) {
-                    var title = $('.example thead th').eq($(this).index()).text();
-                    $(this).html('<input type="text" placeholder="' + title + '" data-index="' + i +
-                        '" />');
+            // Criar uma segunda linha de cabeçalho
+            $('#perguntas thead tr').clone(true).appendTo('#perguntas thead');
+            // Cria os campos de inputs no cabeçalho
+            $('#perguntas thead tr:eq(1) th').each(function (i) {
+                var title = $(this).text();
+                $(this).html('<select><option value="">Selecione...</option></select>');
+                $('input', this).on('keyup change', function () {
+                    if (table.column().search() !== this.value) {
+                        table
+                            .column(i)
+                            .search(this.value)
+                            .draw();
+                    }
                 });
-                // DataTable
-                var table = $('.example').DataTable();
-                scrollY: "300px",
-                    scrollX: true,
-                    scrollCollapse: true,
-                    paging: false,
-                    fixedColumns: true
+            });
 
-                // Filter event handler
-                $(table.table().container()).on('keyup', 'tfoot input', function() {
-                    table
-                        .column($(this).data('index'))
-                        .search(this.value)
-                        .draw();
-                });
-            } else {
-                table = $('.example').DataTable({
-                    paging: false
-                });
-            }
         });
     </script>
 
