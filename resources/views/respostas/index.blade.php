@@ -14,7 +14,7 @@ $config = [
     ],
     'processing' => true,
     'serverSide' => true,
-    'searching' => true,
+    'searching' => false,
     'ordering' => true,
     'ajax' => $url,
     'sDom' => 'blfrtip', // Configuração: 'DOM' de exibição do datatable
@@ -52,23 +52,41 @@ $config = [
             </div>
             {{-- Perguntas select --}}
             <div class="row">
-                <div class="col-md-4 ml-3">
+                <div class="col-sm-3 ml-3">
                     <x-adminlte-select name="question_titulo" class="question_titulo">
-                        <option value="">Selecione uma pergunta...</option>
 
+                        <option id="pergunta_id" value="">Selecione uma pergunta...</option>
                         @foreach ($questions as $question)
                             <option name="question_titulo" value="{{ $question->id }}">{{ $question->titulo }}</option>
                         @endforeach
 
                     </x-adminlte-select>
                 </div>
+                {{-- Filtro do período por data --}}
+                {{-- <form action="{{route('respostas.getResponse')}}" method="get"> --}}
+                    <div class="col-sm-3">
+                        <label for="">From Date</label>
+                        <input type="date" id="from_date" value="" />
+                    </div>
 
-            </div>
-            <div class="card-body">
-                <x-adminlte-datatable id="perguntas" class="perguntas" :heads="$heads" :config="$config" striped hoverable
-                    bordered compressed />
+                    <div class="col-sm-3">
+                        <label for="">To Date</label>
+                        <input type="date" id="to_date" value="" />
+                    </div>
+
+                    <div class="col-sm-2">
+                        <button type="submit" id="btnFilter" class="btn btn-info">Filter</button>
+                    </div>
+                {{-- </form> --}}
+                {{-- Fim filtro período por data --}}
             </div>
         </div>
+
+        <div class="card-body">
+            <x-adminlte-datatable id="perguntas" class="perguntas" :heads="$heads" :config="$config" striped hoverable
+                bordered compressed />
+        </div>
+    </div>
     </div>
 
 @stop
@@ -95,31 +113,23 @@ $config = [
     <!-- Jquery DataTable JS -->
     <script src="{{ asset('datatables/cdn.datatables.net_1.11.5.jquery.dataTables.min.js') }}"></script>
     {{-- <script src="{{ asset('datatables/dataTables.fixedHeader.min.js') }}"></script> --}}
+    {{-- <script src="{{ asset('site/jquery.js') }}"></script> --}}
 
     <!-- Bootstrap JS -->
     <script src="{{ asset('bootstrap-5.0.2/js/bootstrap.bundle.min.js') }}"></script>
 
     {{-- Filtro por coluna --}}
     <script>
-        $('document').ready(function() {
+        // $('document').ready(function() {
+        $(document).on("click", "#btnFilter", function(e) {
+            e.preventDefault();
 
-            // Criar uma segunda linha de cabeçalho
-            $('#perguntas thead tr').clone(true).appendTo('#perguntas thead');
-            // Cria os campos de inputs no cabeçalho
-            $('#perguntas thead tr:eq(1) th').each(function (i) {
-                var title = $(this).text();
-                $(this).html('<select><option value="">Selecione...</option></select>');
-                $('input', this).on('keyup change', function () {
-                    if (table.column().search() !== this.value) {
-                        table
-                            .column(i)
-                            .search(this.value)
-                            .draw();
-                    }
-                });
-            });
+            var from_date = document.getElementById('from_date').value;
+            var to_date = document.getElementById('to_date').value;
+            var pergunta_id = document.getElementById('pergunta_id').value;
 
+            console.log(from_date, to_date, pergunta_id)
         });
+        // });
     </script>
-
 @stop

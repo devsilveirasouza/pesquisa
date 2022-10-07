@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 namespace App\Http\Controllers;
 
@@ -17,6 +17,7 @@ class UserController extends Controller
     }
     public function buscaDados(Request $request)
     {
+        // Iniciando a Estrutura básica para montar o datatable
         $draw                       = $request->get('draw'); // Iniciando tabela a ser mostrada
         $start                      = $request->get("start"); // Inicialização dos registros
         $rowPerPage                 = $request->get("length"); // Quantidade de registros por paginas
@@ -30,14 +31,15 @@ class UserController extends Controller
         $columnName                 = $columnName_arr[$columnIndex]['data']; // Nome da coluna
         $columnSortOrder            = $order_arr[0]['dir']; // Definir ordenação das informações asc ou desc
         $searchValue                = $search_arr['value']; // Valor da pesquisa
-
+        // Fim Estrutura básica para montar o datatable
+        // Recebe a contagem dos dados
         $totalRecords               = User::select('count(*) as allcount')->count();
-
+        // Recebe a contagem dos dados filtrados
         $totalRecordswithFilter     = User::select('count(*) as allcount')
             ->where('users.name', 'like', '%' . $searchValue . '%')
             ->orWhere('users.email', 'like', '%' . $searchValue . '%')
             ->count();
-
+        // Realiza a consulta das informaçoes com os devidos filtros
         $users                      = User::orderBy($columnName, $columnSortOrder)
             ->where('users.name', 'like', '%' . $searchValue . '%')
             ->orWhere('users.email', 'like', '%' . $searchValue . '%')
@@ -45,21 +47,22 @@ class UserController extends Controller
             ->skip($start)
             ->take($rowPerPage)
             ->get();
-
+        // Iniciando o array de envio para o datatable
         $data_arr = array();
-
+        // Carregando os dados recebidos da consulta,
+        // Carregando os dados nas variáveis,
+        // Carregando as variáveis no array
         foreach ($users as $user) {
             $id = $user->id;
             $nome = $user->name;
             $email = $user->email;
-
-            // Criando os botões
+            // Criando os botões do datatable
             $btnEdit        = '<a href="' . route('user.edit', [$user->id]) . '"><button value="' . $user->id . '" class="edit_user btn btn-xs btn-default text-primary mx-1 shadow"><i class="fa fa-lg fa-fw fa-pen"></i></button></a>';
             $btnDelete      = '<button value="' . $user->id . '" class="delete_user btn btn-xs btn-default text-danger mx-1 shadow"><i class="fa fa-lg fa-fw fa-trash"></i></button>';
             $btnDetails     = '<a href="' . route('user.listUser', [$user->id]) . '"><button value="' . $user->id . '" class="details_user btn btn-xs btn-default text-teal mx-1 shadow"><i class="fa fa-lg fa-fw fa-eye"></i></button></a>';
-
+            // Inserindo os botões em array
             $buttons = ['<nobr>' . $btnDetails . $btnEdit . $btnDelete . '</nobr>'];
-
+            // Montar array de envio para o datatable
             $data_arr[] = array(
                 "id" => $id,
                 "name" => $nome,
@@ -68,6 +71,7 @@ class UserController extends Controller
             );
         }
         // Envio das informações
+        // Estrutura que o datatable espera receber        
         $response = array(
             "draw" => intval($draw),
             "iTotalRecords" => $totalRecords,
@@ -76,6 +80,7 @@ class UserController extends Controller
         );
         echo json_encode($response);
         exit;
+        // End Estrutura que o datatables espera receber
     }
     /**
      * Show the form for creating a new resource.

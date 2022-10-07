@@ -19,6 +19,17 @@ class Answer extends Model
 
     protected $casts = ['option_id'];
 
+    // DataFilter -> filtra os dados pela data
+    public function scopeDateFilter( $query, $from_date = null, $to_date = null )
+    {
+        if (!empty( $from_date )) {
+            $from_date = date("Y-m-d 00:00:01", strtotime( $from_date ));
+            $to_date = (!empty( $to_date)) ? date("Y-m-d 23:59:59", strtotime( $from_date )) : date("Y-m-d 23:59:59", strtotime( $to_date ));
+
+            $query->whereBetween('created_at', [ $from_date, $to_date]);
+        }
+    }
+
     public function questions()
     {
         return $this->belongsToMany(Question::class)->withTimestamps();
