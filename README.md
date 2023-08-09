@@ -84,6 +84,7 @@ Server local: Laragon
 
 Implementações:
 
+    = AdminLte Template
     = Breeze authentication
     = Sweetalert2
     = Bootstrap Switch
